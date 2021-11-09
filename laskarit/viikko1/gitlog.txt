@@ -1,0 +1,113 @@
+commit db335186cf20d5626db0d348997ca0994b7221af
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 17:29:34 2021 +0200
+
+    poista tiedosto file1.txt ja uudelleennimeä file2.txt -> file22.txt
+
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 03fecec9f0e8d51ea264161e3c630705d8b297bf
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 17:17:56 2021 +0200
+
+    lisää hakemisto tiedostoja ja kolme tiedostoa sen alle
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 4f23452a2dbe42e2e3dee8c51c2029fbad4877b4
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 17:00:16 2021 +0200
+
+    muuta tiedostoja eka.txt ja kolmas.txt
+
+ eka.txt    | 11 ++++-------
+ kolmas.txt |  4 +++-
+ 2 files changed, 7 insertions(+), 8 deletions(-)
+
+commit 213b019ffc5b0f0e66f81fdd6076983f290a797b
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 16:52:40 2021 +0200
+
+    nimeä uudelleen tiedosto.txt -> eka.txt
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f92fd8d23511ca8944149a3850707023746a9fc3
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 16:49:50 2021 +0200
+
+    poista tiedosto toinen.txt
+
+ toinen.txt | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit 13a1189d27bc629b29788303f799651aa1c8ff03
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 16:37:14 2021 +0200
+
+    Poista osa ipsumista, ja lisää tilalle lause
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit a64b94be5c4d32ea8edb525f271e91cd691b01e8
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 16:35:05 2021 +0200
+
+    lisää Lorem Ipsumia tiedostoon tiedosto.txt
+
+ tiedosto.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit d2cac2827167acf8e95390c59b16c8265477a5f8
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 14:54:06 2021 +0200
+
+    lisää uusi hakemisto stuff, sekä jokinTiedosto.txt sen alle
+
+ stuff/jokinTiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 865513271240f5c78c61499d256194e1ff1399c4
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 14:51:12 2021 +0200
+
+    muuta tiedostojen toinen.txt ja kolmas.txt sisältöä
+
+ kolmas.txt | 3 +++
+ toinen.txt | 2 ++
+ 2 files changed, 5 insertions(+)
+
+commit 12cea80b8b8813a2782d37fddf246e4224c95a2f
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 14:48:30 2021 +0200
+
+    lisää kolmas.txt
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a2b0ec38fe45dcf389649f4d3aa07bf95b69f6c2
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 14:34:05 2021 +0200
+
+    muuta tiedosto.txt ja lisää uusi toinen.txt
+
+ tiedosto.txt | 3 +++
+ toinen.txt   | 0
+ 2 files changed, 3 insertions(+)
+
+commit da1591b3659b762c9463a4ebdb8d65fe86a0b3f1
+Author: Taneli Härkönen <taneliharkonen@hotmail.com>
+Date:   Tue Nov 9 14:27:03 2021 +0200
+
+    luo tiedosto tiedosto.txt
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
