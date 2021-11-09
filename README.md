@@ -36,4 +36,4 @@ owner of [repo](https://github.com/xTanzu/ot-harjoitustyo) @xTanzu
 
 git is :heart_eyes:
 
-<img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" width=100>
+<img src="https://github.githubassets.com/images/modules/logos_page/Octocat.png" width=250>
