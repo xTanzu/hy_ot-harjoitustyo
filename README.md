@@ -30,8 +30,8 @@ Week 1:
   * [komentorivi.txt](https://github.com/xTanzu/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
   * [gitlog.txt](https://github.com/xTanzu/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
+## Closing words ##
 
 owner of [repo](https://github.com/xTanzu/ot-harjoitustyo) @xTanzu
-
 
 git is :heart_eyes:
