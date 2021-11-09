@@ -14,15 +14,15 @@ This is a **mandatory** course for *Helsinki University* cs students
 But also **open** for *other students* as well
 
 As a base a student should have
-	1. basic knowledge of **python**
-	1. some grasp of **linux command line** and **bash**
-	1. basics of **databases** and **sql**
+  1. basic knowledge of **python**
+  1. some grasp of **linux command line** and **bash**
+  1. basics of **databases** and **sql**
 
 The course:
-	- [x] done in solo
-	- [x] need an internet connection
-	- [x] teaches you a lot
-	- [ ] requires you to be a pro
+  - [x] done in solo
+  - [x] need an internet connection
+  - [x] teaches you a lot
+  - [ ] requires you to be a pro
 
 
 owner of [repo](https://github.com/xTanzu/ot-harjoitustyo) @xTanzu
