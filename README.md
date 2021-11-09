@@ -24,6 +24,12 @@ The course:
   - [x] teaches you a lot
   - [ ] requires you to be a pro
 
+## Content ##
+
+Week 1:
+  * [komentorivi.txt](https://github.com/xTanzu/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+  * [gitlog.txt](https://github.com/xTanzu/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+
 
 owner of [repo](https://github.com/xTanzu/ot-harjoitustyo) @xTanzu
 
