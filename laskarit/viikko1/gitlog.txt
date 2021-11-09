@@ -1,3 +1,5 @@
+Tämä on gitlog tulostus:
+
 commit db335186cf20d5626db0d348997ca0994b7221af
 Author: Taneli Härkönen <taneliharkonen@hotmail.com>
 Date:   Tue Nov 9 17:29:34 2021 +0200
