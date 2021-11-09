@@ -1,13 +1,13 @@
 # Rehearsal assignment for the Ohjelmistotekniikka-course (ot) #
 
 In this assignment we will study
-	* phases of the software development process
-	* the waterfall model and some of the agile model
-	* version control (git and github)
-	* UML-modeling technique
-	* phases software testing
-	* automatic testing
-	* some software design principles
+  * phases of the software development process
+  * the waterfall model and some of the agile model
+  * version control (git and github)
+  * UML-modeling technique
+  * phases software testing
+  * automatic testing
+  * some software design principles
 
 This is a **mandatory** course for *Helsinki University* cs students
 
