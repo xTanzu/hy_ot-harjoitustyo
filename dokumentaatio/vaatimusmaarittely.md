@@ -1,23 +1,23 @@
-#Vaatimusmäärittely#
+# Vaatimusmäärittely #
 
-##Sovelluksen tarkoitus##
+## Sovelluksen tarkoitus ##
 Mitä varten sovellus tehdään
 
-##Käyttäjäroolit##
+## Käyttäjäroolit ##
 Minkälaisia käyttäjärooleja
 
-##Käyttöliittymäluonnos##
+## Käyttöliittymäluonnos ##
 Miltä käyttöliittymä tulisi näyttämään
 
-##Toiminnallisuus##
-###Kirjautuminen/rekisteröinti###
+## Toiminnallisuus ##
+### Kirjautuminen/rekisteröinti ###
 näin kirjaudutaan/rekisteröidytään
-###Päänäkymä###
+### Päänäkymä ###
 Tässä näät omat tiedot
-###Ryhmän lisäys###
+### Ryhmän lisäys ###
 Kun haluat alloittaa ryhmän
-###Ryhmänäkymä###
+### Ryhmänäkymä ###
 Tässä näet ryhmän ja siihen liittyvät omat tiedot
 
-##Jatkokehitysideoita##
+## Jatkokehitysideoita ##
 Miten tätä ideaa voisi jatkaa
