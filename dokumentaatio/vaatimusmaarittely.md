@@ -55,11 +55,11 @@ Miltä käyttöliittymä tulisi näyttämään
 Sovellus on hyvin raakile, ja siihen voisi lisätä todella paljon erilaisia toimintoja ja ominaisuuksia.
 Joitain esimerkkejä:
   - ryhmien muokkaus jälkikäteen
-  - salasanojen ja käyttäjätunnusten oikeaoppinen säilyttäminen
   - ryhmän uusien ostosten hyväksyttäminen kaikilla jäsenillä
   - ostosten ja maksujen tarkastelu ryhmän sisällä
   - aliryhmien toteuttaminen
 
 Korkealentoisia esimerkkejä:
+  - salasanojen ja käyttäjätunnusten oikeaoppinen säilyttäminen
   - tuotteiden automaattinen lukeminen kuitista
   - oikean maksuliikenteen toteuttaminen sovelluksen kautta
