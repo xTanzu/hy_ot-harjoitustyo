@@ -1,0 +1,7 @@
+- 11.11 16-22 Tutustuminen projektivaatimuksiin
+- 12.11 10-12 Tutustuminen projektivaatimuksiin
+	12-14 Tutustuminen Tkinteriin
+	14-15 Tutustuminen Git for Windowsiin ja Windows Terminaliin
+	15-16 Tutustumine Tkinteriin jatkuu
+	20-00 Ohjelman toiminnan ja rakenteen hahmottelu/kartoitus
+	00- Määrittelydokumentin laatiminen
