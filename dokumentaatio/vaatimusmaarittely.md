@@ -59,6 +59,7 @@ Joitain esimerkkejä:
   - ryhmän uusien ostosten hyväksyttäminen kaikilla jäsenillä
   - ostosten ja maksujen tarkastelu ryhmän sisällä
   - aliryhmien toteuttaminen
+
 Korkealentoisia esimerkkejä:
   - tuotteiden automaattinen lukeminen kuitista
   - oikean maksuliikenteen toteuttaminen sovelluksen kautta
