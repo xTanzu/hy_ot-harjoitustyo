@@ -1,3 +1,7 @@
+## Linkkejä tarkastajalle: ##
+- [määrittelydokumentti](https://github.com/xTanzu/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
+- [työaikakirjanpito](https://github.com/xTanzu/ot-harjoitustyo/blob/master/dokumentaatio/tyoaika.txt)
+
 # Rehearsal assignment for the Ohjelmistotekniikka-course (ot) #
 
 In this assignment we will study
