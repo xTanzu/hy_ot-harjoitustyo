@@ -52,7 +52,8 @@ Miltä käyttöliittymä tulisi näyttämään
   - mahdollisuus suorittaa uusi maksu ryhmälle, tai ilmoittaa uudesta ostoksesta
 
 ## Jatkokehitysideoita ##
-Sovellus on hyvin raakile, ja siihen voisi lisätä todella paljon erilaisia toimintoja ja ominaisuuksia.
+Sovellus on hyvin raakile, ja siihen voisi lisätä todella paljon erilaisia toimintoja ja ominaisuuksia. Nämä tekisivät siitä jopa oikeasti käytännöllisen sovelluksen talouden hoitoon ryhmässä.
+
 Joitain esimerkkejä:
   - ryhmien muokkaus jälkikäteen
   - ryhmän uusien ostosten hyväksyttäminen kaikilla jäsenillä
