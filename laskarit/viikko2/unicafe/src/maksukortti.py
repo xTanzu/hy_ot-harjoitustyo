@@ -8,11 +8,9 @@ class Maksukortti:
     def ota_rahaa(self, maara):
         if self.saldo < maara:
             return False
-
-        self.saldo = self.saldo - maara
+        self.saldo -= maara
         return True
 
     def __str__(self):
         saldo_euroissa = round(self.saldo / 100, 2)
-
         return f"saldo: {saldo_euroissa}"
