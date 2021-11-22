@@ -2,6 +2,7 @@ import unittest
 from entities.user import User
 
 class TestUser(unittest.TestCase):
+    
     def setUp(self):
         self.test_user = User(1234, "testName", "testPassword", "testFirstName", "testLastName")
     
