@@ -1,5 +1,4 @@
 import unittest
-from unittest import result
 from dbaos.user_dbao import User_DBAO
 
 class TestUser_DBAO(unittest.TestCase):
@@ -17,7 +16,7 @@ class TestUser_DBAO(unittest.TestCase):
         self.assertRaises(ValueError, lambda: User_DBAO("wrong type"))
         self.assertRaises(ValueError, lambda: User_DBAO("sqlite3_no_destination"))
     
-    def test_panic(self):
+    def test_wrong_db_path_raises_connection_error(self):
         self.assertRaises(ConnectionError, lambda: User_DBAO("sqlite3_file", "folderthatdoesnotexist/data.db"))
     
     def test_inserted_user_can_be_found(self):

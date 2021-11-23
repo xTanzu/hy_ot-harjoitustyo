@@ -1,9 +1,8 @@
 class User:
 
-    def __init__(self, user_id:int, username:str, password:str, first_name:str, last_name:str):
+    def __init__(self, user_id:int, username:str, first_name:str, last_name:str):
         self.__user_id = user_id
         self.__username = username
-        self.__password = password
         self.__first_name = first_name
         self.__last_name = last_name
     
@@ -22,6 +21,3 @@ class User:
     @property
     def last_name(self) -> str:
         return self.__last_name
-    
-    def isValidPassword(self, tryPassword: str):
-        return tryPassword == self.__password

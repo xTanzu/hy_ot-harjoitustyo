@@ -1,7 +1,7 @@
 from config import DB_TYPE, DB_PATH
 import sqlite3 as sql3
 
-class User_DBAO():
+class User_DBAO:
     
     def __init__(self, db_type:str = None, db_path:str = None):
         self.__db_type = (db_type if (db_type and type(db_type) == str) else DB_TYPE)
