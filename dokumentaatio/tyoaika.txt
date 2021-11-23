@@ -1,7 +1,33 @@
 - 11.11 16-22		Tutustuminen projektivaatimuksiin
+
 - 12.11 10-12		Tutustuminen projektivaatimuksiin
 	12-14		Tutustuminen Tkinteriin
 	14-15		Tutustuminen Git for Windowsiin ja Windows Terminaliin
 	15-16		Tutustuminen Tkinteriin jatkuu
 	20-00		Ohjelman toiminnan ja rakenteen hahmottelu/kartoitus
 	00-03:45 	Määrittelydokumentin laatiminen
+
+- 13.11 12-15           Unittest ohjeeseen tutustuminen
+	15-17           Invoke ohjeeseen tutustumisen aloittaminen
+	19-22		Invoke ohjeeseen tutustumisen jatkaminen
+	12-03           invoke unittest ja git harjoittelu
+
+- 14.11 12-14		Invoke ja coverage ohjeisiin tutustuminen
+	14-16		Invoke, unittest, coverage ja git harjoittelu
+	18-03		viikon 2 tehtävien teko
+
+- 15.11 15-18           viikon 2 tehtävien teko
+
+- 18.11 14:30-18	tehtävän koodaamisen aloittaminen, ensin hahmoitellaan perusrakennetta ja ideaa (Luukkaisen kanssa zoomissa)
+	21-00		sqlite3:n käytön muistelu ja tavailu
+	00-03		tietokannan päädyn luokkien rakenteen muodostaminen ja koodaamisen aloitus
+
+- 19.11 11-15:30	User ja user_dbao koodaus --> töihin
+
+- 20.11 14-16		user_dbao koodaus --> töihin
+
+- 21.11 16-17:30	user_dbao koodaus --> töihin
+	18:30-21:30	user_dbao koodaus töissä
+	23-04		user_dbao koodaus ja testit user_dbao:lle koodaus 100% coverage
+
+- 22.11 17-05		user_repository luokan, user_repository_test testien, utils/ kansion Helper luokan apufunktioiden, helper_test apufunktioiden testien koodaus, testit 100% coverage
