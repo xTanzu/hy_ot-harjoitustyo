@@ -31,3 +31,5 @@
 	23-04		user_dbao koodaus ja testit user_dbao:lle koodaus 100% coverage
 
 - 22.11 17-05		user_repository luokan, user_repository_test testien, utils/ kansion Helper luokan apufunktioiden, helper_test apufunktioiden testien koodaus, testit 100% coverage
+
+- 23.11 10-23:30	Pelkkää user_service luokan ja tekstikäyttöliittymän koodausta. Näissä ei testejä.
