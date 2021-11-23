@@ -48,6 +48,7 @@ class TextUi:
             fields = {"username": None, "password": None}
             for key in fields.keys():
                 fields[key] = input(key + ": ")
+                print("\n")
                 if fields[key] == "":
                     return
             if self.__user_service.login(fields["username"], fields["password"]):
@@ -92,6 +93,7 @@ class TextUi:
         for key in fields.keys():
             for i in range(10):
                 fields[key] = input(key + ": ")
+                print("\n")
                 if fields[key] == "":
                     return
                 checker = None
