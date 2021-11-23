@@ -80,3 +80,12 @@ class TestUser_Repository(unittest.TestCase):
         self.test_user_repository.insert_new_user(username, password, first_name, last_name)
         self.assertTrue(self.test_user_repository.username_password_match(username, password))
         self.assertFalse(self.test_user_repository.username_password_match(username, "complicated_password_abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789!()-.?[]_'~;:!@#$%^&*+=w"))
+
+    def test_legal_insert_new_user_incorrect_user_correct_password_is_not_matching(self):
+        username = "testUsername"
+        password = "complicated_password_abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789!()-.?[]_'~;:!@#$%^&*+="
+        first_name = "Testerfirstname"
+        last_name = "Testerlastname"
+        self.test_user_repository.insert_new_user(username, password, first_name, last_name)
+        self.assertTrue(self.test_user_repository.username_password_match(username, password))
+        self.assertFalse(self.test_user_repository.username_password_match("wrongusername", password))

@@ -27,5 +27,7 @@ class User_Repository:
         return user
     
     def username_password_match(self, inserted_username:str, inserted_password:str) -> bool:
+        if not self.username_exists(inserted_username):
+            return False
         id, username, password, first_name, last_name = self.__user_dbao.find_user_by_username(inserted_username)
         return (inserted_username, inserted_password) == (username, password)
