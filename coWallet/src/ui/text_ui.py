@@ -12,7 +12,7 @@ class TextUi:
 
         while(True):
             command = input(">")
-
+            print("\n")
             if command == "quit":
                 break
             elif command == "cmnds":
