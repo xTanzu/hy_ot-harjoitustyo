@@ -5,7 +5,7 @@ class User:
         self.__username = username
         self.__first_name = first_name
         self.__last_name = last_name
-    
+
     @property
     def user_id(self) -> int:
         return self.__user_id
@@ -13,11 +13,20 @@ class User:
     @property
     def username(self) -> str:
         return self.__username
-    
+
     @property
     def first_name(self) -> str:
         return self.__first_name
-    
+
     @property
     def last_name(self) -> str:
         return self.__last_name
+
+    def __str__(self) -> str:
+        return f"{self.__first_name} {self.__last_name}"
+
+    def __repr__(self) -> str:
+        return f"<User> id: {self.__user_id}, \
+            username: {self.__username}, \
+            first_name: {self.__first_name}, \
+            last_name: {self.__last_name}"

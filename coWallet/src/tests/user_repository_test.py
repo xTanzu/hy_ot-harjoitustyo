@@ -1,10 +1,10 @@
 import unittest
-from repositories.user_repository import User_Repository
+from repositories.user_repository import UserRepository
 
-class TestUser_Repository(unittest.TestCase):
+class TestUserRepository(unittest.TestCase):
     
     def setUp(self):
-        self.test_user_repository = User_Repository("sqlite3_in_memory")
+        self.test_user_repository = UserRepository("sqlite3_in_memory")
     
     def test_legal_insert_new_user_is_succesful(self):
         username = "testUsername"

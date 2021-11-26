@@ -1,7 +1,7 @@
 from ui.text_ui import TextUi
 
 def main():
-    ui = TextUi("sqlite3_in_memory")
-    ui.start_ui()
+    user_interface = TextUi("sqlite3_in_memory")
+    user_interface.start_ui()
 
 main()

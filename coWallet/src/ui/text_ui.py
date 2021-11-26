@@ -1,10 +1,10 @@
-from services.user_service import User_Service
+from services.user_service import UserService
 from utils.helper import Helper
 
 class TextUi:
 
     def __init__(self, db_type:str = None, db_path:str = None):
-        self.__user_service = User_Service(db_type, db_path)
+        self.__user_service = UserService(db_type, db_path)
     
     def start_ui(self):
 

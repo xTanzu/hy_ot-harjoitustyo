@@ -33,3 +33,7 @@
 - 22.11 17-05		user_repository luokan, user_repository_test testien, utils/ kansion Helper luokan apufunktioiden, helper_test apufunktioiden testien koodaus, testit 100% coverage
 
 - 23.11 10-23:30	Pelkkää user_service luokan ja tekstikäyttöliittymän koodausta. Näissä ei testejä.
+
+- 25.11 23-05		Pylintiin tutustuminen, ja koko koodikannan sillä korjaaminen mahd lähelle 10/10. Taisi olla jotain 9,80 luokkaa
+
+- 26.11	05-07:30	Testien päivitystä. Pylintin mukaan jouduin tekemään muutoksia niin että testit piti päivittää. Lisäksi loin uuden tiedoston user_service_test.py, jossa kirjoitin uudet testit user_service moduulille.

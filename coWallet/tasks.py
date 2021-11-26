@@ -21,3 +21,7 @@ def coverage_report(ctx):
 def coverage_html_report(ctx):
     ctx.run("coverage run --branch -m pytest src")
     ctx.run("coverage html")
+
+@task
+def lint(ctx):
+    ctx.run("pylint src")
