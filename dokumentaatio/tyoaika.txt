@@ -37,3 +37,7 @@
 - 25.11 23-05		Pylintiin tutustuminen, ja koko koodikannan sillä korjaaminen mahd lähelle 10/10. Taisi olla jotain 9,80 luokkaa
 
 - 26.11	05-07:30	Testien päivitystä. Pylintin mukaan jouduin tekemään muutoksia niin että testit piti päivittää. Lisäksi loin uuden tiedoston user_service_test.py, jossa kirjoitin uudet testit user_service moduulille.
+
+- 29.11 21-02		Tutustu Tkinteriin lisää ja yritä saada Tkinter toimimaan sekä 
+windowsilla, wsl:ssä ja debianilla
+	02-06		Aloita graafisen käyttöliittymän teko

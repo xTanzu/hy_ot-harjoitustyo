@@ -1,4 +1,5 @@
 from invoke import task
+import platform
 
 @task
 def foo(ctx):
@@ -6,7 +7,13 @@ def foo(ctx):
 
 @task
 def start(ctx):
-    ctx.run("python3 src/index.py")
+    if platform.system() == 'Linux':
+        if 'Microsoft' in platform.release():
+            ctx.run("python.exe src/index.py")
+        else:
+            ctx.run("python3 src/index.py")
+    elif platform.system() == 'Windows':
+        ctx.run("python src/index.py")
 
 @task
 def test(ctx):
