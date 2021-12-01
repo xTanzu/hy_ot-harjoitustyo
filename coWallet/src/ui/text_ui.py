@@ -92,6 +92,9 @@ class TextUi:
                 it must start with a letter\n"""}
         for key in fields.keys():
             for i in range(10):
+                if i > 6:
+                    print("Thats too many tries, quitting\n")
+                    return
                 fields[key] = input(key + ": ")
                 print("\n")
                 if fields[key] == "":
@@ -101,9 +104,6 @@ class TextUi:
                 checker = Helper.is_valid_password if key == "password" else checker
                 checker = Helper.is_valid_name if key == "first_name" or key == "last_name" else checker
                 valid = checker(fields[key])
-                if i > 6:
-                    print("Thats too many tries, quitting\n")
-                    return
                 if not valid:
                     print(errorMsgs[key])
                 else:

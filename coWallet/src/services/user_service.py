@@ -32,6 +32,9 @@ class UserService:
 
     def get_current_user(self) -> User:
         return self.__user
+    
+    def username_available(self, username:str) -> bool:
+        return not self.__user_repository.username_exists(username)
 
     def logout(self):
         self.__user = None

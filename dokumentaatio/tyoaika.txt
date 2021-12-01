@@ -42,3 +42,5 @@
 windowsilla, wsl:ssä ja debianilla
 	02-06		Aloita graafisen käyttöliittymän teko
 - 30.11	14-00		Tkinterin kanssa sählääminen. Yritä saada sivurakenne toimimaan fiksusti. Joutuu Tkinterin oliorakenteiden opiskelun lisäksi palaamaan takaisin Pythonin perinnän rakenteiden kertaamiseen. Ihan ei ehdi deadlineen nyt nämä. Sen verran iso pala purtavaksi.
+
+- 1.12	00-05		Tkinter jatkuu. Keksin kivan tavan luoda GUI rakenteen. Rakensin kirjautumis ja rekisteröitymissivut ja liitin ne sovelluslogiikkaan. Korjasin myös sovelluslogiikan toimintaa ja siihen liittyviä testejä

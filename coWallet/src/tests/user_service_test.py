@@ -117,3 +117,17 @@ class TestUserService(unittest.TestCase):
         self.assertEqual(repr(current_user), user_repr)
         self.test_user_service.logout()
         self.assertIsNone(self.test_user_service.get_current_user())
+
+    def test_created_username_is_not_available(self):
+        username = "testUsername"
+        password = "testPassword1!"
+        first_name = "testfirstname"
+        last_name = "testlastname"
+        self.test_user_service.create_user(username, password, first_name, last_name)
+        result = self.test_user_service.username_available(username)
+        self.assertFalse(result)
+    
+    def test_not_created_username_is_available(self):
+        username = "testUsername"
+        result = self.test_user_service.username_available(username)
+        self.assertTrue(result)
