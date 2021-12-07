@@ -178,6 +178,7 @@ class TestHelper(unittest.TestCase):
         test_name5 = "Liu"
         test_name6 = "Hu"
         test_name7 = "Wolfeschlegelsteinhausenbergerdorff"
+        test_name8 = "Taneli Härkönen"
         self.assertTrue(Helper.is_valid_name(test_name1))
         self.assertTrue(Helper.is_valid_name(test_name2))
         self.assertTrue(Helper.is_valid_name(test_name3))
@@ -185,16 +186,21 @@ class TestHelper(unittest.TestCase):
         self.assertTrue(Helper.is_valid_name(test_name5))
         self.assertTrue(Helper.is_valid_name(test_name6))
         self.assertTrue(Helper.is_valid_name(test_name7))
+        self.assertTrue(Helper.is_valid_name(test_name8))
 
     
     def test_is_valid_name_returns_false_when_false(self):
         test_name1 = ""
         test_name2 = " "
-        test_name3 = "matti,Meikäläinen123"
-        test_name4 = "Taneli Härkönen"
+        test_name3 = "matti|Meikäläinen123"
+        test_name4 = "Taneli/\\Härkönen"
         test_name5 = "".join(["a" for x in range(201)])
         test_name6 = ".gitignore"
         test_name7 = "0.?5$9%+2*"
+        test_name8 = "Taneli\nHärkönen"
+        test_name9 = "Taneli\rHärkönen"
+        test_name10 = "Taneli\tHärkönen"
+        test_name11 = "Taneli,Härkönen"
         self.assertFalse(Helper.is_valid_name(test_name1))
         self.assertFalse(Helper.is_valid_name(test_name2))
         self.assertFalse(Helper.is_valid_name(test_name3))
@@ -202,4 +208,19 @@ class TestHelper(unittest.TestCase):
         self.assertFalse(Helper.is_valid_name(test_name5))
         self.assertFalse(Helper.is_valid_name(test_name6))
         self.assertFalse(Helper.is_valid_name(test_name7))
+        self.assertFalse(Helper.is_valid_name(test_name8))
+        self.assertFalse(Helper.is_valid_name(test_name9))
+        self.assertFalse(Helper.is_valid_name(test_name10))
+        self.assertFalse(Helper.is_valid_name(test_name11))
 
+    # Short texts --------------------------------------------------------------------
+
+    def test_is_valid_short_text_returns_true_when_true(self):
+        test_text1 = """Lorem ipsum dolor sit ame, consectetur adipiscing elit. Duis dolor purus, condimentum nec mauris eu, suscipit ornare velit. Praesent ligula leo, ullamcorper ac quam vel, iaculis tristique elit. Duis id ipsum dui. Nunc dignissim purus a mauris molestie vestibulum. In non auctor quam, id bibendum lacus. Nam euismod fringilla enim, sit amet pellentesque lacus tincidunt non. Nulla commodo finibus felis id scelerisque. Suspendisse at laoreet lorem. Phasellus convallis turpis sit amet nulla congue, quis gravida risus tincidunt. Nullam sed tortor porta tortor molestie venenatis nec non velit. Nam nisl quam, dictum et consectetur nec, aliquet et justo. Proin imperdiet, sapien a aliquam rhoncus, nibh purus sollicitudin leo, a sodales eros risus vel nulla. Integer malesuada dictum mi, vel tempus ligula vulputate id. Proin cursus nisl orci, et ultrices leo luctus aliquam. Mauris vestibulum bibendum augue, egestas maximus nulla auctor ullamcorper. Pellentesque habitant morbi tristique senectus e netus et malesuada nunc."""
+        test_text2 = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ!()-.?[]_'~;:!@#$%^&*+= ,"
+        self.assertTrue(Helper.is_valid_short_text(test_text1))
+        self.assertTrue(Helper.is_valid_short_text(test_text2))
+    
+    def test_is_valid_short_text_returns_false_when_false(self):
+        test_text1 = "".join(["a" for x in range(1025)])
+        self.assertFalse(Helper.is_valid_short_text(test_text1))

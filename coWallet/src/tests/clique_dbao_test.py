@@ -28,13 +28,13 @@ class TestCliqueDbao(unittest.TestCase):
         user_info = ("testUsername", "testPassword", "testFirstName", "testLastName")
         succesful = self.test_user_dbao.insert_new_user(*user_info)
         self.assertTrue(succesful)
-        clique_info = ("testCliqueName", "testCliqueDescription", 1)
+        clique_info = ("testCliqueName", "test clique description", 1)
         succesful = self.test_clique_dbao.insert_new_clique(*clique_info)
         self.assertTrue(succesful)
-        result = self.test_clique_dbao.find_clique_by_head_id(1)
+        result = self.test_clique_dbao.find_cliques_by_head_id(1)
         self.assertEqual(result, [(1,) + clique_info] )
 
     def test_clique_with_non_existing_head_cannot_be_inserted(self):
-        clique_info = ("testCliqueName", "testCliqueDescription", 1)
+        clique_info = ("testCliqueName", "test clique description", 1)
         succesful = self.test_clique_dbao.insert_new_clique(*clique_info)
         self.assertFalse(succesful)

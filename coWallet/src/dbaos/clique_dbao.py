@@ -49,7 +49,7 @@ class CliqueDbao(Dbao):
 
         return True
 
-    def find_clique_by_head_id(self, head_id):
+    def find_cliques_by_head_id(self, head_id) -> list:
         query_find_clique_by_head_id = """
             SELECT 
                 *
