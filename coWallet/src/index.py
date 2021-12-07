@@ -1,4 +1,4 @@
-from ui.text_ui import TextUi
+#from ui.text_ui import TextUi
 from ui.graphical_ui import GraphicalUi
 
 def main():

@@ -7,6 +7,9 @@ class UserRepository:
     def __init__(self, db_type:str = None, db_path:str = None):
         self.__user_dbao = UserDbao(db_type, db_path)
 
+    def disconnect_db(self):
+        self.__user_dbao.disconnect()
+
     def insert_new_user(self, username:str, password:str, first_name:str, last_name:str) -> bool:
         if Helper.is_valid_username(username) and Helper.is_valid_password(password) and \
             Helper.is_valid_name(first_name) and Helper.is_valid_name(last_name):

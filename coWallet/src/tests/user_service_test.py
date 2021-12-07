@@ -5,7 +5,10 @@ class TestUserService(unittest.TestCase):
 
     def setUp(self):
         self.test_user_service = UserService("sqlite3_in_memory")
-    
+
+    def tearDown(self):
+        self.test_user_service.disconnect_db()
+
     def test_created_user_is_able_to_login(self):
         username = "testUsername"
         password = "testPassword1!"
@@ -14,13 +17,13 @@ class TestUserService(unittest.TestCase):
         self.test_user_service.create_user(username, password, first_name, last_name)
         result = self.test_user_service.login(username, password)
         self.assertTrue(result)
-    
+
     def test_not_created_user_is_not_able_to_login(self):
         username = "randomusername"
         password = "randompassword"
         result = self.test_user_service.login(username, password)
         self.assertFalse(result)
-    
+
     def test_wrong_form_username_create_user_raises_credentialserror(self):
         username = ""
         password = "testPassword1!"
@@ -64,7 +67,7 @@ class TestUserService(unittest.TestCase):
         self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
         password = """abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789"""
         self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
-    
+
     def test_wrong_form_first_name_create_user_raises_credentialserror(self):
         username = "testusername"
         password = "testPassword1!"
@@ -78,7 +81,7 @@ class TestUserService(unittest.TestCase):
         first_name = "".join(["a" for i in range(201)])
         self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
         first_name = "!aaaaaa"
-    
+
     def test_wrong_form_last_name_create_user_raises_credentialserror(self):
         username = "testusername"
         password = "testPassword1!"
@@ -126,7 +129,7 @@ class TestUserService(unittest.TestCase):
         self.test_user_service.create_user(username, password, first_name, last_name)
         result = self.test_user_service.username_available(username)
         self.assertFalse(result)
-    
+
     def test_not_created_username_is_available(self):
         username = "testUsername"
         result = self.test_user_service.username_available(username)

@@ -11,6 +11,9 @@ class UserService:
         self.__user_repository = UserRepository(db_type, db_path)
         self.__user = None
 
+    def disconnect_db(self):
+        self.__user_repository.disconnect_db()
+
     def create_user(self, username:str, password:str, first_name:str, last_name:str) -> bool:
         if not Helper.is_valid_username(username):
             raise CredentialsError("username is not correct form")
@@ -32,7 +35,7 @@ class UserService:
 
     def get_current_user(self) -> User:
         return self.__user
-    
+
     def username_available(self, username:str) -> bool:
         return not self.__user_repository.username_exists(username)
 
