@@ -68,3 +68,10 @@ yht: 6h
 - 7.12	00-09		Tietokantaobjektirakenteen refaktorointi. Luotiin perintää ja poistettiin sitä kautta toisteisuutta. Jouduttiin korjaamaan myös muita niitä käyttäviä luokkia ja testejä. Jouduin kertaamaan paljon pythonin perinnän toimintaa jotta sain fiksun rakenteen aikaiseksi. Lopetin kun testit niin lähellä 100% coverage kun mahdollista ja pylint mahd lähellä 10pistettä. Opin paljon tänään.
 	15:30-00	Klikkien ohjelmalogiikan jatkamista. Tee Clique ja CliqueRepository oliot. Liitä Clique ja CliqueDbao oliot yhteen CliqueRepository ryhmällä, johon luodaan sopiva rajapinta Klikkien käyttämistä varten. Tee näihin testit kattavasti. Jouduin muokkaamaan myös muita luokkia jotta toiminta menee hyvin yhteen (esim. yhteisellä Helper luokalla)
 yht: 17h 30min
+
+- 9.12	19-01		Graafisen käyttöliittymän moduulirakenteen refaktorointi ja "circular import" ongelman ratkaisu. Tuloksena omiin moduuleihin jaettu graafisen käyttöliittymän koodi.
+yht: 6h
+
+- 10.12 12-14:30	"user_main_page" käyttäjän pääsivun tiedoston koodailun aloitus ja tkinteriin tutustuminen, sillä käsitteissä on selvästi vielä reikiä.
+	22-7		tkinterin kertausta, käyttöliittymän rakenteen suunnittelua. Lisättiin sivu "create_clique" jossa käyttäjä voi luoda uuden ryhmän. Tämä tarvitsi uutta toimintoa sovelluslogiikalta, toteutettiin se, sille kattavat testit, coverage 100%, lint lähelle 10p
+yht: 11h 30min

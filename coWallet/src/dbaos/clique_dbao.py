@@ -3,8 +3,8 @@ from dbaos.dbao import Dbao
 
 class CliqueDbao(Dbao):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, db_type:str = None, db_path:str = None):
+        super().__init__(db_type, db_path)
         self.check_db()
 
     def check_db(self):
@@ -49,15 +49,32 @@ class CliqueDbao(Dbao):
 
         return True
 
-    def find_cliques_by_head_id(self, head_id) -> list:
-        query_find_clique_by_head_id = """
+    def find_cliques_by_head_id(self, head_id:int) -> list:
+        query_find_cliques_by_head_id = """
             SELECT 
                 *
             FROM 
                 Clique 
             WHERE 
-                :head_id
+                head_id=:head_id
+            ;
         """
         query_values = {"head_id": head_id}
-        result = self.db.execute(query_find_clique_by_head_id, query_values)
+        result = self.db.execute(query_find_cliques_by_head_id, query_values)
         return result.fetchall()
+
+    def find_latest_clique_by_head_id(self, head_id:int) -> tuple:
+        query_find_latest_clique_by_head_id = """
+            SELECT 
+                * 
+            FROM 
+                Clique 
+            WHERE 
+                head_id=:head_id 
+            ORDER BY 
+                id DESC
+            ;
+        """
+        query_values = {"head_id": head_id}
+        result = self.db.execute(query_find_latest_clique_by_head_id, query_values)
+        return result.fetchone()

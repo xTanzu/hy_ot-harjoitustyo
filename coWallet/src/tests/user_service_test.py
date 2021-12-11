@@ -113,10 +113,11 @@ class TestUserService(unittest.TestCase):
         result = self.test_user_service.login(username, password)
         self.assertTrue(result)
         current_user = self.test_user_service.get_current_user()
-        user_repr = f"<User> id: {1}, \
-            username: {username}, \
-            first_name: {first_name}, \
-            last_name: {last_name}"
+        user_repr = f"""<User>:
+            id: {1},
+            username: {username},
+            first_name: {first_name},
+            last_name: {last_name}"""
         self.assertEqual(repr(current_user), user_repr)
         self.test_user_service.logout()
         self.assertIsNone(self.test_user_service.get_current_user())

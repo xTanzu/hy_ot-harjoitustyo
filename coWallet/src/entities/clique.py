@@ -23,22 +23,13 @@ class Clique:
         return self.__head_id
 
     def __str__(self) -> str:
-        return f"{self.clique_name}: {self.description if len(self.description) <= 20 else (self.description[:18] + '...')}"
-    
+        return f"{self.clique_name}: \
+{self.description if len(self.description) <= 20 else (self.description[:18] + '...')}"
+
     def __repr__(self) -> str:
-        return f"""Clique-object:
+        return f"""<Clique-object>:
             id: {self.clique_id},
             name: {self.clique_name},
             description: {self.description[:100]},
             head_id: {self.head_id}
         """
-
-if __name__ == "__main__":
-    clique_info = {
-        "clique_id": 1234,
-        "clique_name": "testCliqueName",
-        "description": "Just a test cliqueeeeee",
-        "head_id": 1
-    }
-    test_clique = Clique(**clique_info)
-    print(repr(test_clique))

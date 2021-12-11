@@ -22,8 +22,9 @@ class TestUser(unittest.TestCase):
         self.assertEqual(str(self.test_user), "testFirstName testLastName")
     
     def test_repr_returns_full_info(self):
-        repr_str = "<User> id: 1234, \
-            username: testName, \
-            first_name: testFirstName, \
-            last_name: testLastName"
+        repr_str = f"""<User>:
+            id: 1234,
+            username: testName,
+            first_name: testFirstName,
+            last_name: testLastName"""
         self.assertEqual(repr(self.test_user), repr_str)

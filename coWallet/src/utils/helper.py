@@ -36,7 +36,8 @@ class Helper:
 
     @staticmethod
     def is_valid_username(username:str) -> bool:
-        if not bool(username) \
+        if not isinstance(username, str) \
+            or not bool(username) \
             or username.isspace() \
             or not Helper.consists_of_legal_characters(username) \
             or not 6 <= len(username) <= NAME_MAX_LENGTH \
@@ -47,7 +48,8 @@ class Helper:
 
     @staticmethod
     def is_valid_password(password:str) -> bool:
-        if not bool(password) \
+        if not isinstance(password, str) \
+            or not bool(password) \
             or password.isspace() \
             or not Helper.consists_of_legal_characters(password) \
             or not 8 <= len(password) <= NAME_MAX_LENGTH \
@@ -61,17 +63,19 @@ class Helper:
 
     @staticmethod
     def is_valid_name(name:str) -> bool:
-        if not bool(name) \
+        if not isinstance(name, str) \
+            or not bool(name) \
             or name.isspace() \
             or not Helper.consists_of_legal_characters(name, xtra_chars=" ") \
             or len(name) > NAME_MAX_LENGTH \
             or not Helper.contains_letters(name[0]):
             return False
         return True
-    
+
     @staticmethod
     def is_valid_short_text(text:str) -> bool:
-        if not Helper.consists_of_legal_characters(text, xtra_chars=" ,") \
+        if not isinstance(text, str) \
+            or not Helper.consists_of_legal_characters(text, xtra_chars=" ,") \
             or len(text) > SHORT_TEXT_MAX_LENGTH:
             return False
         return True

@@ -26,7 +26,8 @@ class User:
         return f"{self.__first_name} {self.__last_name}"
 
     def __repr__(self) -> str:
-        return f"<User> id: {self.__user_id}, \
-            username: {self.__username}, \
-            first_name: {self.__first_name}, \
-            last_name: {self.__last_name}"
+        return f"""<User>:
+            id: {self.__user_id},
+            username: {self.__username},
+            first_name: {self.__first_name},
+            last_name: {self.__last_name}"""

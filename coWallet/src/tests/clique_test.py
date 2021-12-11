@@ -18,13 +18,14 @@ class TestClique(unittest.TestCase):
         self.assertEqual(self.test_clique.description, self.clique_info["description"])
         self.assertEqual(self.test_clique.head_id, self.clique_info["head_id"])
 
-    def test_str_returns_group_name_desc(self):
+    def test_str_returns_clique_name_desc(self):
         self.assertEqual(str(self.test_clique), f"{self.clique_info['clique_name']}: {self.clique_info['description']}")
 
     def test_repr_returns_full_info(self):
-        assertion = f"""Clique-object:
+        repr_assertion = f"""<Clique-object>:
             id: {self.clique_info["clique_id"]},
             name: {self.clique_info["clique_name"]},
             description: {self.clique_info["description"][:100]},
             head_id: {self.clique_info["head_id"]}
         """
+        self.assertEqual(repr(self.test_clique), repr_assertion)
