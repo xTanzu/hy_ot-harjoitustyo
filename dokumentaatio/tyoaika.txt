@@ -75,3 +75,5 @@ yht: 6h
 - 10.12 12-14:30	"user_main_page" käyttäjän pääsivun tiedoston koodailun aloitus ja tkinteriin tutustuminen, sillä käsitteissä on selvästi vielä reikiä.
 	22-7		tkinterin kertausta, käyttöliittymän rakenteen suunnittelua. Lisättiin sivu "create_clique" jossa käyttäjä voi luoda uuden ryhmän. Tämä tarvitsi uutta toimintoa sovelluslogiikalta, toteutettiin se, sille kattavat testit, coverage 100%, lint lähelle 10p
 yht: 11h 30min
+
+- 12.12	21-05		Dokumentaation kirimistä. Löysin vasta Labtoolin kommentointi osuuden ja huomasin mitä kaikkea minulta on jäänyt tekemättä. Ajattelin kiriä vähän jääneitä tehtäviä. Samalla jouduin vähän miettiä ohjelman rakennetta ja toiminnallisuutta loppuun asti, sillä yritin tehdä erilaiset kaaviot niin lopullisiksi kuin mahdollista.
