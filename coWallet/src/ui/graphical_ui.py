@@ -11,8 +11,24 @@ import ui.pages.page as page
 
 
 class MainTkFrame(tkinter.Tk):
+    """Class of the Ui that acts as the main container for other elements.
+        Acts as a controller and a parent for child pages
+
+    Args:
+        tkinter: Tkinter framework object
+    """
 
     def __init__(self, user_service:UserService, clique_service:CliqueService, *args, **kwargs):
+        """Constructor of the MainTkFrame class
+            sets the main container, constructs and shows the first page
+
+        Args:
+            user_service (UserService): user service of the application.
+                Is partly resposible for the application logic (User side)
+
+            clique_service (CliqueService): clique service of the application.
+                Is partly resposible for the application logic (Clique side)
+        """        
         super().__init__(*args, **kwargs)
         self.user_service = user_service
         self.clique_service = clique_service
@@ -24,6 +40,17 @@ class MainTkFrame(tkinter.Tk):
         page.show()
     
     def construct_page(self, usable_page:type) -> page.Page:
+        """Contruct a given page, and saves it for later use
+
+        Args:
+            usable_page (type): Class of the page that is to be constructed
+
+        Raises:
+            NameError: If a given page allready exists
+
+        Returns:
+            page.Page: A reference to the contructer Page-object
+        """
         if usable_page in self.pages:
             raise NameError(f"Page {usable_page.__name__} allready exists, can't construct it")
         page = usable_page(name=usable_page.__name__, parent=self.container, controller=self)
@@ -32,6 +59,16 @@ class MainTkFrame(tkinter.Tk):
         return page
     
     def switch_page_to(self, page:type):
+        """Changes the current page to the given one
+            If Page is not yet created, it is constructed
+
+        Args:
+            page (type): A Page object is wanted to be switched to
+
+        Raises:
+            NameError: If the given page is not defined a usable.
+                Add the page-class to self.usable_pages if required
+        """
         if page not in self.pages:
             if page not in self.usable_pages:
                 error_msg = f"Page {page.__name__} is not usable, can't switch to it"
@@ -41,11 +78,25 @@ class MainTkFrame(tkinter.Tk):
 
 
 class GraphicalUi:
+    """The class that gathers all the resources and starts the user interface
+    """
 
     def __init__(self, db_type:str = None, db_path:str = None):
+        """Constructor of the GraphicalUi-class
+
+        Args:
+            db_type (str, optional): Where to save db-file, either 'sqlite3_in_memory' or
+                'sqlite3_file'. Defaults to 'sqlite3_file' (from config.py).
+
+            db_path (str, optional): path where to save db-file. When
+                db_type == 'sqlite3_in_memory', then has no effect.
+                Defaults to "data/data.db" (from config.py).
+        """
         self.__user_service = UserService(db_type, db_path)
         self.__clique_service = CliqueService(db_type, db_path)
         self.__mainFrame = MainTkFrame(self.__user_service, self.__clique_service)
     
     def start_ui(self):
+        """function that starts the confiqured user interface
+        """
         self.__mainFrame.mainloop()

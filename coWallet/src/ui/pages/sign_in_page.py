@@ -7,8 +7,16 @@ import ui.pages.user_main_page as user_main_page
 from config import *
 
 class SignInPage(Page):
+    """Class for the sign in page
+
+    Args:
+        Page: Inherits the Page base-class
+    """
 
     def __init__(self, *args, **kwargs):
+        """Constructor of the SignInPage class
+        """
+
         super().__init__(*args, **kwargs)
 
         # Define Labels
@@ -36,6 +44,8 @@ class SignInPage(Page):
         self.register_button.grid(row=6, column=0)
     
     def sign_in_pressed(self):
+        """Functionality what happens when the "Sign in" button is pressed
+        """
         username = self.username_entry.get()
         password = self.password_entry.get()
         if self.controller.user_service.login(username, password):
@@ -44,4 +54,6 @@ class SignInPage(Page):
             self.info_label["text"] = "Wrong username or password"
 
     def register_pressed(self):
+        """Functionality what happens when the register button is pressed
+        """
         self.controller.switch_page_to(register_page.RegisterPage)

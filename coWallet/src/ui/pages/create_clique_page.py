@@ -9,8 +9,15 @@ import entities.clique as clique
 from config import ENTRY_FIELD_WIDTH
 
 class CreateCliquePage(Page):
+    """Class for the create clique page
+
+    Args:
+        Page: Inherits the Page base-class
+    """
 
     def __init__(self, *args, **kwargs):
+        """Constructor of the CreateCliquePage class
+        """
         super().__init__(*args, **kwargs)
 
         # Define Frames
@@ -20,9 +27,17 @@ class CreateCliquePage(Page):
         create_clique_frame.grid(row=0, column=0)
 
     def set_up_create_clique_frame(self) -> tkinter.Frame:
+        """Set up the frame for creating the clique
+            Contains the required input fields and buttons
+
+        Returns:
+            tkinter.Frame: A tkinter.Frame-object
+        """
         frame = tkinter.Frame(self)
 
         def add_clique_pressed():
+            """Functionality what happens when the "Add Clique" button is pressed
+            """
             clique_name = clique_name_entry.get()
             clique_description = clique_description_entry.get()
             clique_head_id = self.controller.user_service.get_current_user().user_id
@@ -60,4 +75,6 @@ class CreateCliquePage(Page):
         return frame
     
     def clique_created_succesful(self, created_clique:clique.Clique):
+        """Functionality what happens when the Clique has been created
+        """
         print(created_clique)

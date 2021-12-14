@@ -7,8 +7,15 @@ from utils.helper import Helper
 from config import *
 
 class RegisterPage(Page):
+    """Class for the register page
+
+    Args:
+        Page: Inherits the Page base-class
+    """
 
     def __init__(self, *args, **kwargs):
+        """Constructor of the RegisterPage class
+        """
         super().__init__(*args, **kwargs)
         
         # Define Labels
@@ -52,6 +59,12 @@ class RegisterPage(Page):
         self.error_label.grid(row=12, column=0, sticky="W")
     
     def check_username_available(self) -> bool:
+        """Check if a given username is available
+
+        Returns:
+            bool: Boolean value representing the availability of the username,
+                False also if not correct form
+        """
         username = self.username_entry.get()
         if Helper.is_valid_username(username):
             if self.controller.user_service.username_available(username):
@@ -65,6 +78,11 @@ class RegisterPage(Page):
             return False
     
     def register_pressed(self):
+        """Functionality what happens when the "Register" button is pressed
+
+        Raises:
+            SystemError: If an unexpected error happens
+        """
         errorMsgs = {
         "username": """username must be:
                 6-200 chars long

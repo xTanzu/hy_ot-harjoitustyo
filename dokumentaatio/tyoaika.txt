@@ -76,4 +76,8 @@ yht: 6h
 	22-7		tkinterin kertausta, käyttöliittymän rakenteen suunnittelua. Lisättiin sivu "create_clique" jossa käyttäjä voi luoda uuden ryhmän. Tämä tarvitsi uutta toimintoa sovelluslogiikalta, toteutettiin se, sille kattavat testit, coverage 100%, lint lähelle 10p
 yht: 11h 30min
 
-- 12.12	21-05		Dokumentaation kirimistä. Löysin vasta Labtoolin kommentointi osuuden ja huomasin mitä kaikkea minulta on jäänyt tekemättä. Ajattelin kiriä vähän jääneitä tehtäviä. Samalla jouduin vähän miettiä ohjelman rakennetta ja toiminnallisuutta loppuun asti, sillä yritin tehdä erilaiset kaaviot niin lopullisiksi kuin mahdollista.
+- 12.12	21-06:30	Dokumentaation kirimistä. Löysin vasta Labtoolin kommentointi osuuden ja huomasin mitä kaikkea minulta on jäänyt tekemättä. Ajattelin kiriä vähän jääneitä tehtäviä. Samalla jouduin vähän miettiä ohjelman rakennetta ja toiminnallisuutta loppuun asti, sillä yritin tehdä erilaiset kaaviot niin lopullisiksi kuin mahdollista.
+9h 30min
+
+-12.12 21-02:30		Docstringien teko tähänastisen pisteeseen asti koodia samalla läpikäyden
+5h 30min

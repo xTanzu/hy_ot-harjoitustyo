@@ -6,8 +6,15 @@ import ui.pages.create_clique_page as create_clique_page
 #from config import *
 
 class UserMainPage(Page):
+    """Class for the user main page
+
+    Args:
+        Page: Inherits the Page base-class
+    """
 
     def __init__(self, *args, **kwargs):
+        """Constructor of the UserMainPage class
+        """
         super().__init__(*args, **kwargs)
 
         # Define Frames
@@ -17,6 +24,11 @@ class UserMainPage(Page):
         self.cliques_list_frame.grid(row=1, column=0)
 
     def set_up_cliques_list_frame(self) -> tkinter.Frame:
+        """Set up the frame for the list of cliques
+
+        Returns:
+            tkinter.Frame: A tkinter.Frame-object
+        """
         frame = tkinter.Frame(self)
 
         # Define Buttons
