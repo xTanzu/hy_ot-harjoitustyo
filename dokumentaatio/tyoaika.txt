@@ -79,5 +79,8 @@ yht: 11h 30min
 - 12.12	21-06:30	Dokumentaation kirimistä. Löysin vasta Labtoolin kommentointi osuuden ja huomasin mitä kaikkea minulta on jäänyt tekemättä. Ajattelin kiriä vähän jääneitä tehtäviä. Samalla jouduin vähän miettiä ohjelman rakennetta ja toiminnallisuutta loppuun asti, sillä yritin tehdä erilaiset kaaviot niin lopullisiksi kuin mahdollista.
 9h 30min
 
--12.12 21-02:30		Docstringien teko tähänastisen pisteeseen asti koodia samalla läpikäyden
+- 13.12 21-02:30	Docstringien teko tähänastisen pisteeseen asti koodia samalla läpikäyden
 5h 30min
+
+- 14.12 11-23:30	Käyttöliittymäkoodin jatkaminen ja refaktorointi. UserMainPage toiminnallisuuden luominen. Sijoittelun kanssa painiminen Näyttää jo ihan hyvältä vaikka toiminnallisuus on melko vajaat avielä.
+12h 30min

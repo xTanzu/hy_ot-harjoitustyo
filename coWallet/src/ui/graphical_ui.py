@@ -1,4 +1,5 @@
 import tkinter
+from tkinter.constants import E
 
 from services.user_service import UserService
 from services.clique_service import CliqueService
@@ -32,8 +33,13 @@ class MainTkFrame(tkinter.Tk):
         super().__init__(*args, **kwargs)
         self.user_service = user_service
         self.clique_service = clique_service
-        self.container = tkinter.Frame()
-        self.container.grid(row=0, column=0, sticky='nesw')
+        self.title("coWallet")
+        self.minsize(300,300)
+        self.container = tkinter.Frame(self, padx=20, pady=20)
+        self.container.pack(fill="both", expand=True)
+        self.container.columnconfigure(0, weight=1)
+        self.container.rowconfigure(0, weight=1)
+
         self.pages = {}
         self.usable_pages = [SignInPage, RegisterPage, UserMainPage, CreateCliquePage]
         page = self.construct_page(self.usable_pages[0])
@@ -54,7 +60,7 @@ class MainTkFrame(tkinter.Tk):
         if usable_page in self.pages:
             raise NameError(f"Page {usable_page.__name__} allready exists, can't construct it")
         page = usable_page(name=usable_page.__name__, parent=self.container, controller=self)
-        page.grid(row=0, column=0, sticky="nsew")
+        page.grid(row=0, column=0, sticky="news")
         self.pages[type(page).__name__] = page
         return page
     
@@ -75,6 +81,7 @@ class MainTkFrame(tkinter.Tk):
                 raise NameError(error_msg)
             self.construct_page(page)             
         self.pages[page.__name__].show()
+        self.update()
 
 
 class GraphicalUi:

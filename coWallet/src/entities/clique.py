@@ -38,8 +38,8 @@ class Clique:
         Returns:
             str: Clique name and description in a str-object
         """
-        return f"{self.clique_name}: \
-{self.description if len(self.description) <= 20 else (self.description[:18] + '...')}"
+        return f"{self.clique_name if len(self.clique_name)<=20 else self.clique_name[:18]+'...'}\
+: {self.description if len(self.description) <= 20 else (self.description[:18] + '...')}"
 
     def __repr__(self) -> str:
         """Returns a longer string representation of the Clique object

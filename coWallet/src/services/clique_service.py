@@ -65,3 +65,16 @@ class CliqueService:
             Clique: matching Clique-object
         """
         return self.__clique_repository.get_latest_clique_by_head_id(head_id)
+
+    def get_clique_personal_balance(self, user_id:int, clique_id:int) -> int:
+        """Calculate the current personal balance in a clique
+
+        Args:
+            user_id (int): user_id of a User
+            clique_id (int): clique_id of a Clique
+
+        Returns:
+            int: amount of personal balance in a clique
+        """
+        # Jatka toimintoa myöhemmin!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return 0

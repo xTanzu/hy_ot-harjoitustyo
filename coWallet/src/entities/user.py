@@ -15,6 +15,7 @@ class User:
         self.__username = username
         self.__first_name = first_name
         self.__last_name = last_name
+        self.__balance = 0
 
     @property
     def user_id(self) -> int:
@@ -31,6 +32,10 @@ class User:
     @property
     def last_name(self) -> str:
         return self.__last_name
+
+    @property
+    def balance(self):
+        return self.__balance
 
     def __str__(self) -> str:
         """Returns a short string representation of the User object
