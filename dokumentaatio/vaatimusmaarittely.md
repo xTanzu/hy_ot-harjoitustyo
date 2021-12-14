@@ -12,33 +12,33 @@ Miltä käyttöliittymä tulisi näyttämään
 
 ## Toiminnallisuus ##
 ### Kirjautuminen/rekisteröinti ###
-- jos käyttäjä on uusi, voi hän voi luoda järjestelmään käyttäjätunnuksen
-  - käyttäjä ohjataan erilliselle ruudulle rekisteröitymään
-  - käyttäjältä pyydetään etu- ja sukunimeä, sekä pyydetään keksimään käyttäjätunnus ja salasana
-- käyttäjä voi kirjautua järjestelmään jos hänellä on tunnukset
-  - kirjautuminen tapahtuu käyttäen käyttäjätunnusta ja salasanaa
-- kirjautumisprosessin onnistuessa käyttäjä päästetään sisään
+- jos käyttäjä on uusi, voi hän voi luoda järjestelmään käyttäjätunnuksen                         -\<tehty\>-
+  - käyttäjä ohjataan erilliselle ruudulle rekisteröitymään                                       -\<tehty\>-
+  - käyttäjältä pyydetään etu- ja sukunimeä, sekä pyydetään keksimään käyttäjätunnus ja salasana  -\<tehty\>-
+- käyttäjä voi kirjautua järjestelmään jos hänellä on tunnukset                                   -\<tehty\>-
+  - kirjautuminen tapahtuu käyttäen käyttäjätunnusta ja salasanaa                                 -\<tehty\>-
+- kirjautumisprosessin onnistuessa käyttäjä päästetään sisään                                     -\<tehty\>-
 ### Päänäkymä ###
 - käyttäjä näkee päänäkymässä
-  - oman nimen
-  - sovelluksessa olevan oman tilin saldon
-  - mahdollisuuden tallettaa tai nostaa varoja
-  - ryhmät joissa hän on jäsenenä
-    - jokaiseen ryhmään liittyvän velkatilanteen
+  - oman nimen                                                                                    -\<tehty\>-
+  - sovelluksessa olevan oman tilin saldon                                                        -\<tehty\>-
+  - mahdollisuuden tallettaa tai nostaa varoja                                                    -\<tehty\>-(vasta visuaaliset elementit)
+  - ryhmät joissa hän on jäsenenä                                                                 -\<tehty\>-(Jotka hän omistaa)
+    - jokaiseen ryhmään liittyvän velkatilanteen                                                  -\<tehty\>-(Joka on vielä aina 0)
     - jokaisen ryhmän voi klikata auki, jolloin pääsee ryhmänäkymään
-  - mahdollisuuden lisätä uusi ryhmä
-  - mahdollisuuden kirjautua ulos
-- tiedot päivittyvät päänäkymään aina sivun auetessa
+  - mahdollisuuden lisätä uusi ryhmä                                                              -\<tehty\>-
+  - mahdollisuuden kirjautua ulos                                                                 -\<tehty\>-
+- tiedot päivittyvät päänäkymään aina sivun auetessa                                              -\<tehty\>-(toteutetun toiminnan puolesta)
 ### Ryhmän lisäys ###
 - lisätäkseen uuden ryhmän, jäyttäjältä pyydetään
-  - ryhmän nimi
-  - ryhmän kuvaus
+  - ryhmän nimi                                                                                   -\<tehty\>-
+  - ryhmän kuvaus                                                                                 -\<tehty\>-
   - lisäämään käyttäjiä
     - käyttäjät lisätään yksi kerrallaan
     - voi lisätä vain järjestelmässä jo olevia käyttäjiä
 - kun ryhmä on valmis
-  - se luodaan nappia painamalla'
-  - ryhmää ei voi sen jälkeen enää muokata
+  - se luodaan nappia painamalla'                                                                 -\<tehty\>-
+  - ryhmää ei voi sen jälkeen enää muokata                                                        -\<tehty\>-
 ### Ryhmänäkymä ###
 - käyttäjä näkee päänäkymässä
   - ryhmän nimen
