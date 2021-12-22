@@ -1,7 +1,6 @@
 **/.pytest_cache
 **/__pycache__/
 **/.coverage
-**/.coveragerc
 **/htmlcov/
 remote_SSH_address.txt
 coWallet/data/**

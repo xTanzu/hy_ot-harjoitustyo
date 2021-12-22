@@ -6,6 +6,9 @@ CoWallet on sovellus, joka pyrkii ratkaisemaan juuri tämän ongelman. Sovelluks
 ## Huomio Python-versiosta ##
 Sovellus on testattu toimivaksi Pythonin versiolla '3.8'. Tämän kyseisen, tai sitä uudemman Python-version käyttö sovellusta suoritettaessa on hyvin suositeltavaa. Vanhemmilla Python-versioilla saattaa ilmentyä ongelmia.
 
+## Releaset ##
+- [Viikko 6](https://github.com/xTanzu/ot-harjoitustyo/releases/tag/viikko6)
+
 ## Dokumentaatio ##
 - [Käyttöohje](./dokumentaatio/kayttoohje.md)
 - [määrittelydokumentti](./dokumentaatio/vaatimusmaarittely.md)
