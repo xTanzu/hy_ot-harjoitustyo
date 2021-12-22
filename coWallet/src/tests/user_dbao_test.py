@@ -29,7 +29,7 @@ class TestUserDbao(unittest.TestCase):
         succesful = self.test_user_dbao.insert_new_user(username, password, first_name, last_name)
         self.assertTrue(succesful)
         result = self.test_user_dbao.find_user_by_username(username)
-        self.assertEqual(result[1:], (username, first_name, last_name))
+        self.assertEqual(result, (1,) + (username, first_name, last_name))
         result = self.test_user_dbao.find_password_by_username(username)
         self.assertEqual(result, (username, password))
 

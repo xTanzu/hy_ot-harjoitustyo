@@ -107,3 +107,11 @@ kum: 184h 15min
 - 14.12 11-00:00	Käyttöliittymäkoodin jatkaminen ja refaktorointi. UserMainPage toiminnallisuuden luominen. Sijoittelun kanssa painiminen Näyttää jo ihan hyvältä vaikka toiminnallisuus on melko vajaat avielä.
 13h
 kum: 197h 15min
+
+- 20.12	18-00		Aloita käyttäjien lisäys toiminnon suunnittelu ja kirjoittaminen
+6h
+kum: 203h 15min
+
+- 21.12	21-04:45	Viimeistele käyttäjien lisäys. Tajua että olet tehnyt suuren ajatteluvirheen heti alussa ja aloita suuri refaktorointiprojekti. Haluan siirtää kaiken tarpeettoman logiikan pois käyttöliittymän puolelta, ja toteuttaa ohjelmalogiikan abstraktiotasot niin, että joka tasolla käsitellään mahdollisimman paljon sille tasolle ominaisia objekteja eikä konkreettisia literaaleja. Refaktoroi käyttäjien lisäys käyttöliittymätasolta tietokantatasolle asti. (register_page, user_service, user_repository, user_dbao, user)
+7h 45min
+kum: 211h

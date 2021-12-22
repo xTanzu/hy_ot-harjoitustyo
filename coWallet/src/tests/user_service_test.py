@@ -14,7 +14,7 @@ class TestUserService(unittest.TestCase):
         password = "testPassword1!"
         first_name = "testfirstname"
         last_name = "testlastname"
-        self.test_user_service.create_user(username, password, first_name, last_name)
+        self.test_user_service.create_user(username, password, password, first_name, last_name)
         result = self.test_user_service.login(username, password)
         self.assertTrue(result)
 
@@ -29,57 +29,57 @@ class TestUserService(unittest.TestCase):
         password = "testPassword1!"
         first_name = "testfirstname"
         last_name = "testlastname"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         username = " "
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         username = """",/<>\\`{|}"""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         username = "aaaa"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         username = "".join(["a" for i in range(201)])
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         username = "!aaaaaa"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         username = """!()-.?[]_'~;:!@#$%^&*+=0123456789"""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
 
     def test_wrong_form_password_create_user_raises_credentialserror(self):
         username = "testusername"
         password = ""
         first_name = "testfirstname"
         last_name = "testlastname"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = " "
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = """",/<>\\`{|}"""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = "aaaa"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = "".join(["a" for i in range(201)])
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = "!aaaaaa"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = """ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789!()-.?[]_'~;:!@#$%^&*+="""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = """abcdefghijklmnopqrstuvwxyzåäö0123456789!()-.?[]_'~;:!@#$%^&*+="""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = """abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ!()-.?[]_'~;:!@#$%^&*+="""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         password = """abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789"""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
 
     def test_wrong_form_first_name_create_user_raises_credentialserror(self):
         username = "testusername"
         password = "testPassword1!"
         first_name = ""
         last_name = "testlastname"
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         first_name = " "
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         first_name = """",/<>\\`{|}"""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         first_name = "".join(["a" for i in range(201)])
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         first_name = "!aaaaaa"
 
     def test_wrong_form_last_name_create_user_raises_credentialserror(self):
@@ -87,13 +87,13 @@ class TestUserService(unittest.TestCase):
         password = "testPassword1!"
         first_name = "testfirstname"
         last_name = ""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         last_name = " "
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         last_name = """",/<>\\`{|}"""
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         last_name = "".join(["a" for i in range(201)])
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
         last_name = "!aaaaaa"
 
     def test_create_same_user_twice_raises_credentialserror(self):
@@ -101,15 +101,23 @@ class TestUserService(unittest.TestCase):
         password = "testPassword1!"
         first_name = "testfirstname"
         last_name = "testlastname"
-        self.assertTrue(self.test_user_service.create_user(username, password, first_name, last_name))
-        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, first_name, last_name))
+        self.assertTrue(self.test_user_service.create_user(username, password, password, first_name, last_name))
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, password, first_name, last_name))
+
+    def test_create_user_passwords_not_matching_raises_credentialserror(self):
+        username = "testusername"
+        password = "testPassword1!"
+        not_same_password = "testPassword2!"
+        first_name = "testfirstname"
+        last_name = "testlastname"
+        self.assertRaises(CredentialsError, lambda: self.test_user_service.create_user(username, password, not_same_password, first_name, last_name))
 
     def test_logged_in_user_is_the_current_user_and_logged_out_is_none(self):
         username = "testUsername"
         password = "testPassword1!"
         first_name = "testfirstname"
         last_name = "testlastname"
-        self.test_user_service.create_user(username, password, first_name, last_name)
+        self.test_user_service.create_user(username, password, password, first_name, last_name)
         result = self.test_user_service.login(username, password)
         self.assertTrue(result)
         current_user = self.test_user_service.get_current_user()
@@ -127,7 +135,7 @@ class TestUserService(unittest.TestCase):
         password = "testPassword1!"
         first_name = "testfirstname"
         last_name = "testlastname"
-        self.test_user_service.create_user(username, password, first_name, last_name)
+        self.test_user_service.create_user(username, password, password, first_name, last_name)
         result = self.test_user_service.username_available(username)
         self.assertFalse(result)
 

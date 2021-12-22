@@ -32,28 +32,24 @@ class UserRepository:
         """
         self.__user_dbao.disconnect()
 
-    def insert_new_user(self, username:str, password:str, first_name:str, last_name:str) -> bool:
+    def insert_new_user(self, user:User, password:str) -> int:
         """Inserts a new User to the database.
 
         Args:
-            username (str): Name of the user
+            user (User): User-object to be inserted
             password (str): Password of the user
-            first_name (str): First name of the user
-            last_name (str): Last name of the user
-
-        Raises:
-            ConnectionError: If encounters an unexpected error when inserting, insert aborted
 
         Returns:
-            bool: Boolean value representing the success of the insert operation
+            int: user_id of the inserted user
         """
-        if Helper.is_valid_username(username) and Helper.is_valid_password(password) and \
-            Helper.is_valid_name(first_name) and Helper.is_valid_name(last_name):
-            return self.__user_dbao.insert_new_user(username, password, first_name, last_name)
-        print("""User insert consists of illegal characters\n
-        Use only lower case (a-ö) or upper case (A-Ö) characters, \n
-        digits (0-9) and special characters (!()-.?[]_'~;:!@#$%^&*+=)""")
-        return False
+        username = user.username
+        first_name = user.first_name
+        last_name = user.last_name
+        successful = self.__user_dbao.insert_new_user(username, password, first_name, last_name)
+        if not successful:
+            return None
+        user_id = self.__user_dbao.find_user_by_username(username)[0]
+        return user_id
 
     def username_exists(self, inserted_username:str) -> bool:
         """Check if a given username exists in the database

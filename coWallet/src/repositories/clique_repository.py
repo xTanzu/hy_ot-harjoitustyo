@@ -35,7 +35,7 @@ class CliqueRepository:
         self.__clique_dbao.disconnect()
 
     def insert_new_clique(self, clique_name:str, description:str, head_id:int) -> bool:
-        """Inserts new Clique to the database
+        """Insert new Clique to the database
 
         Args:
             clique_name (str): name of the Clique
@@ -49,6 +49,18 @@ class CliqueRepository:
             and isinstance(head_id, int):
             return self.__clique_dbao.insert_new_clique(clique_name, description, head_id)
         return False
+
+    def insert_new_member(self, user_id:int, clique_id:int) -> bool:
+        """Insert a new member into the database under a given Clique
+
+        Args:
+            user_id (int): user_id of the user to add to the Clique
+            clique_id (int): clique_id of the Clique where to add the user
+
+        Returns:
+            bool: Boolean value representing the success of the insert operation
+        """
+        return self.__clique_dbao.insert_new_member(user_id, clique_id)
 
     def get_cliques_by_head_id(self, head_id:int) -> List[Clique]:
         """Get all the the Clique-objects that belong to a User
@@ -66,7 +78,7 @@ class CliqueRepository:
         """Get the users latest Clique-object that was inserted
 
         Args:
-            head_id (int): username of the User
+            head_id (int): user_id of the User
 
         Returns:
             Clique: The latest Clique-object
@@ -75,3 +87,15 @@ class CliqueRepository:
         if not clique_info:
             return None
         return Clique(*clique_info)
+
+    def get_cliques_by_member_id(self, user_id:int) -> List[Clique]:
+        """Get all the Clique-objects that a User is a member of
+
+        Args:
+            user_id (int): user_id of the User who is an alleged a member of Cliques
+
+        Returns:
+            List[Clique]: List of Clique-objects
+        """
+        cliques = self.__clique_dbao.find_cliques_by_member_id(user_id)
+        return [Clique(*clique) for clique in cliques]

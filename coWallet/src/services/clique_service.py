@@ -44,6 +44,18 @@ class CliqueService:
         """
         return self.__clique_repository.insert_new_clique(clique_name, description, head_id)
 
+    def insert_new_member(self, member_candidate_id:int, clique_id:int) -> bool:
+        """Insert a new member into a given Clique
+
+        Args:
+            user_id (int): user_id of the user to add to the Clique
+            clique_id (int): clique_id of the Clique where to add the user
+
+        Returns:
+            bool: Boolean value representing the success of the insert operation
+        """
+        return self.__clique_repository.insert_new_member(member_candidate_id, clique_id)
+
     def get_cliques_by_head_id(self, head_id:int) -> List[Clique]:
         """Get all cliques that the user has created
 
@@ -53,7 +65,7 @@ class CliqueService:
         Returns:
             List[Clique]: list of Clique-objects
         """
-        return self.__clique_repository.get_cliques_by_head_id(head_id)
+        return self.__clique_repository.get_cliques_by_head_id(head_id)       
 
     def get_latest_clique_by_head_id(self, head_id:int) -> Clique:
         """Get the latest clique that user has created
@@ -65,6 +77,16 @@ class CliqueService:
             Clique: matching Clique-object
         """
         return self.__clique_repository.get_latest_clique_by_head_id(head_id)
+
+    def get_cliques_by_member_id(self, user_id:int) -> List[Clique]:
+        """Get all the Clique-objects that a User is a member of
+
+        Args:
+            user_id (int): user_id of the User who is an alleged a member of Cliques
+
+        Returns:
+            List[Clique]: List of Clique-objects
+        """
 
     def get_clique_personal_balance(self, user_id:int, clique_id:int) -> int:
         """Calculate the current personal balance in a clique

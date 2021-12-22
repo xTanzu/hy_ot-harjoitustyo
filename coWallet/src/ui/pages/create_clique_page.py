@@ -40,7 +40,7 @@ class CreateCliquePage(Page):
             """
             clique_name = clique_name_entry.get()
             clique_description = clique_description_entry.get()
-            clique_head_id = self.controller.user_service.get_current_user().user_id
+            clique_head_user = self.controller.user_service.get_current_user()
             if not self.controller.clique_service.create_clique(clique_name, clique_description, clique_head_id):
                 error_label["text"] = "Bad clique name or description"
                 return

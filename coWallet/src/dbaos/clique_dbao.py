@@ -38,7 +38,8 @@ class CliqueDbao(Dbao):
             CREATE TABLE IF NOT EXISTS CliqueMember (
                 id INTEGER PRIMARY KEY,
                 user_id INTEGER NOT NULL REFERENCES User(id),
-                clique_id INTEGER NOT NULL REFERENCES Clique(id)
+                clique_id INTEGER NOT NULL REFERENCES Clique(id),
+                UNIQUE(user_id, clique_id)
             )
         """
         self.db.execute("BEGIN")
@@ -81,7 +82,7 @@ class CliqueDbao(Dbao):
         return True
 
     def insert_new_member(self, user_id:int, clique_id:int) -> bool:
-        """Insert a new member into a given Clique-object
+        """Insert a new member into the database under a given Clique
 
         Args:
             user_id (int): user_id of the user to add to the Clique
@@ -90,8 +91,25 @@ class CliqueDbao(Dbao):
         Returns:
             bool: Boolean value representing the success of the insert operation
         """
-        query_insert_new_member = """"""
-        ## Jatka tästä
+        query_insert_new_member = """
+            INSERT INTO CliqueMember(
+                user_id, clique_id
+            )
+            VALUES(
+                :user_id, :clique_id
+            );
+        """
+        query_values = {"user_id": user_id, "clique_id": clique_id}
+
+        try:
+            self.db.execute(query_insert_new_member, query_values)
+        except IntegrityError as e:
+            print(f"DB error: {e}")
+            return False
+        except Exception as e:
+            raise ConnectionError(f"DB faced an error inserting clique data: {e}") from e
+        
+        return True
 
     def find_cliques_by_head_id(self, head_id:int) -> list("tuple"):
         """Find the information of all Cliques that belong to a User
@@ -141,3 +159,24 @@ class CliqueDbao(Dbao):
         query_values = {"head_id": head_id}
         result = self.db.execute(query_find_latest_clique_by_head_id, query_values)
         return result.fetchone()
+
+    def find_cliques_by_member_id(self, user_id:int) -> list("tuple"):
+        """Find the information of all cliques that a User is a member of
+            from the database using the user_id.
+
+        Args:
+            user_id (int): the user_id of the User whos cliques are looked for
+        """
+        query_find_cliques_by_member_id = """
+            SELECT 
+                Cli.id, Cli.clique_name, Cli.description, Cli.head_id 
+            FROM 
+                CliqueMember CliMem, Clique Cli 
+            WHERE 
+                CliMem.user_id=:user_id 
+                and CliMem.clique_id=Cli.id
+            ;
+        """
+        query_values = {"user_id": user_id}
+        result = self.db.execute(query_find_cliques_by_member_id, query_values)
+        return result.fetchall()

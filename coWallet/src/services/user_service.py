@@ -1,9 +1,7 @@
 from entities.user import User
 from repositories.user_repository import UserRepository
 from utils.helper import Helper
-
-class CredentialsError(Exception):
-    pass
+from utils.error import CredentialsError
 
 class UserService:
     """The Application logic regarding the User-objects
@@ -34,12 +32,13 @@ class UserService:
         """
         self.__user_repository.disconnect_db()
 
-    def create_user(self, username:str, password:str, first_name:str, last_name:str) -> bool:
+    def create_user(self, username:str, password:str, password_again:str, first_name:str, last_name:str) -> bool:
         """Create a new user for the application
 
         Args:
             username (str): username of the user
             password (str): password of the user
+            password_again (str): re-enter of the password (similarity check)
             first_name (str): first name of the user
             last_name (str): last name of the user
 
@@ -49,17 +48,19 @@ class UserService:
         Returns:
             bool: Boolean value representing the success of the create operation
         """
-        if not Helper.is_valid_username(username):
-            raise CredentialsError("username is not correct form")
+        self.__user = User(0, username, first_name, last_name)
         if self.__user_repository.username_exists(username):
-            raise CredentialsError("username already exists!")
+            raise CredentialsError("username already exists")
         if not Helper.is_valid_password(password):
-            raise CredentialsError("password is not correct form")
-        if not Helper.is_valid_name(first_name):
-            raise CredentialsError("first name is not correct form")
-        if not Helper.is_valid_name(last_name):
-            raise CredentialsError("last name is not correct form")
-        return self.__user_repository.insert_new_user(username, password, first_name, last_name)
+            raise CredentialsError("password not valid form")
+        if password != password_again:
+            raise CredentialsError("passwords do not match")
+        user_id = self.__user_repository.insert_new_user(self.__user, password)
+        if not user_id:
+            self.__user = None
+            raise MemoryError("database encoutered an error")
+        self.__user.set_user_id(user_id)
+        return True
 
     def login(self, username:str, password:str) -> bool:
         """Log a user in to the application

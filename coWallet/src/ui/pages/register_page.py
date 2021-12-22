@@ -2,6 +2,7 @@ import tkinter
 
 from ui.pages.page import Page
 import ui.pages.sign_in_page as sign_in_page
+import ui.pages.user_main_page as user_main_page
 
 from utils.helper import Helper
 from config import *
@@ -66,6 +67,7 @@ class RegisterPage(Page):
                 False also if not correct form
         """
         username = self.username_entry.get()
+        # Muuta tästä että salasana tarkastetaan vasta user_servicessä
         if Helper.is_valid_username(username):
             if self.controller.user_service.username_available(username):
                 self.username_available_label["text"] = "Available!"
@@ -78,68 +80,49 @@ class RegisterPage(Page):
             return False
     
     def register_pressed(self):
+        
         """Functionality what happens when the "Register" button is pressed
-
-        Raises:
-            SystemError: If an unexpected error happens
         """
-        errorMsgs = {
-        "username": """username must be:
-                6-200 chars long
-                consist of lowercase letters (a-ö)
-                uppercase letters (A-Ö)
-                numbers (0-9) and
-                special characters !()-.?[]_'~;:!@#$%^&*+=
-                it cannot start with a special character\n""", 
-        "password": """password must be:
-                8-200 chars long
-                consist of lowercase letters (a-ö)
-                uppercase letters (A-Ö)
-                numbers (0-9) and
-                special characters !()-.?[]_'~;:!@#$%^&*+=
-                must contain at least one character of each
-                it cannot start with a special character\n""", 
-        "first_name": """first name must be:
-                1-200 chars long
-                consist of lowercase letters (a-ö)
-                uppercase letters (A-Ö)
-                numbers (0-9) and
-                special characters !()-.?[]_'~;:!@#$%^&*+=
-                it must start with a letter\n""", 
-        "last_name": """last name must be:
-                1-200 chars long
-                consist of lowercase letters (a-ö)
-                uppercase letters (A-Ö)
-                numbers (0-9) and
-                special characters !()-.?[]_'~;:!@#$%^&*+=
-                it must start with a letter\n"""}
         first_name = self.first_name_entry.get()
         last_name = self.last_name_entry.get()
         username = self.username_entry.get()
         password = self.password_entry.get()
         password_again = self.password_again_entry.get()
-        if not Helper.is_valid_name(first_name):
-            self.info_label["text"] = "First name is not valid form"
-            self.error_label["text"] = errorMsgs["first_name"]
-        elif not Helper.is_valid_name(last_name):
-            self.info_label["text"] = "Last name is not valid form"
-            self.error_label["text"] = errorMsgs["last_name"]
-        elif not self.check_username_available():
-            self.info_label["text"] = "Try another username"
-            self.error_label["text"] = ""
-            if not Helper.is_valid_username(username):
-                self.error_label["text"] = errorMsgs["username"]
-        elif not Helper.is_valid_password(password):
-            self.info_label["text"] = "Password is not valid form"
-            self.error_label["text"] = errorMsgs["password"]
-        elif password != password_again:
-            self.error_label["text"] = ""
-            self.info_label["text"] = "Passwords do not match"
-        else:
-            self.error_label["text"] = ""
-            self.info_label["text"] = ""
-            if self.controller.user_service.create_user(username, password, first_name, last_name):
-                self.info_label["text"] = "Got it!"
-                self.controller.switch_page_to(sign_in_page.SignInPage)
-            else:
-                raise SystemError("Something went wrong")
+        try:
+            self.controller.user_service.create_user(username, password, password_again, first_name, last_name)
+        except Exception as e:
+            self.info_label["text"] = str(e)
+            return
+        self.info_label["text"] = ""
+        self.controller.switch_page_to(user_main_page.UserMainPage)
+
+        # errorMsgs = {
+        # "username": """username must be:
+        #         6-200 chars long
+        #         consist of lowercase letters (a-ö)
+        #         uppercase letters (A-Ö)
+        #         numbers (0-9) and
+        #         special characters !()-.?[]_'~;:!@#$%^&*+=
+        #         it cannot start with a special character\n""", 
+        # "password": """password must be:
+        #         8-200 chars long
+        #         consist of lowercase letters (a-ö)
+        #         uppercase letters (A-Ö)
+        #         numbers (0-9) and
+        #         special characters !()-.?[]_'~;:!@#$%^&*+=
+        #         must contain at least one character of each
+        #         it cannot start with a special character\n""", 
+        # "first_name": """first name must be:
+        #         1-200 chars long
+        #         consist of lowercase letters (a-ö)
+        #         uppercase letters (A-Ö)
+        #         numbers (0-9) and
+        #         special characters !()-.?[]_'~;:!@#$%^&*+=
+        #         it must start with a letter\n""", 
+        # "last_name": """last name must be:
+        #         1-200 chars long
+        #         consist of lowercase letters (a-ö)
+        #         uppercase letters (A-Ö)
+        #         numbers (0-9) and
+        #         special characters !()-.?[]_'~;:!@#$%^&*+=
+        #         it must start with a letter\n"""}

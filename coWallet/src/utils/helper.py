@@ -35,6 +35,13 @@ class Helper:
         return any((char in Helper.special_characters for char in word))
 
     @staticmethod
+    def is_valid_id(id_value:int) -> bool:
+        if not isinstance(id_value, int) \
+            or id_value < 0:
+            return False
+        return True
+
+    @staticmethod
     def is_valid_username(username:str) -> bool:
         if not isinstance(username, str) \
             or not bool(username) \

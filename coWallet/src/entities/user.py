@@ -1,3 +1,6 @@
+from utils.helper import Helper
+from utils.error import CredentialsError
+
 class User:
     """Class representing a User
     """
@@ -11,7 +14,13 @@ class User:
             first_name (str): first name of the user
             last_name (str): last name of the user
         """
-        self.__user_id = user_id
+        if not Helper.is_valid_name(first_name):
+            raise CredentialsError("first name is not correct form")
+        if not Helper.is_valid_name(last_name):
+            raise CredentialsError("last name is not correct form")
+        if not Helper.is_valid_username(username):
+            raise CredentialsError("username is not correct form")
+        self.set_user_id(user_id)
         self.__username = username
         self.__first_name = first_name
         self.__last_name = last_name
@@ -36,6 +45,16 @@ class User:
     @property
     def balance(self):
         return self.__balance
+
+    def set_user_id(self, user_id:int):
+        """method for resetting the user_id (used in register process)
+
+        Args:
+            user_id (int): user_id of the User
+        """
+        if not Helper.is_valid_id(user_id):
+            raise CredentialsError("user_id is not valid")
+        self.__user_id = user_id
 
     def __str__(self) -> str:
         """Returns a short string representation of the User object

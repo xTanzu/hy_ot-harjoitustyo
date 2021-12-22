@@ -14,7 +14,7 @@ class TestCliqueService(unittest.TestCase):
 
     def test_legal_create_user_and_clique_are_succesful_and_found(self):
         user_info = ("testUsername", "testPassword1!", "testFirstName", "testLastName")
-        succesful = self.test_user_service.create_user(*user_info)
+        succesful = self.test_user_service.create_user(*(user_info[:2] + user_info[1:]))
         self.assertTrue(succesful)
         clique_info = ("Test Clique Name", "test clique, description", 1)
         succesful = self.test_clique_service.create_clique(*clique_info)
@@ -28,7 +28,7 @@ class TestCliqueService(unittest.TestCase):
 
     def test_illegal_create_user_and_clique_arent_succesful_nor_found(self):
         user_info = ("testUsername", "testPassword1!", "testFirstName", "testLastName")
-        succesful = self.test_user_service.create_user(*user_info)
+        succesful = self.test_user_service.create_user(*(user_info[:2] + user_info[1:]))
         self.assertTrue(succesful)
         clique_info = (5, "test clique description", 1)
         succesful = self.test_clique_service.create_clique(*clique_info)
