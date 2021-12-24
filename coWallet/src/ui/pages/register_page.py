@@ -4,8 +4,7 @@ from ui.pages.page import Page
 import ui.pages.sign_in_page as sign_in_page
 import ui.pages.user_main_page as user_main_page
 
-from utils.helper import Helper
-from config import *
+from config import ENTRY_FIELD_WIDTH
 
 class RegisterPage(Page):
     """Class for the register page
@@ -67,20 +66,19 @@ class RegisterPage(Page):
                 False also if not correct form
         """
         username = self.username_entry.get()
-        # Muuta tästä että salasana tarkastetaan vasta user_servicessä
-        if Helper.is_valid_username(username):
-            if self.controller.user_service.username_available(username):
-                self.username_available_label["text"] = "Available!"
-                return True
-            else:
+        try:
+            if not self.controller.user_service.username_available(username):
                 self.username_available_label["text"] = "Not available..."
+                self.info_label["text"] = ""
                 return False
-        else:
-            self.username_available_label["text"] = "Not valid form"
-            return False
+            self.username_available_label["text"] = "Available!"
+            self.info_label["text"] = ""
+            return True
+        except Exception as e:
+            self.username_available_label["text"] = ""
+            self.info_label["text"] = str(e)
     
     def register_pressed(self):
-        
         """Functionality what happens when the "Register" button is pressed
         """
         first_name = self.first_name_entry.get()

@@ -95,6 +95,7 @@ class UserService:
             bool: Boolean value representing the availability of the username
                 False also if not correct form
         """
+        username = User.check_username_valid(username)
         return not self.__user_repository.username_exists(username)
 
     def logout(self):

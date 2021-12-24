@@ -53,8 +53,8 @@ class SignInPage(Page):
         # Define entries
         username_entry = tkinter.Entry(frame, width=ENTRY_FIELD_WIDTH)
         password_entry = tkinter.Entry(frame, width=ENTRY_FIELD_WIDTH)
-        username_entry.insert(0, "tanzu")
-        password_entry.insert(0, "Salasana1!")
+        username_entry.insert(0, "tanzu") # POISTA MYÖHEMMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        password_entry.insert(0, "Salasana1!") # POISTA MYÖHEMMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         # Define Buttons
         signin_button = tkinter.Button(frame, text="Sign in", command=sign_in_pressed)
