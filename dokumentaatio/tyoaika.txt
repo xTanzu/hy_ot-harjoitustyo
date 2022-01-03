@@ -115,3 +115,23 @@ kum: 203h 15min
 - 21.12	21-04:45	Viimeistele käyttäjien lisäys. Tajua että olet tehnyt suuren ajatteluvirheen heti alussa ja aloita suuri refaktorointiprojekti. Haluan siirtää kaiken tarpeettoman logiikan pois käyttöliittymän puolelta, ja toteuttaa ohjelmalogiikan abstraktiotasot niin, että joka tasolla käsitellään mahdollisimman paljon sille tasolle ominaisia objekteja eikä konkreettisia literaaleja. Refaktoroi käyttäjien lisäys käyttöliittymätasolta tietokantatasolle asti. (register_page, user_service, user_repository, user_dbao, user)
 7h 45min
 kum: 211h
+
+- 22.12	22-02		Siirrä käyttäjän tietojen oikeellisuuden tarkistutoiminnallisuus User-luokalle. Laita muut luokat käyttämään tätä. Poista tämän johdosta jääneet tarpeettomat riippivuudet luokan importeista.
+4h
+kum: 215h
+
+- 24.12	02:30-07	Käyttäjän tietojen tarkistusmekanismin muuttaminen uudestaan. Muutos muotoon jossa virheet ilmoitetaan virheilmoituksilla, jotka kuplivat ylös käyttöliittymään asti jossa ne piirretään käyttäjälle näkyviin. Muokkaa luokat käyttämään tätä. Yritä korjata kaikki virheet testeissä. En päässyt loppuun asti kun joku sitkeä ongelma jäi.
+4h 30min
+kum: 219h 30min
+
+- 26.12 06-10		Sain ratkaistua ongelman testeissä. Johtui tuplejen muuttumattomuudesta. Testien korjailua
+4h
+
+- 27.12 14-15		Clique luokkien korjailua käyttämään suoraan objekteja literaalien sijaan.
+1h
+
+- 29.12 07-9		Lisää refaktorointia. Käytän liian monessa paikassa literaaliarvoja. muutan luokat keskustelemaan objekteilla sen sijaan. Testien korjailua sitä mukaa.
+2h
+
+- 2.1 05-07		Testien korjailua.
+2h

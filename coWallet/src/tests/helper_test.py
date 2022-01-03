@@ -125,13 +125,13 @@ class TestHelper(unittest.TestCase):
         test_name5 = "".join(["a" for x in range(201)])
         test_name6 = ".gitignore"
         test_name7 = "0.?5$9%+2*"
-        self.assertFalse(Helper.is_valid_username(test_name1))
-        self.assertFalse(Helper.is_valid_username(test_name2))
-        self.assertFalse(Helper.is_valid_username(test_name3))
-        self.assertFalse(Helper.is_valid_username(test_name4))
-        self.assertFalse(Helper.is_valid_username(test_name5))
-        self.assertFalse(Helper.is_valid_username(test_name6))
-        self.assertFalse(Helper.is_valid_username(test_name7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name2))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name3))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name4))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name5))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name6))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name7))
 
     # Valid passwords --------------------------------------------------------------------
 
@@ -157,16 +157,16 @@ class TestHelper(unittest.TestCase):
         test_name8 = "abc123.!#"
         test_name9 = "abcABC.!#"
         test_name10 = "abcABC123"
-        self.assertFalse(Helper.is_valid_password(test_name1))
-        self.assertFalse(Helper.is_valid_password(test_name2))
-        self.assertFalse(Helper.is_valid_password(test_name3))
-        self.assertFalse(Helper.is_valid_password(test_name4))
-        self.assertFalse(Helper.is_valid_password(test_name5))
-        self.assertFalse(Helper.is_valid_password(test_name6))
-        self.assertFalse(Helper.is_valid_password(test_name7))
-        self.assertFalse(Helper.is_valid_password(test_name8))
-        self.assertFalse(Helper.is_valid_password(test_name9))
-        self.assertFalse(Helper.is_valid_password(test_name10))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name2))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name3))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name4))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name5))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name6))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name8))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name9))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name10))
 
     # Valid names --------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ class TestHelper(unittest.TestCase):
         self.assertTrue(Helper.is_valid_name(test_name8))
 
     
-    def test_is_valid_name_returns_false_when_false(self):
+    def test_is_valid_name_raises_valueerror_when_false(self):
         test_name1 = ""
         test_name2 = " "
         test_name3 = "matti|Meikäläinen123"
@@ -201,17 +201,18 @@ class TestHelper(unittest.TestCase):
         test_name9 = "Taneli\rHärkönen"
         test_name10 = "Taneli\tHärkönen"
         test_name11 = "Taneli,Härkönen"
-        self.assertFalse(Helper.is_valid_name(test_name1))
-        self.assertFalse(Helper.is_valid_name(test_name2))
-        self.assertFalse(Helper.is_valid_name(test_name3))
-        self.assertFalse(Helper.is_valid_name(test_name4))
-        self.assertFalse(Helper.is_valid_name(test_name5))
-        self.assertFalse(Helper.is_valid_name(test_name6))
-        self.assertFalse(Helper.is_valid_name(test_name7))
-        self.assertFalse(Helper.is_valid_name(test_name8))
-        self.assertFalse(Helper.is_valid_name(test_name9))
-        self.assertFalse(Helper.is_valid_name(test_name10))
-        self.assertFalse(Helper.is_valid_name(test_name11))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name2))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name3))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name4))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name5))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name6))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name8))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name9))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name10))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_name(test_name11))
+
 
     # Short texts --------------------------------------------------------------------
 
@@ -223,4 +224,4 @@ class TestHelper(unittest.TestCase):
     
     def test_is_valid_short_text_returns_false_when_false(self):
         test_text1 = "".join(["a" for x in range(1025)])
-        self.assertFalse(Helper.is_valid_short_text(test_text1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text1))

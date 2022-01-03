@@ -1,6 +1,5 @@
 from entities.user import User
 from dbaos.user_dbao import UserDbao
-from utils.helper import Helper
 
 class UserRepository:
     """Repository object for data relating to User objects.

@@ -81,12 +81,12 @@ class CliqueDbao(Dbao):
 
         return True
 
-    def insert_new_member(self, user_id:int, clique_id:int) -> bool:
+    def insert_new_member(self, clique_id:int, user_id:int) -> bool:
         """Insert a new member into the database under a given Clique
 
         Args:
-            user_id (int): user_id of the user to add to the Clique
             clique_id (int): clique_id of the Clique where to add the user
+            user_id (int): user_id of the user to add to the Clique
 
         Returns:
             bool: Boolean value representing the success of the insert operation
@@ -104,11 +104,53 @@ class CliqueDbao(Dbao):
         try:
             self.db.execute(query_insert_new_member, query_values)
         except IntegrityError as e:
+            print(f"clique_id: {clique_id}, user_id: {user_id}")
             print(f"DB error: {e}")
             return False
         except Exception as e:
             raise ConnectionError(f"DB faced an error inserting clique data: {e}") from e
         
+        return True
+
+    def remove_clique_by_id(self, clique_id:int) -> bool:
+        """Remove all data of a clique
+
+        Args:
+            clique_id (int): clique_id of the clique to be removed
+
+        Raises:
+            ConnectionError: If database encounters an unexpected error when deleting data, delete aborted
+
+        Returns:
+            bool: Boolean value representing the success of the delete operation
+        """        
+        query_remove_clique_members = """
+            DELETE FROM
+                CliqueMember
+            WHERE
+                clique_id=:clique_id
+            ;
+        """
+        query_remove_clique = """
+            DELETE FROM
+                Clique
+            WHERE
+                id=:clique_id
+            ;
+        """
+        query_values = {"clique_id": clique_id}
+
+        try:
+            self.db.execute("BEGIN")
+            self.db.execute(query_remove_clique_members, query_values)
+            self.db.execute(query_remove_clique, query_values)
+            self.db.execute("COMMIT")
+        except IntegrityError as e:
+            print(f"DB error: {e}")
+            return False
+        except Exception as e:
+            raise ConnectionError(f"DB faced an error removing clique data: {e}") from e
+
         return True
 
     def find_cliques_by_head_id(self, head_id:int) -> list("tuple"):
@@ -178,5 +220,4 @@ class CliqueDbao(Dbao):
             ;
         """
         query_values = {"user_id": user_id}
-        result = self.db.execute(query_find_cliques_by_member_id, query_values)
-        return result.fetchall()
+        return self.db.execute(query_find_cliques_by_member_id, query_values).fetchall()

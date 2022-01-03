@@ -41,14 +41,14 @@ class CreateCliquePage(Page):
             clique_name = clique_name_entry.get()
             clique_description = clique_description_entry.get()
             clique_head_user = self.controller.user_service.get_current_user()
-            if not self.controller.clique_service.create_clique(clique_name, clique_description, clique_head_id):
-                error_label["text"] = "Bad clique name or description"
-                return
-            created_clique = self.controller.clique_service.get_latest_clique_by_head_id(clique_head_id)
-            error_label["text"] = f"Clique '{created_clique.clique_name[:20]}{'...' if len(created_clique.clique_name) > 20 else ''}' created"
-            clique_name_entry.delete(0, END)
-            clique_description_entry.delete(0, END)
-            self.clique_created_succesful(created_clique)
+            try:
+                created_clique = self.controller.clique_service.create_clique(clique_name, clique_description, clique_head_user)
+                error_label["text"] = f"Clique '{created_clique.clique_name[:20]}{'...' if len(created_clique.clique_name) > 20 else ''}' created"
+                clique_name_entry.delete(0, END)
+                clique_description_entry.delete(0, END)
+                self.clique_created_succesful(created_clique)
+            except Exception as e:
+                error_label["text"] = str(e)
 
         # Define Labels
         clique_name_label = tkinter.Label(self, text="clique name:")

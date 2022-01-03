@@ -43,24 +43,26 @@ class UserService:
             last_name (str): last name of the user
 
         Raises:
-            CredentialsError: if username, password or either of the names are not in correct form
+            CredentialsError: if username, password or either of the names are not in valid form
 
         Returns:
             bool: Boolean value representing the success of the create operation
         """
-        self.__user = User(0, username, first_name, last_name)
+        created_user = User(0, username, first_name, last_name)
         if self.__user_repository.username_exists(username):
             raise CredentialsError("username already exists")
-        if not Helper.is_valid_password(password):
-            raise CredentialsError("password not valid form")
+        try:
+            Helper.is_valid_password(password)
+        except ValueError as e:
+            raise CredentialsError(f"password not valid form:\n{str(e)}") from e
         if password != password_again:
             raise CredentialsError("passwords do not match")
-        user_id = self.__user_repository.insert_new_user(self.__user, password)
+        user_id = self.__user_repository.insert_new_user(created_user, password)
         if not user_id:
-            self.__user = None
             raise MemoryError("database encoutered an error")
-        self.__user.set_user_id(user_id)
-        return True
+        created_user.set_user_id(user_id)
+        self.__user = created_user
+        return created_user
 
     def login(self, username:str, password:str) -> bool:
         """Log a user in to the application
