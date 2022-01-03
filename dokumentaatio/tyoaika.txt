@@ -135,3 +135,6 @@ kum: 219h 30min
 
 - 2.1 05-07		Testien korjailua.
 2h
+
+- 3.1 02-03:30		Tajusin, että mun koko oliorakenne on aivan päin helvettiä ja lopetin refaktoroinnin.. En oikeen tiedä minne tästä pitäisi jatkaa.. Haluisin että välitason luokat keskustelisivat mahd paljon olioilla, mutta huomaan, että luokkien puurakenne estää tämän rikkomatta poikkireferointia haarojen välillä. Puurakenteessa olisi tullut olla yksittäinen ohjelmalogiikasta vastaava luokka, joka omistaa ja koordinoi käyttäjiä ja klikkejä, ja sitä kautta voi antaa viestintää näiden välille. Voisin esimerkiksi yhdistää service luokat, mutta se vaatisi todella perusteellista refaktorointia ja joutuisin kirjoittamaan testit service tasolle kokonaan uudestaan. En oikeen tiedä mitä tehdä.. ahdistaa.. miksei tällaisia asioita käyty läpi ennen kuin alettiin kirjoittamaan ohjelmaa? Eikö nämä olisi aika tärkeitä asioita tiedostaa jo ennen aloittamista? Mikä on järkevä ohjelmarakenne, miten osat keskustelevat keskenään, mikä on fiksua, mikä on tyhmää. Nyt tein jotain tyhmää, ja tuntuu että sen olisi voinut helposti estää..
+1h 30min
