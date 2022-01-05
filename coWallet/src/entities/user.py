@@ -37,7 +37,7 @@ class User:
         return self.__last_name
 
     @property
-    def balance(self):
+    def balance(self) -> int:
         return self.__balance
 
     @staticmethod
@@ -136,10 +136,34 @@ class User:
         """Returns a longer string representation of the User object
 
         Returns:
-            str: User id, username, first name and last name in a multi-line str-object
+            str: User id, last name, first name and username in a str-object
         """
-        return f"""<User>:
-            id: {self.__user_id},
-            username: {self.__username},
-            first_name: {self.__first_name},
-            last_name: {self.__last_name}"""
+        return f"User({self.user_id}, {repr(self.last_name)} ,{repr(self.first_name)}, {repr(self.username)})"
+
+    def __hash__(self) -> int:
+        return self.user_id
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, User):
+            return self.user_id == other.user_id
+        return False
+
+    def __lt__(self, other: object) -> bool:
+        if not isinstance(other, User):
+            raise TypeError(f"'<' not supported between instances of '{type(self).__name__}' and '{type(other).__name__}'")
+        if self.last_name < other.last_name:
+            return True
+        elif self.last_name > other.last_name:
+            return False
+        if self.first_name < other.first_name:
+            return True
+        elif self.first_name > other.first_name:
+            return False
+        if self.username < other.username:
+            return True
+        elif self.username > other.username:
+            return False
+        if self.user_id < other.user_id:
+            return True
+        else:
+            return False

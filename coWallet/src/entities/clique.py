@@ -19,22 +19,27 @@ class Clique:
         self.__clique_name = self.check_clique_name_valid(clique_name)
         self.__description = self.check_description_valid(description)
         self.__head_user = head_user
+        self.__members = set()
 
     @property
-    def clique_id(self):
+    def clique_id(self) -> int:
         return self.__clique_id
 
     @property
-    def clique_name(self):
+    def clique_name(self) -> str:
         return self.__clique_name
 
     @property
-    def description(self):
+    def description(self) -> str:
         return self.__description
 
     @property
-    def head_user(self):
+    def head_user(self) -> User:
         return self.__head_user
+
+    @property
+    def members(self) -> list:
+        return list(self.__members)
 
     @staticmethod
     def check_id_valid(id_value:int) -> int:
@@ -101,6 +106,14 @@ class Clique:
         """
         self.__clique_id = self.check_id_valid(clique_id)
 
+    def insert_new_member(self, new_member:User):
+        """Inserts a new member in the Clique object
+
+        Args:
+            new_member (User): the User object to insert as new member
+        """        
+        self.__members.add(new_member)
+
     def __str__(self) -> str:
         """Returns a short string representation of the Clique object
 
@@ -122,3 +135,31 @@ class Clique:
             description: {self.description[:100]},
             head_user: {self.head_user}
         """
+
+    def __hash__(self) -> int:
+        return self.clique_id
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, Clique):
+            return self.clique_id == other.clique_id
+        return False
+
+    def __lt__(self, other: object) -> bool:
+        if not isinstance(other, Clique):
+            raise TypeError(f"'<' not supported between instances of '{type(self).__name__}' and '{type(other).__name__}'")
+        if self.clique_name < other.clique_name:
+            return True
+        elif self.clique_name > other.clique_name:
+            return False
+        if self.description < other.description:
+            return True
+        elif self.description > other.description:
+            return False
+        if self.head_user < other.head_user:
+            return True
+        elif self.head_user > other.head_user:
+            return False
+        if self.clique_id < other.clique_id:
+            return True
+        else:
+            return False

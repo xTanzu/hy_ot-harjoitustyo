@@ -95,6 +95,26 @@ class UserDbao(Dbao):
         search_values = {"username": username}
         return self.db.execute(query, search_values).fetchone()
 
+    def find_users_by_user_id_list(self, user_ids:list("int")) -> list("tuple"):
+        """Find the information of users from database by their user_id's provided as a list
+
+        Args:
+            user_ids (list("int")): list of user_id's
+
+        Returns:
+            list("tuple"): a list of tuples, where a tuple contains the information of a User
+        """        
+        query = """
+            SELECT 
+                id, username, first_name, last_name 
+            FROM 
+                User 
+            WHERE 
+                id in ({qmrks})
+            ;
+        """.format(qmrks=','.join(['?']*len(user_ids)))
+        return self.db.execute(query, user_ids).fetchall()
+
     def find_password_by_username(self, username:str) -> tuple:
         """Find the password of a user
             [Horrible way to verify a password]

@@ -35,7 +35,7 @@ class SignInPage(Page):
             """
             username = username_entry.get()
             password = password_entry.get()
-            if self.controller.user_service.login(username, password):
+            if self.controller.app_logic.login(username, password):
                 self.controller.switch_page_to(user_main_page.UserMainPage)
             else:
                 info_label["text"] = "Wrong username or password"
@@ -53,7 +53,7 @@ class SignInPage(Page):
         # Define entries
         username_entry = tkinter.Entry(frame, width=ENTRY_FIELD_WIDTH)
         password_entry = tkinter.Entry(frame, width=ENTRY_FIELD_WIDTH)
-        username_entry.insert(0, "tanzu") # POISTA MYÖHEMMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        username_entry.insert(0, "Tanzuu") # POISTA MYÖHEMMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         password_entry.insert(0, "Salasana1!") # POISTA MYÖHEMMIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         # Define Buttons

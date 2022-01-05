@@ -1,8 +1,7 @@
 import tkinter
 from tkinter.constants import E
 
-from services.user_service import UserService
-from services.clique_service import CliqueService
+from application.cowallet_application import CoWalletApplication
 
 from ui.pages.sign_in_page import SignInPage
 from ui.pages.register_page import RegisterPage
@@ -19,7 +18,7 @@ class MainTkFrame(tkinter.Tk):
         tkinter: Tkinter framework object
     """
 
-    def __init__(self, user_service:UserService, clique_service:CliqueService, *args, **kwargs):
+    def __init__(self, app_logic:CoWalletApplication, *args, **kwargs):
         """Constructor of the MainTkFrame class
             sets the main container, constructs and shows the first page
 
@@ -31,8 +30,7 @@ class MainTkFrame(tkinter.Tk):
                 Is partly resposible for the application logic (Clique side)
         """        
         super().__init__(*args, **kwargs)
-        self.user_service = user_service
-        self.clique_service = clique_service
+        self.app_logic = app_logic
         self.title("coWallet")
         self.minsize(300,300)
         self.container = tkinter.Frame(self, padx=20, pady=20)
@@ -99,9 +97,8 @@ class GraphicalUi:
                 db_type == 'sqlite3_in_memory', then has no effect.
                 Defaults to "data/data.db" (from config.py).
         """
-        self.__user_service = UserService(db_type, db_path)
-        self.__clique_service = CliqueService(db_type, db_path)
-        self.__mainFrame = MainTkFrame(self.__user_service, self.__clique_service)
+        self.__app_logic = CoWalletApplication(db_type, db_path)
+        self.__mainFrame = MainTkFrame(self.__app_logic)
     
     def start_ui(self):
         """function that starts the confiqured user interface

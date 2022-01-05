@@ -42,3 +42,14 @@ class TestUserDbao(unittest.TestCase):
         self.assertTrue(succesful)
         succesful = self.test_user_dbao.insert_new_user(username, password, first_name, last_name)
         self.assertFalse(succesful)
+
+    def test_find_users_by_user_id_list(self):
+        for i in range(1,101):
+            user_info = [f"username{i}", "password", f"first_name{i}", f"last_name{i}"]
+            self.test_user_dbao.insert_new_user(*user_info)
+        result = self.test_user_dbao.find_users_by_user_id_list([i for i in range(1,101)])
+        self.assertEqual(len(result), 100)
+        self.assertEqual(result[0][0], 1)
+        self.assertEqual(result[10][1], 'username11')
+        self.assertEqual(result[50][2], 'first_name51')
+        self.assertEqual(result[79][3], 'last_name80')

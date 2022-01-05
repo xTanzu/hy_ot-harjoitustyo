@@ -43,8 +43,8 @@ class UserMainPage(Page):
         frame.columnconfigure(1, weight=1)
 
         # Define Labels
-        full_name_label = tkinter.Label(frame, text=str(self.controller.user_service.get_current_user()))
-        self.account_balance_label = tkinter.Label(frame, text=str(self.controller.user_service.get_current_user().balance))
+        full_name_label = tkinter.Label(frame, text=str(self.controller.app_logic.get_current_user()))
+        self.account_balance_label = tkinter.Label(frame, text=str(self.controller.app_logic.get_current_user().balance))
 
         # Define Buttons
         sign_out_button = tkinter.Button(frame, text="Sign Out", command=self.sign_out_pressed)
@@ -97,13 +97,13 @@ class UserMainPage(Page):
         frame = tkinter.Frame(self)
 
         def generate_clique_frame_array() -> (list("tkinter.Frame")):
-            user_id = self.controller.user_service.get_current_user().user_id
-            users_cliques = self.controller.clique_service.get_cliques_by_head_id(user_id)
+            current_user = self.controller.app_logic.get_current_user()
+            users_cliques = self.controller.app_logic.get_cliques_by_head(current_user)
             clique_frames = []
             for clique in users_cliques:
                 clique_frame = tkinter.Frame(frame)
                 clique_label = tkinter.Label(clique_frame, text=str(clique), padx=PADDING_CONST, pady=PADDING_CONST)
-                clique_personal_balance = self.controller.clique_service.get_clique_personal_balance(user_id, clique.clique_id)
+                clique_personal_balance = self.controller.app_logic.get_clique_personal_balance(current_user, clique)
                 balance_label = tkinter.Label(clique_frame, text=clique_personal_balance, padx=PADDING_CONST, pady=PADDING_CONST)
                 balance_label.pack(side="right", fill="y", expand=False)
                 clique_label.pack(side="left", fill="y", expand=False)
@@ -129,5 +129,5 @@ class UserMainPage(Page):
         return frame
 
     def sign_out_pressed(self):
-        self.controller.user_service.logout()
+        self.controller.app_logic.logout()
         self.controller.switch_page_to(sign_in_page.SignInPage)

@@ -8,6 +8,8 @@ import entities.clique as clique
 
 from config import ENTRY_FIELD_WIDTH
 
+from utils.error import CredentialsError
+
 class CreateCliquePage(Page):
     """Class for the create clique page
 
@@ -40,14 +42,13 @@ class CreateCliquePage(Page):
             """
             clique_name = clique_name_entry.get()
             clique_description = clique_description_entry.get()
-            clique_head_user = self.controller.user_service.get_current_user()
             try:
-                created_clique = self.controller.clique_service.create_clique(clique_name, clique_description, clique_head_user)
+                created_clique = self.controller.app_logic.create_clique(clique_name, clique_description)
                 error_label["text"] = f"Clique '{created_clique.clique_name[:20]}{'...' if len(created_clique.clique_name) > 20 else ''}' created"
                 clique_name_entry.delete(0, END)
                 clique_description_entry.delete(0, END)
                 self.clique_created_succesful(created_clique)
-            except Exception as e:
+            except CredentialsError as e:
                 error_label["text"] = str(e)
 
         # Define Labels

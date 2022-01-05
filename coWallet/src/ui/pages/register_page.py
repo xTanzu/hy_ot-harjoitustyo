@@ -6,6 +6,8 @@ import ui.pages.user_main_page as user_main_page
 
 from config import ENTRY_FIELD_WIDTH
 
+from utils.error import CredentialsError
+
 class RegisterPage(Page):
     """Class for the register page
 
@@ -67,14 +69,14 @@ class RegisterPage(Page):
         """
         username = self.username_entry.get()
         try:
-            if not self.controller.user_service.username_available(username):
+            if not self.controller.app_logic.username_available(username):
                 self.username_available_label["text"] = "Not available..."
                 self.info_label["text"] = ""
                 return False
             self.username_available_label["text"] = "Available!"
             self.info_label["text"] = ""
             return True
-        except Exception as e:
+        except CredentialsError as e:
             self.username_available_label["text"] = ""
             self.info_label["text"] = str(e)
     
@@ -87,7 +89,7 @@ class RegisterPage(Page):
         password = self.password_entry.get()
         password_again = self.password_again_entry.get()
         try:
-            self.controller.user_service.create_user(username, password, password_again, first_name, last_name)
+            self.controller.app_logic.create_user(username, password, password_again, first_name, last_name)
         except Exception as e:
             self.info_label["text"] = str(e)
             return
