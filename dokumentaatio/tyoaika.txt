@@ -144,3 +144,6 @@ kum: 219h 30min
 - 4.1	12-18		Refaktorointia
 	20-04:30	Refaktorointia ja sen vaatimaa uutta toiminnallisuutta käyttäjän omien klikkien hakemiseen ja säilyttämiseen.
 12h 30min
+
+- 6.1	00-06:30	Refaktoroinnin jatkamista
+6h 30min

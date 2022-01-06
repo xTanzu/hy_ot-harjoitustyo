@@ -120,3 +120,21 @@ class TestCliqueDbao(unittest.TestCase):
         self.assertTrue(succesful3)
         succesful4 = self.test_clique_dbao.insert_new_member(1,1)
         self.assertFalse(succesful4)
+
+    def test_member_list_matches_inserted_members(self):
+        for i in range(1,101):
+            userInfo = (f"testUsername{i}", "testPassword", f"testFirstName{i}", f"testLastName{i}")
+            succesful = self.test_user_dbao.insert_new_user(*userInfo)
+            self.assertTrue(succesful)
+        clique_info = ("testClique1", "test clique 1 description", 1)
+        succesful1 = self.test_clique_dbao.insert_new_clique(*clique_info)
+        self.assertTrue(succesful1)
+        members = self.test_clique_dbao.find_clique_member_list_by_id(1)
+        self.assertEqual(len(members),0)
+        for i in range(1,101):
+            succesful = self.test_clique_dbao.insert_new_member(1,i)
+            self.assertTrue(succesful)
+        members = self.test_clique_dbao.find_clique_member_list_by_id(1)
+        self.assertEqual(len(members),100)
+        for i in range(100):
+            self.assertEqual(members[i], i+1)

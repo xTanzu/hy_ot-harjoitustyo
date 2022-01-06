@@ -153,7 +153,7 @@ class CliqueDbao(Dbao):
 
         return True
 
-    def find_cliques_by_head_id(self, head_id:int) -> list("tuple"):
+    def find_cliques_by_head_id(self, head_id:int) -> list('tuple'):
         """Find the information of all Cliques that belong to a User
             from database using the user_id of the owner.
 
@@ -202,7 +202,7 @@ class CliqueDbao(Dbao):
         result = self.db.execute(query_find_latest_clique_by_head_id, query_values)
         return result.fetchone()
 
-    def find_cliques_by_member_id(self, user_id:int) -> list("tuple"):
+    def find_cliques_by_member_id(self, user_id:int) -> list('tuple'):
         """Find the information of all cliques that a User is a member of
             from the database using the user_id.
 
@@ -221,3 +221,27 @@ class CliqueDbao(Dbao):
         """
         query_values = {"user_id": user_id}
         return self.db.execute(query_find_cliques_by_member_id, query_values).fetchall()
+
+    def find_clique_member_list_by_id(self, clique_id:int) -> list('int'):
+        """Find all user_id's of the members of a clique
+
+        Args:
+            clique_id (int): the clique_id of the Clique in question
+        
+        Returns:
+            list(int): List of the members user_id's
+        """        
+        query_find_clique_member_list_by_id = """
+            SELECT DISTINCT 
+                user_id 
+            FROM 
+                CliqueMember 
+            WHERE 
+                clique_id=:clique_id 
+            ORDER BY 
+                user_id
+            ;
+        """
+        query_values = {"clique_id": clique_id}
+        result = self.db.execute(query_find_clique_member_list_by_id, query_values)
+        return [val[0] for val in result]

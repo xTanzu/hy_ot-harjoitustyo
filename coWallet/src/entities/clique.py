@@ -19,7 +19,7 @@ class Clique:
         self.__clique_name = self.check_clique_name_valid(clique_name)
         self.__description = self.check_description_valid(description)
         self.__head_user = head_user
-        self.__members = set()
+        self.__members:set("User") = set()
 
     @property
     def clique_id(self) -> int:
@@ -106,13 +106,15 @@ class Clique:
         """
         self.__clique_id = self.check_id_valid(clique_id)
 
-    def insert_new_member(self, new_member:User):
-        """Inserts a new member in the Clique object
+    def insert_new_members(self, *new_members:User):
+        """Inserts new members in the Clique object
 
         Args:
-            new_member (User): the User object to insert as new member
-        """        
-        self.__members.add(new_member)
+            new_member (User): arbitrary number of User objects to insert as new member
+        """
+        for new_member in new_members:
+            if isinstance(new_member, User):
+                self.__members.add(new_member)
 
     def __str__(self) -> str:
         """Returns a short string representation of the Clique object
@@ -127,14 +129,9 @@ class Clique:
         """Returns a longer string representation of the Clique object
 
         Returns:
-            str: Clique id, name, description and head_user in a multi-line str-object
+            str: Clique id, name and description in a str-object
         """
-        return f"""<Clique-object>:
-            id: {self.clique_id},
-            name: {self.clique_name},
-            description: {self.description[:100]},
-            head_user: {self.head_user}
-        """
+        return f"Clique({self.clique_id},{repr(self.clique_name)},{repr(self.description)})"
 
     def __hash__(self) -> int:
         return self.clique_id

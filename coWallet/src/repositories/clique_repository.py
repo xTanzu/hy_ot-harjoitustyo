@@ -3,6 +3,7 @@ from typing import List
 from entities.clique import Clique
 from entities.user import User
 from dbaos.clique_dbao import CliqueDbao
+from repositories.user_repository import UserRepository
 
 class CliqueRepository:
     """Repository object for data relating to Clique objects.
@@ -22,6 +23,7 @@ class CliqueRepository:
                 Defaults to "data/data.db" (from config.py).
         """
         self.__clique_dbao = CliqueDbao(db_type, db_path)
+        self.__cliques:dict(Clique) = {}
 
     def disconnect_db(self):
         """Closes the connection to the database.
@@ -75,7 +77,7 @@ class CliqueRepository:
         insert_new_member_successful = self.__clique_dbao.insert_new_member(clique.clique_id, new_member.user_id)
         if not insert_new_member_successful:
             return False
-        clique.insert_new_member(new_member)
+        clique.insert_new_members(new_member)
         return True
 
     # def get_cliques_by_head(self, head_user:User) -> List[Clique]:
@@ -90,7 +92,7 @@ class CliqueRepository:
     #     cliques = self.__clique_dbao.find_cliques_by_head_id(head_user.user_id)
     #     return [Clique(*clique) for clique in cliques]
 
-    def get_cliques_by_member(self, member:User) -> List[Clique]:
+    def get_cliques_by_member(self, member:User, user_repo:UserRepository) -> List[Clique]:
         """Get all the Clique-objects that a User is a member of
 
         Args:
@@ -99,14 +101,29 @@ class CliqueRepository:
         Returns:
             List[Clique]: List of Clique-objects that the User is a member of
         """
-        cliques = self.__clique_dbao.find_cliques_by_member_id(member.user_id)
-        # luo palautettavien klikkien lista
-        # Hae klikkien tiedot dbaosta
-        # looppaa jokainen tietue läpi
-            # hae head_id:tä vastaava User-olio User_reposta
+        # Hae klikkien tiedot dbaosta (Cli.id, Cli.clique_name, Cli.description, Cli.head_id)
+        clique_infos:list("tuple") = self.__clique_dbao.find_cliques_by_member_id(member.user_id)
+        # ota klikeistä vain id:t listaan
+        clique_ids = [clq_info[0] for clq_info in clique_infos]
+        # katso mitkä tiedot ei ole jo __cliques:ssa ja poista clique_infos:sta kaikki turha
+        clique_infos = [clq_info for clq_info in clique_infos if clq_info[0] not in self.__cliques]
+        # looppaa jokainen dbaosta haettava tietue läpi
+        for clq_info in clique_infos:
+            # hae kaikki klikkiin kuuluvien user_id:t clique_dbaosta
+            clique_id = clq_info[0]
+            clique_name = clq_info[1]
+            description = clq_info[2]
+            head_user_id = clq_info[3]
+            member_id_list = self.__clique_dbao.find_clique_member_list_by_id(clique_id)
+            # hae näitä vastaavat User-objektit user_reposta niin että head_user on ekana
+            members = user_repo.get_users_by_user_id_list([head_user_id] + member_id_list)
+            head_user = members[0]
+            members = members[1:]
             # rakenna näillä tiedoilla klikki olio
-            # hae dbaosta klikin jäsenten id:t
-            # hae näitä vastaavat User-oliot User_reposta
+            clique = Clique(clique_id, clique_name, description, head_user)
             # aseta nämä käyttäjät klikin jäsenlistaan
-            # aseta klikki palautettavien klikkien listaan
+            clique.insert_new_members(*members)
+            # lisää klikki __cliquesiin
+            self.__cliques[clique.clique_id] = clique
         # palauta palautettavat nklikit
+        return [self.__cliques[clq_id] for clq_id in clique_ids]

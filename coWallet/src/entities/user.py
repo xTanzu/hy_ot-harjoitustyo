@@ -138,7 +138,7 @@ class User:
         Returns:
             str: User id, last name, first name and username in a str-object
         """
-        return f"User({self.user_id}, {repr(self.last_name)} ,{repr(self.first_name)}, {repr(self.username)})"
+        return f"User({self.user_id},{repr(self.last_name)},{repr(self.first_name)},{repr(self.username)})"
 
     def __hash__(self) -> int:
         return self.user_id

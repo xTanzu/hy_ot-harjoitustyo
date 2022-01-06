@@ -114,13 +114,12 @@ class UserRepository:
             user_ids (list("int")): list of user_id's
 
         Returns:
-            list("User"): a list of User-objects
-        """        
+            list("User"): a list of User-objects in the same order as the id's came in
+        """
         not_in_users = [usr_id for usr_id in user_ids if usr_id not in self.__users]
         user_infos = self.__user_dbao.find_users_by_user_id_list(not_in_users)
         self.__users.update({user[0] : User(*user) for user in user_infos})
         return [self.__users[usr_id] for usr_id in user_ids]
-        # Tämä taitaa nyt toimia, niin tee seuraavaksi CowalletApplicationin update_mbr_cliques()
 
     def username_password_match(self, username:str, inserted_password:str) -> bool:
         """Check if a given username and password are a match

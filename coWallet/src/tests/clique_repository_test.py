@@ -16,19 +16,35 @@ class TestCliqueRepository(unittest.TestCase):
         self.test_clique_repository.disconnect_db()
 
     def test_new_user_has_no_cliques(self):
-        user1_info = {
-        "username": "testUsername",
-        "password": "testPassword1!",
-        "first_name": "testFirstName",
-        "last_name": "testLastName"
-        }
-        test_user1 = User(0, user1_info["username"], user1_info["first_name"], user1_info["last_name"])
-        succesful1 = self.test_user_repository.insert_new_user(test_user1, user1_info["password"])
-        self.assertTrue(succesful1)
-        result1:list = self.test_clique_repository.get_cliques_by_head_id(1)
+        user1_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")
+        user1 = self.test_user_repository.insert_new_user(*user1_info)
+        self.assertTrue(user1)
+        # result1:list = self.test_clique_repository.get_cliques_by_head_id(1) # Poista jos metodikin poistuu
+        # self.assertEqual(len(result1), 0)
+        result1:list = self.test_clique_repository.get_cliques_by_member(user1, self.test_user_repository)
         self.assertEqual(len(result1), 0)
-        result2:tuple = self.test_clique_repository.get_latest_clique_by_head_id(1)
-        self.assertIsNone(result2)
+        cliques = []
+        for i in range(1,101):
+            clique_info = (f"clique{i}Name", f"clique{i} description", user1)
+            clique = self.test_clique_repository.insert_new_clique(*clique_info)
+            self.assertTrue(clique)
+            cliques.append(clique)
+            result:list = self.test_clique_repository.get_cliques_by_member(user1, self.test_user_repository)
+            self.assertEqual(len(result), i)
+        user2_info = ("testUsername2", "testPassword2!", "testPassword2!", "testFirstName2", "testLastName2")
+        user2 = self.test_user_repository.insert_new_user(*user2_info)
+        self.assertTrue(user2)
+        result2:list = self.test_clique_repository.get_cliques_by_member(user2, self.test_user_repository)
+        self.assertEqual(len(result2), 0)
+        for clique in cliques:
+            self.test_clique_repository.insert_new_member(clique, user2)
+        result3:list = self.test_clique_repository.get_cliques_by_member(user2, self.test_user_repository)
+        self.assertEqual(len(result3), 100)
+        i = 1
+        for clique in result3:
+            self.assertEqual(clique.clique_id, i)
+            i += 1
+        # TOIMIIIIII!!!! Korjaa loput testit!!
 
     def test_legal_insert_new_user_and_clique_are_succesful_and_found(self):
         user1_info = {

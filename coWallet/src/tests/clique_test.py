@@ -25,10 +25,5 @@ class TestClique(unittest.TestCase):
         self.assertEqual(str(self.test_clique), f"{self.clique_info['clique_name']}: {self.clique_info['description']}")
 
     def test_repr_returns_full_info(self):
-        repr_assertion = f"""<Clique-object>:
-            id: {self.clique_info["clique_id"]},
-            name: {self.clique_info["clique_name"]},
-            description: {self.clique_info["description"][:100]},
-            head_user: {self.clique_info["head_user"]}
-        """
+        repr_assertion = f"Clique({self.clique_info['clique_id']},'{self.clique_info['clique_name']}','{self.clique_info['description']}')"
         self.assertEqual(repr(self.test_clique), repr_assertion)
