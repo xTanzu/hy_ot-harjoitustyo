@@ -95,7 +95,7 @@ class UserDbao(Dbao):
         search_values = {"username": username}
         return self.db.execute(query, search_values).fetchone()
 
-    def find_users_by_user_id_list(self, user_ids:list("int")) -> list("tuple"):
+    def find_users_by_user_ids(self, *user_ids:list("int")) -> list("tuple"):
         """Find the information of users from database by their user_id's provided as a list
 
         Args:

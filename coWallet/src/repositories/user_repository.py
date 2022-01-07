@@ -107,17 +107,17 @@ class UserRepository:
             self.__users[user.user_id] = user
         return user
 
-    def get_users_by_user_id_list(self, user_ids:list("int")) -> list("User"):
+    def get_users_by_user_ids(self, *user_ids:list("int")) -> list("User"):
         """Get the User-objects of users by their user_id's provided as a list
 
         Args:
-            user_ids (list("int")): list of user_id's
+            user_ids (*int): an arbitrary amount of user_id's
 
         Returns:
             list("User"): a list of User-objects in the same order as the id's came in
         """
         not_in_users = [usr_id for usr_id in user_ids if usr_id not in self.__users]
-        user_infos = self.__user_dbao.find_users_by_user_id_list(not_in_users)
+        user_infos = self.__user_dbao.find_users_by_user_ids(*not_in_users)
         self.__users.update({user[0] : User(*user) for user in user_infos})
         return [self.__users[usr_id] for usr_id in user_ids]
 

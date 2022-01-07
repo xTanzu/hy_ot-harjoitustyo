@@ -146,4 +146,9 @@ kum: 219h 30min
 12h 30min
 
 - 6.1	00-06:30	Refaktoroinnin jatkamista
-6h 30min
+	15-17		Refaktoroinnin jatkamista ja testien korjaamista
+	18-22:30	testien korjaamista
+	23:30-00	testien korjaamista
+13h 30min
+
+- 7.1	00-05		testien korjaamista. Kaikki alatason toimintojen testit ovat lähellä 100% coveragea ja toimivat nyt. Seuraavaksi yhdistettyjen service luokkien metodien testien kimppuun
