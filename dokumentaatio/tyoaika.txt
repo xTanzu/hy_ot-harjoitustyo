@@ -152,3 +152,10 @@ kum: 219h 30min
 13h 30min
 
 - 7.1	00-05		testien korjaamista. Kaikki alatason toimintojen testit ovat lähellä 100% coveragea ja toimivat nyt. Seuraavaksi yhdistettyjen service luokkien metodien testien kimppuun
+5h
+
+-8.1	23-03		Yhdistä service luokkien testit coWallet_application_test tiedostoon ja täydennä lähelle 100% coverage. Korjaile pikkuvirheitä coWalletaApplication luokassa
+4h
+
+- 10.1	22-05		Liitä käyttöliittymä uuteen ohjelmalogiikkaluokkaan. Ala luomaan Clique_page:a niin, että dynaamisesti aukeaa se klikki jota on klikattu. Tarvitsi pikku refaktorointia
+7h

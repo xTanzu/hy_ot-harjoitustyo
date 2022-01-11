@@ -7,6 +7,7 @@ from ui.pages.sign_in_page import SignInPage
 from ui.pages.register_page import RegisterPage
 from ui.pages.user_main_page import UserMainPage
 from ui.pages.create_clique_page import CreateCliquePage
+from ui.pages.clique_page import CliquePage
 import ui.pages.page as page
 
 
@@ -39,11 +40,10 @@ class MainTkFrame(tkinter.Tk):
         self.container.rowconfigure(0, weight=1)
 
         self.pages = {}
-        self.usable_pages = [SignInPage, RegisterPage, UserMainPage, CreateCliquePage]
-        page = self.construct_page(self.usable_pages[0])
-        page.show()
+        self.usable_pages = [SignInPage, RegisterPage, UserMainPage, CreateCliquePage, CliquePage]
+        self.switch_page_to(SignInPage)
     
-    def construct_page(self, usable_page:type) -> page.Page:
+    def construct_page(self, usable_page:type, **kwargs) -> page.Page:
         """Contruct a given page, and saves it for later use
 
         Args:
@@ -57,12 +57,11 @@ class MainTkFrame(tkinter.Tk):
         """
         if usable_page in self.pages:
             raise NameError(f"Page {usable_page.__name__} allready exists, can't construct it")
-        page = usable_page(name=usable_page.__name__, parent=self.container, controller=self)
+        page = usable_page(name=usable_page.__name__, parent=self.container, controller=self, **kwargs)
         page.grid(row=0, column=0, sticky="news")
-        self.pages[type(page).__name__] = page
         return page
     
-    def switch_page_to(self, page:type):
+    def switch_page_to(self, page:type, **kwargs):
         """Changes the current page to the given one
             If Page is not yet created, it is constructed
 
@@ -73,12 +72,15 @@ class MainTkFrame(tkinter.Tk):
             NameError: If the given page is not defined a usable.
                 Add the page-class to self.usable_pages if required
         """
-        if page not in self.pages:
+        user = self.app_logic.get_current_user()
+        page_instance_name = f"{page.__name__}{'_'+str(user.user_id) if user is not None else ''}{'_'+str(kwargs.pop('page_id')) if 'page_id' in kwargs else ''}"
+        if page_instance_name not in self.pages:
             if page not in self.usable_pages:
                 error_msg = f"Page {page.__name__} is not usable, can't switch to it"
                 raise NameError(error_msg)
-            self.construct_page(page)             
-        self.pages[page.__name__].show()
+            print(page_instance_name)
+            self.pages[page_instance_name] = self.construct_page(page, **kwargs)
+        self.pages[page_instance_name].show()
         self.update()
 
 

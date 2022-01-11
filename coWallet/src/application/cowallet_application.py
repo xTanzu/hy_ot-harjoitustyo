@@ -143,8 +143,11 @@ class CoWalletApplication:
     #     return self.__clique_repository.get_cliques_by_head(head_user)
 
     def update_mbr_cliques(self):
-        cliques = self.__clique_repository.get_cliques_by_member(self.__user)
-        # päivitä mbr_cliques muuttuja!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        """Fetch the latest Clique-objects from clique_repository
+        """
+        self.__mbr_cliques = set()
+        self.__clique_repository.forget_cliques()
+        self.__mbr_cliques.update(self.__clique_repository.get_cliques_by_member(self.__user, self.__user_repository))
 
     def get_mbr_cliques(self) -> List[Clique]:
         """Get all the Clique-objects that the logged in User is a member of
@@ -154,21 +157,14 @@ class CoWalletApplication:
         """
         return list(self.__mbr_cliques)
 
-    def get_clique_personal_balance(self, user:User, clique:Clique) -> int:
-        """Calculate the current personal balance in a clique
+    def get_clique_personal_balance(self, clique:Clique) -> int:
+        """Calculate the current users current personal balance in a clique
 
         Args:
-            user (User): User whose balance to be calculated
-            clique (Clique): Clique that the balance is associated with
+            clique (Clique): Clique whose balance to get
 
         Returns:
             int: amount of personal balance in a clique
         """
         # Jatka toimintoa myöhemmin!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return 0
-
-    def update_my_cliques(self):
-        """updates the state of my cliques
-        """
-        #Tänne klikkien päivitystoiminto
-        pass

@@ -1,4 +1,5 @@
 import tkinter
+from entities.user import User
 
 from ui.pages.page import Page
 import ui.pages.register_page as register_page
@@ -16,7 +17,6 @@ class SignInPage(Page):
     def __init__(self, *args, **kwargs):
         """Constructor of the SignInPage class
         """
-
         super().__init__(*args, **kwargs)
         sign_in_frame = self.set_up_sign_in_frame()
         sign_in_frame.pack(side="top", fill=None, expand=True)
@@ -26,7 +26,7 @@ class SignInPage(Page):
 
         Returns:
             tkinter.Frame: A tkinter.Frame-object
-        """        
+        """
         frame = tkinter.Frame(self)
         frame.columnconfigure(0, weight=1)
 
@@ -36,6 +36,7 @@ class SignInPage(Page):
             username = username_entry.get()
             password = password_entry.get()
             if self.controller.app_logic.login(username, password):
+                user:User = self.controller.app_logic.get_current_user()
                 self.controller.switch_page_to(user_main_page.UserMainPage)
             else:
                 info_label["text"] = "Wrong username or password"

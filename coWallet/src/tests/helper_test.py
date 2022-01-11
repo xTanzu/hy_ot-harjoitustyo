@@ -125,6 +125,7 @@ class TestHelper(unittest.TestCase):
         test_name5 = "".join(["a" for x in range(201)])
         test_name6 = ".gitignore"
         test_name7 = "0.?5$9%+2*"
+        test_name8 = 23
         self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name1))
         self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name2))
         self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name3))
@@ -132,6 +133,7 @@ class TestHelper(unittest.TestCase):
         self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name5))
         self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name6))
         self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_username(test_name8))
 
     # Valid passwords --------------------------------------------------------------------
 
@@ -157,6 +159,7 @@ class TestHelper(unittest.TestCase):
         test_name8 = "abc123.!#"
         test_name9 = "abcABC.!#"
         test_name10 = "abcABC123"
+        test_name11 = 23
         self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name1))
         self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name2))
         self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name3))
@@ -167,6 +170,7 @@ class TestHelper(unittest.TestCase):
         self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name8))
         self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name9))
         self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name10))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_password(test_name11))
 
     # Valid names --------------------------------------------------------------------
 
@@ -224,4 +228,7 @@ class TestHelper(unittest.TestCase):
     
     def test_is_valid_short_text_returns_false_when_false(self):
         test_text1 = "".join(["a" for x in range(1025)])
+        test_text2 = 23
         self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text2))
+
