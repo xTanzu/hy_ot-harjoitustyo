@@ -78,6 +78,9 @@ class CreateCliquePage(Page):
     def clique_created_succesful(self, created_clique:clique.Clique):
         """Functionality what happens when the Clique has been created
         """
+        # Päivitä
+        self.controller.switch_page_to(user_main_page.UserMainPage)
+
         info_label2 = tkinter.Label(self, text="Coming the possibility to move to add members")
         info_label2.grid(row=6, column=0)
         print(created_clique)

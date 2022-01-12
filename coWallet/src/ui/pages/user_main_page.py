@@ -1,5 +1,7 @@
 import tkinter
 
+#from collections import OrderedDict
+
 from ui.pages.page import Page
 import ui.pages.create_clique_page as create_clique_page
 import ui.pages.sign_in_page as sign_in_page
@@ -16,26 +18,66 @@ class UserMainPage(Page):
         Page: Inherits the Page base-class
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, operation='initialize', *args, **kwargs):
         """Constructor of the UserMainPage class
         """
         super().__init__(*args, **kwargs)
 
-        # Define Frames
-        self.personal_account_info_frame = self.set_up_personal_account_info_frame()
-        self.handle_account_balance_frame = self.set_up_handle_account_balance_frame()
-        self.cliques_list_frame = self.set_up_cliques_list_frame()
+        self.frames = {}
+        self.frame_info = {
+            "personal_account_info": {
+                "set_up_method": self.set_up_personal_account_info_frame,
+                "pack_params": {"side":"top", "fill":"x", "expand":False, "pady":PADDING_CONST}
+                },
+            "account_balance_controls": {
+                "set_up_method": self.set_up_account_balance_controls_frame,
+                "pack_params": {"side":"top", "fill":"x", "expand":False, "pady":PADDING_CONST}
+                },
+            "clique_list": {
+                "set_up_method": self.set_up_clique_list_frame,
+                "pack_params": {"side":"top", "fill":"both", "expand":True, "pady":PADDING_CONST}
+                },
+            "add_clique": {
+                "set_up_method": self.set_up_add_clique_frame,
+                "pack_params": {"side":"bottom", "fill":"x", "expand":False, "pady":PADDING_CONST}
+                }
+        }
 
-        # Define Buttons
-        add_clique_button_frame = self.set_up_add_clique_frame()
 
-        # Position Frames
-        self.personal_account_info_frame.pack(side="top", fill="x", expand=False, pady=PADDING_CONST)
-        self.handle_account_balance_frame.pack(side="top", fill="x", expand=False, pady=PADDING_CONST)
-        self.cliques_list_frame.pack(side="top", fill="both", expand=True, pady=PADDING_CONST)
-        add_clique_button_frame.pack(side="bottom", fill="x", expand=False, pady=PADDING_CONST)
-    
-    def set_up_personal_account_info_frame(self) -> tkinter.Frame:
+    def construct_frames(self, operation:str):
+        print("pöö")
+
+        def unpack_frames():
+            for frame in self.frames.values():
+                frame.pack_forget()
+
+        def initialize_frames():
+            self.frames.clear()
+            for frame_name, info in self.frame_info.items():
+                self.frames[frame_name] = info["set_up_method"](update=True)
+
+        def reconstruct_updatable_frames(update):
+            for frame_name in ("personal_account_info", "clique_list"):
+                self.frames[frame_name] = self.frame_info[frame_name]["set_up_method"](update=update)
+
+        def pack_frames():
+             for frame_name, info in self.frame_info.items():
+                 self.frames[frame_name].pack(**info["pack_params"])
+
+        # Unpack
+        unpack_frames()
+
+        # Define
+        if operation == "initialize":
+            initialize_frames()
+        elif operation in ("get_new", "update_all"):
+            update = True if operation == "update_all" else False
+            reconstruct_updatable_frames(update)
+
+        # Pack
+        pack_frames()
+
+    def set_up_personal_account_info_frame(self, **kwargs) -> tkinter.Frame:
         """Set up the frame to display personal account info
 
         Returns:
@@ -63,7 +105,7 @@ class UserMainPage(Page):
 
         return frame
     
-    def set_up_handle_account_balance_frame(self) -> tkinter.Frame:
+    def set_up_account_balance_controls_frame(self, **kwargs) -> tkinter.Frame:
         """Set up the frame for topping up and withdrawing funds to/from account
 
         Returns:
@@ -95,7 +137,7 @@ class UserMainPage(Page):
 
         return frame
 
-    def set_up_cliques_list_frame(self) -> tkinter.Frame:
+    def set_up_clique_list_frame(self, update=False) -> tkinter.Frame:
         """Set up the frame for the list of cliques
 
         Returns:
@@ -107,8 +149,7 @@ class UserMainPage(Page):
             self.controller.switch_page_to(clique_page.CliquePage, page_id=clique.clique_id, clique=clique)
 
         def generate_clique_frame_array() -> (list("tkinter.Frame")):
-            self.controller.app_logic.update_mbr_cliques()
-            users_cliques = self.controller.app_logic.get_mbr_cliques()
+            users_cliques = self.controller.app_logic.get_mbr_cliques(update=update)
             clique_frames = []
             for clique in users_cliques:
                 def clique_click_event_handler(event, arg=clique):
@@ -132,7 +173,7 @@ class UserMainPage(Page):
 
         return frame
 
-    def set_up_add_clique_frame(self) -> tkinter.Frame:
+    def set_up_add_clique_frame(self, **kwargs) -> tkinter.Frame:
         """Set up the frame for the clique adding functionality
 
         Returns:
@@ -142,3 +183,7 @@ class UserMainPage(Page):
         add_clique_button = tkinter.Button(frame, text="Add Clique", pady=PADDING_CONST, command=lambda: self.controller.switch_page_to(create_clique_page.CreateCliquePage))
         add_clique_button.pack(side="top", fill="x", expand=False)
         return frame
+
+    def show(self, operation:str="get_new"):
+        self.construct_frames(operation)
+        return super().show()

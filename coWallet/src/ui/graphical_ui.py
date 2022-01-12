@@ -80,7 +80,7 @@ class MainTkFrame(tkinter.Tk):
                 raise NameError(error_msg)
             print(page_instance_name)
             self.pages[page_instance_name] = self.construct_page(page, **kwargs)
-        self.pages[page_instance_name].show()
+        self.pages[page_instance_name].show(**kwargs)
         self.update()
 
 

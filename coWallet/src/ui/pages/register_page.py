@@ -94,7 +94,7 @@ class RegisterPage(Page):
             self.info_label["text"] = str(e)
             return
         self.info_label["text"] = ""
-        self.controller.switch_page_to(user_main_page.UserMainPage)
+        self.controller.switch_page_to(user_main_page.UserMainPage, operation="initialize")
 
         # errorMsgs = {
         # "username": """username must be:

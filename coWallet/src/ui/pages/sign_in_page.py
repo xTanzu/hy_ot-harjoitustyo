@@ -37,7 +37,7 @@ class SignInPage(Page):
             password = password_entry.get()
             if self.controller.app_logic.login(username, password):
                 user:User = self.controller.app_logic.get_current_user()
-                self.controller.switch_page_to(user_main_page.UserMainPage)
+                self.controller.switch_page_to(user_main_page.UserMainPage, operation="initialize")
             else:
                 info_label["text"] = "Wrong username or password"
 

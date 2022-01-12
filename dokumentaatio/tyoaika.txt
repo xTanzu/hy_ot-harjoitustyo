@@ -159,3 +159,6 @@ kum: 219h 30min
 
 - 10.1	22-05		Liitä käyttöliittymä uuteen ohjelmalogiikkaluokkaan. Ala luomaan Clique_page:a niin, että dynaamisesti aukeaa se klikki jota on klikattu. Tarvitsi pikku refaktorointia
 7h
+
+- 11.1	20-05		Refaktoroi user_main_page:a niin, että se päivittyy aina tarpeen mukaan. Alustaa klikkilistan kun käyttäjä kirjautuu, hakee uudet klikit (muttei päivitä jo olevia) oletuksena, mutta unohtaa vanhat ja hakee uudet tiedot tietokannasta jos näin tarvitsee tehdä. Oli jotenkin prkleen vaikeeta. Helvetin tkinter. En tuu kyllä ikinä saamaan tätä varmaan valmiiksi...
+9h

@@ -6,5 +6,5 @@ class Page(tkinter.Frame):
         self.name, parent, self.controller = (kwargs.pop(x) for x in ("name", "parent", "controller"))
         super().__init__(parent, *args, **kwargs)
 
-    def show(self):
+    def show(self, **kwargs):
         self.lift()

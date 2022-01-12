@@ -99,6 +99,8 @@ class CoWalletApplication:
         """
         self.__user = None
         self.__mbr_cliques = set()
+        self.__user_repository.forget_users()
+        self.__clique_repository.forget_cliques()
 
     # Clique related things -----------------------------------------------------------------------
 
@@ -131,30 +133,19 @@ class CoWalletApplication:
         """
         return self.__clique_repository.insert_new_member(clique, new_member)
 
-    # def get_cliques_by_head(self, head_user:User) -> List[Clique]:
-    #     """Get all cliques that the user has created
-
-    #     Args:
-    #         head_user (User): the owner User of the Clique
-
-    #     Returns:
-    #         List[Clique]: list of Clique-objects
-    #     """
-    #     return self.__clique_repository.get_cliques_by_head(head_user)
-
-    def update_mbr_cliques(self):
-        """Fetch the latest Clique-objects from clique_repository
-        """
-        self.__mbr_cliques = set()
-        self.__clique_repository.forget_cliques()
-        self.__mbr_cliques.update(self.__clique_repository.get_cliques_by_member(self.__user, self.__user_repository))
-
-    def get_mbr_cliques(self) -> List[Clique]:
+    def get_mbr_cliques(self, update=False) -> List[Clique]:      
         """Get all the Clique-objects that the logged in User is a member of
+
+        Args:
+            update (bool, optional): Set to True if want to update existing cliques. Defaults to False.
 
         Returns:
             List[Clique]: List of Clique-objects that the User is a member of
         """
+        if update:
+            self.__mbr_cliques = set()
+            self.__clique_repository.forget_cliques()
+        self.__mbr_cliques.update(self.__clique_repository.get_cliques_by_member(self.__user, self.__user_repository))
         return list(self.__mbr_cliques)
 
     def get_clique_personal_balance(self, clique:Clique) -> int:
