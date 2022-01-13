@@ -1,13 +1,11 @@
 import tkinter
-from tkinter.constants import END
 
 from ui.pages.page import Page
 import ui.pages.user_main_page as user_main_page
 
 import entities.clique as clique
 
-from config import ENTRY_FIELD_WIDTH
-
+from utils.config import ENTRY_FIELD_WIDTH
 from utils.error import CredentialsError
 
 class CreateCliquePage(Page):
@@ -45,8 +43,8 @@ class CreateCliquePage(Page):
             try:
                 created_clique = self.controller.app_logic.create_clique(clique_name, clique_description)
                 error_label["text"] = f"Clique '{created_clique.clique_name[:20]}{'...' if len(created_clique.clique_name) > 20 else ''}' created"
-                clique_name_entry.delete(0, END)
-                clique_description_entry.delete(0, END)
+                clique_name_entry.delete(0, "end")
+                clique_description_entry.delete(0, "end")
                 self.clique_created_succesful(created_clique)
             except CredentialsError as e:
                 error_label["text"] = str(e)
@@ -84,3 +82,13 @@ class CreateCliquePage(Page):
         info_label2 = tkinter.Label(self, text="Coming the possibility to move to add members")
         info_label2.grid(row=6, column=0)
         print(created_clique)
+
+
+
+
+
+
+
+
+
+# HYVÄJEE! Poista kaikista entry-kentistä syöte kun se on hyväksytty. Katso myös etteo klikkien maksun syötteeseen saa syötettyä nolla-summaa

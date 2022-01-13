@@ -4,7 +4,7 @@ from ui.pages.page import Page
 import ui.pages.sign_in_page as sign_in_page
 import ui.pages.user_main_page as user_main_page
 
-from config import ENTRY_FIELD_WIDTH
+from utils.config import ENTRY_FIELD_WIDTH
 
 from utils.error import CredentialsError
 

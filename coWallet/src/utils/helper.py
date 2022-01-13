@@ -1,5 +1,5 @@
 import string
-from config import NAME_MAX_LENGTH, SHORT_TEXT_MAX_LENGTH
+from utils.config import NAME_MAX_LENGTH, SHORT_TEXT_MAX_LENGTH
 
 class Helper:
 

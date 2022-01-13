@@ -1,7 +1,5 @@
 import tkinter
 
-#from collections import OrderedDict
-
 from ui.pages.page import Page
 import ui.pages.create_clique_page as create_clique_page
 import ui.pages.sign_in_page as sign_in_page
@@ -9,7 +7,7 @@ import ui.pages.clique_page as clique_page
 
 from entities.clique import Clique
 
-from config import PADDING_CONST
+from utils.config import PADDING_CONST
 
 class UserMainPage(Page):
     """Class for the user main page
@@ -18,7 +16,7 @@ class UserMainPage(Page):
         Page: Inherits the Page base-class
     """
 
-    def __init__(self, operation='initialize', *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """Constructor of the UserMainPage class
         """
         super().__init__(*args, **kwargs)
@@ -45,16 +43,24 @@ class UserMainPage(Page):
 
 
     def construct_frames(self, operation:str):
-        print("pöö")
+        """Construct the frames of the page. Initialize frames all frames, 
+        get new content to updatable frames or get new and update existing 
+        content on updatable frames.
+
+        Args:
+            operation (str): which operation to execute
+        """        
 
         def unpack_frames():
-            for frame in self.frames.values():
-                frame.pack_forget()
+            # for frame in self.frames.values():
+            #     frame.pack_forget()
+            [frame.pack_forget() for frame in self.frames.values()]
 
         def initialize_frames():
             self.frames.clear()
-            for frame_name, info in self.frame_info.items():
-                self.frames[frame_name] = info["set_up_method"](update=True)
+            # for frame_name, info in self.frame_info.items():
+            #     self.frames[frame_name] = info["set_up_method"](update=True)
+            self.frames = {frame_name : info["set_up_method"](update=True) for frame_name, info in self.frame_info.items()}
 
         def reconstruct_updatable_frames(update):
             for frame_name in ("personal_account_info", "clique_list"):
@@ -70,7 +76,7 @@ class UserMainPage(Page):
         # Define
         if operation == "initialize":
             initialize_frames()
-        elif operation in ("get_new", "update_all"):
+        elif operation in ("get_latest", "update_all"):
             update = True if operation == "update_all" else False
             reconstruct_updatable_frames(update)
 
@@ -158,7 +164,7 @@ class UserMainPage(Page):
                 clique_frame.bind('<Button-1>', clique_click_event_handler)
                 clique_label = tkinter.Label(clique_frame, text=str(clique), padx=PADDING_CONST, pady=PADDING_CONST)
                 clique_label.bind('<Button-1>', clique_click_event_handler)
-                clique_personal_balance = self.controller.app_logic.get_clique_personal_balance(clique)
+                clique_personal_balance = self.controller.app_logic.get_personal_clique_data(clique)[3]
                 balance_label = tkinter.Label(clique_frame, text=clique_personal_balance, padx=PADDING_CONST, pady=PADDING_CONST)
                 balance_label.bind('<Button-1>', clique_click_event_handler)
                 balance_label.pack(side="right", fill="y", expand=False)
@@ -184,6 +190,6 @@ class UserMainPage(Page):
         add_clique_button.pack(side="top", fill="x", expand=False)
         return frame
 
-    def show(self, operation:str="get_new"):
+    def show(self, operation:str="get_latest"):
         self.construct_frames(operation)
         return super().show()

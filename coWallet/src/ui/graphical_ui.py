@@ -73,14 +73,15 @@ class MainTkFrame(tkinter.Tk):
                 Add the page-class to self.usable_pages if required
         """
         user = self.app_logic.get_current_user()
-        page_instance_name = f"{page.__name__}{'_'+str(user.user_id) if user is not None else ''}{'_'+str(kwargs.pop('page_id')) if 'page_id' in kwargs else ''}"
+        kwargs_sect = {x : kwargs.pop(x) for x in ('page_id', 'operation') if x in kwargs}
+        page_instance_name = f"{page.__name__}_{str(user.user_id) if user else ''}_{str(kwargs_sect.pop('page_id', ''))}"
         if page_instance_name not in self.pages:
             if page not in self.usable_pages:
                 error_msg = f"Page {page.__name__} is not usable, can't switch to it"
                 raise NameError(error_msg)
             print(page_instance_name)
             self.pages[page_instance_name] = self.construct_page(page, **kwargs)
-        self.pages[page_instance_name].show(**kwargs)
+        self.pages[page_instance_name].show(**kwargs_sect)
         self.update()
 
 

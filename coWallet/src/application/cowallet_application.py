@@ -148,7 +148,7 @@ class CoWalletApplication:
         self.__mbr_cliques.update(self.__clique_repository.get_cliques_by_member(self.__user, self.__user_repository))
         return list(self.__mbr_cliques)
 
-    def get_clique_personal_balance(self, clique:Clique) -> int:
+    def get_personal_clique_data(self, clique:Clique) -> tuple:
         """Calculate the current users current personal balance in a clique
 
         Args:
@@ -158,4 +158,4 @@ class CoWalletApplication:
             int: amount of personal balance in a clique
         """
         # Jatka toimintoa myöhemmin!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return 0
+        return 0.0, 0.0, 0.0, 0.0

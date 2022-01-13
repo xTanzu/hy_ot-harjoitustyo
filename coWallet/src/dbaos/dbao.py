@@ -1,5 +1,5 @@
 import sqlite3
-from config import DB_TYPE, DB_PATH
+from utils.config import DB_TYPE, DB_PATH
 
 class Dbao:
     """DataBase Access Object base class,

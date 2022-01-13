@@ -5,7 +5,7 @@ from ui.pages.page import Page
 import ui.pages.register_page as register_page
 import ui.pages.user_main_page as user_main_page
 
-from config import *
+from utils.config import *
 
 class SignInPage(Page):
     """Class for the sign in page
@@ -36,7 +36,6 @@ class SignInPage(Page):
             username = username_entry.get()
             password = password_entry.get()
             if self.controller.app_logic.login(username, password):
-                user:User = self.controller.app_logic.get_current_user()
                 self.controller.switch_page_to(user_main_page.UserMainPage, operation="initialize")
             else:
                 info_label["text"] = "Wrong username or password"
