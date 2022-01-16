@@ -40,11 +40,22 @@ class CliqueDbao(Dbao):
                 user_id INTEGER NOT NULL REFERENCES User(id),
                 clique_id INTEGER NOT NULL REFERENCES Clique(id),
                 UNIQUE(user_id, clique_id)
-            )
+            );
+        """
+        query_create_clique_ledger_table = """
+            CREATE TABLE IF NOT EXISTS CliqueLedger (
+                id INTEGER PRIMARY KEY,
+                timestamp TEXT NOT NULL,
+                type INTEGER NOT NULL,
+                user_id INTEGER NOT NULL REFERENCES User(id),
+                clique_id INTEGER NOT NULL REFERENCES Clique(id),
+                amount INTEGER NOT NULL
+            );
         """
         self.db.execute("BEGIN")
         self.db.execute(query_create_clique_table)
         self.db.execute(query_create_clique_member_table)
+        self.db.execute(query_create_clique_ledger_table)
         self.db.execute("COMMIT")
 
     def insert_new_clique(self, clique_name:str, description:str, head_id:int) -> bool:
@@ -69,7 +80,7 @@ class CliqueDbao(Dbao):
                 :clique_name, :description, :head_id
             );
         """
-        query_values = {"clique_name": clique_name, "description":description, "head_id":head_id}
+        query_values = {"clique_name":clique_name, "description":description, "head_id":head_id}
 
         try:
             self.db.execute(query_insert_new_clique, query_values)
@@ -99,12 +110,46 @@ class CliqueDbao(Dbao):
                 :user_id, :clique_id
             );
         """
-        query_values = {"user_id": user_id, "clique_id": clique_id}
+        query_values = {"user_id":user_id, "clique_id":clique_id}
 
         try:
             self.db.execute(query_insert_new_member, query_values)
         except IntegrityError as e:
             print(f"clique_id: {clique_id}, user_id: {user_id}")
+            print(f"DB error: {e}")
+            return False
+        except Exception as e:
+            raise ConnectionError(f"DB faced an error inserting clique data: {e}") from e
+        
+        return True
+
+    def insert_new_transaction(self, timestamp:str, transaction_type:int, user_id:int, clique_id:int, amount:int) -> bool:
+        """[summary]
+
+        Args:
+            timestamp (str): timestamp of the transaction in ISO 8601 format
+                            ( [YYYY]-[MM]-[DD] [HH]:[MM]:[SS][UTC] ),
+                            where UTC: ( Z / ([+/-][HH]:[MM]) )
+            transaction_type ([type]): transaction type as an int (0/1),
+                            0 meaning deposit and 1 meaning withdraw
+            user_id ([type]): user_id of the user making or receiving the payment
+            clique_id ([type]): clique_id of the clique where the transaction takes place
+            amount ([type]): amount of the transaction in Euro-cents
+
+        Returns:
+            bool: boolean value representing the success of the transaction
+        """
+        query_insert_new_transaction = """
+            INSERT INTO CliqueLedger(
+                timestamp, type, user_id, clique_id, amount
+            ) values(
+                :timestamp, :type, :user_id, :clique_id, :amount
+            );
+        """
+        query_values = {"timestamp":timestamp, "type":transaction_type, "user_id":user_id, "clique_id":clique_id, "amount":amount}
+        try:
+            self.db.execute(query_insert_new_transaction, query_values)
+        except IntegrityError as e:
             print(f"DB error: {e}")
             return False
         except Exception as e:
@@ -245,3 +290,24 @@ class CliqueDbao(Dbao):
         query_values = {"clique_id": clique_id}
         result = self.db.execute(query_find_clique_member_list_by_id, query_values)
         return [val[0] for val in result]
+
+    def find_transactions_by_clique(self, clique_id:int) -> list('tuples'):
+        """Find all transactions made in a clique
+
+        Args:
+            clique_id (int): the clique_id of the clique whose transactions are to be found
+
+        Returns:
+            list(tuple): list of transactions, whe the information of the transactions is displayed
+            in a 4-tuple (timestamp, transaction-type, user_id, clique_id, amount of transaction)
+        """        
+        query_find_transactions_by_clique = """
+            SELECT 
+                timestamp, type, user_id, clique_id, amount 
+            FROM 
+                CliqueLedger 
+            WHERE 
+                clique_id = ?
+            ;
+        """
+        return self.db.execute(query_find_transactions_by_clique, [clique_id]).fetchall()

@@ -1,9 +1,14 @@
+
 from typing import List
 
 from entities.clique import Clique
 from entities.user import User
 from dbaos.clique_dbao import CliqueDbao
 from repositories.user_repository import UserRepository
+
+from utils import helper
+
+from datetime import datetime
 
 class CliqueRepository:
     """Repository object for data relating to Clique objects.
@@ -82,6 +87,23 @@ class CliqueRepository:
         clique.insert_new_members(new_member)
         return True
 
+    def insert_new_transaction(self, transaction_type:'str/int', user:User, clique:Clique, amount:'int/float') -> bool:
+        """[summary]
+
+        Args:
+            transaction_type (str/int): transaction type as a str ('deposit'/'withdraw') or int (0/1)
+            user (User): user-object associated with the transaction
+            clique (Clique): clique-object associated with the transaction
+            amount (int/float): amount of money moved transacted in euros as int or float
+
+        Returns:
+            bool: boolean value representing the success of the transaction
+        """
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        transaction_type = helper.Helper.convert_transaction_type(transaction_type)
+        amount = helper.Helper.convert_currency_amount(amount)
+        return self.__clique_dbao.insert_new_transaction(timestamp, transaction_type, user.user_id, clique.clique_id, amount)
+
     def get_cliques_by_member(self, member:User, user_repo:UserRepository) -> List[Clique]:
         """Get all the Clique-objects that a User is a member of
 
@@ -107,3 +129,7 @@ class CliqueRepository:
             clique.insert_new_members(*members)
             self.__cliques[clique.clique_id] = clique
         return [self.__cliques[clq_id] for clq_id in clique_ids]
+
+    def get_transactions_by_clique(self, clique:Clique) -> List[tuple]:
+        pass
+        # Tee tätä!!!

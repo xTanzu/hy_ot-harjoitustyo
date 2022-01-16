@@ -1,7 +1,10 @@
 import string
+import math
 from utils.config import NAME_MAX_LENGTH, SHORT_TEXT_MAX_LENGTH
 
 class Helper:
+
+    # Contains / Consists -------------------------------------------------------------------------
 
     special_characters = """!()-.?[]_'~;:!@#$%^&*+="""
     lowercase_letters = string.ascii_lowercase + "åäö"
@@ -41,7 +44,7 @@ class Helper:
         if id_value < 0:
             raise ValueError("is negative")
         return True
-
+    # Is Valid ------------------------------------------------------------------------------------
     @staticmethod
     def is_valid_username(username:str) -> bool:
         if not isinstance(username, str):
@@ -113,6 +116,25 @@ class Helper:
         if SHORT_TEXT_MAX_LENGTH < len(text):
             raise ValueError(f"too long, maximum of {SHORT_TEXT_MAX_LENGTH} characters")
         return True
+
+    # Conversions ---------------------------------------------------------------------------------
+
+    @staticmethod
+    def convert_transaction_type(transaction_type:'str/int/bool') -> int:
+        if isinstance(transaction_type, int) and 0 <= transaction_type <= 1:
+            return transaction_type
+        elif isinstance(transaction_type, str) and transaction_type in ('deposit', 'withdraw'):
+            return {'deposit': 0, 'withdraw': 1}[transaction_type]
+        else:
+            raise ValueError(f"transaction_type: '{transaction_type}' not valid")
+
+    @staticmethod
+    def convert_currency_amount(amount:'int/float') -> int:
+        if not (isinstance(amount, int) or isinstance(amount, float)):
+            raise ValueError("not 'int' or 'float'")
+        if not 0 <= amount:
+            raise ValueError("not non-negative")
+        return amount * 100 if isinstance(amount, int) else math.floor(amount * 100)
 
 # if __name__ == "__main__":
 #     username = "testUsername"

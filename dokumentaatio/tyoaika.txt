@@ -163,5 +163,9 @@ kum: 219h 30min
 - 11.1	20-05		Refaktoroi user_main_page:a niin, että se päivittyy aina tarpeen mukaan. Alustaa klikkilistan kun käyttäjä kirjautuu, hakee uudet klikit (muttei päivitä jo olevia) oletuksena, mutta unohtaa vanhat ja hakee uudet tiedot tietokannasta jos näin tarvitsee tehdä. Oli jotenkin prkleen vaikeeta. Helvetin tkinter. En tuu kyllä ikinä saamaan tätä varmaan valmiiksi...
 9h
 
-- 12.1	18-08		Korona iski ni tehään ny koko päivä sitten. Tee clique_page, eli klikin oma näkymä. Ei vielä näytä kun dummy-summia, mutta layout ja nappien sekä entryjen kutsut ja validoinnit kyllä on paikallaan. Pientä viilausta vielä. Toimii kuitenkin jo.
+- 12.1	18-08		Korona iski ni tehään ny koko päivä sitten. Tee clique_page, eli klikin oma näkymä. Ei vielä näytä kun dummy-summia, mutta layout ja nappien sekä entryjen kutsut ja validoinnit kyllä on paikallaan. Pientä 
+viilausta vielä. Toimii kuitenkin jo.
 14h
+
+- 15.1	23-07		Eka päivä kun vointi antaa luvan keskittyä johonki muuhun kun sairastamiseen. Tehdään Transaktioiden pohjatyöt: transaktioiden lisäys ja hakeminen clique_dbao ja clique_repository luokkiin
+8h

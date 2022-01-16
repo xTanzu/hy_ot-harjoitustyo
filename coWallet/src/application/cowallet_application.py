@@ -149,13 +149,18 @@ class CoWalletApplication:
         return list(self.__mbr_cliques)
 
     def get_personal_clique_data(self, clique:Clique) -> tuple:
-        """Calculate the current users current personal balance in a clique
+        """Calculate the logged in users current personal financials in a clique
 
         Args:
-            clique (Clique): Clique whose balance to get
+            clique (Clique): Clique from where to get the data
 
         Returns:
-            int: amount of personal balance in a clique
+            tuple(float): 4-tuple in form (purchases, users_cut, paid, claim),
+                        purchases:  amount of purchases in a clique,
+                        users_cut:  users portion of the purchases (purchases/members in clique),
+                        paid:       how much the user has allready paid to the clique,
+                        claim:      how much is still to be paid, or if negative how much the clique ows to the user
         """
-        # Jatka toimintoa myöhemmin!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        # Pyydä clique repositorylta kaikki klikin maksutapahtumat
+        # Laske niiden perusteella tarvittava data
         return 0.0, 0.0, 0.0, 0.0

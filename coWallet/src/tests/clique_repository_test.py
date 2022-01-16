@@ -55,11 +55,6 @@ class TestCliqueRepository(unittest.TestCase):
         result5:list = self.test_clique_repository.get_cliques_by_member(user2, self.test_user_repository)
         self.assertEqual(len(result5), 100)
 
-    # def test_after_forget_cliques_fetch_cliques_from_dbao_and_still_gettable(self):
-    #     user1_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")
-    #     user1 = self.test_user_repository.insert_new_user(*user1_info)
-    #     self.assertTrue(user1)
-
     def test_insert_new_clique_with_nonexist_head_user_raises_memoryerror(self):
         user_info = (1, "fakeUsername", "fakeFirstName", "fakeLastName")
         user = User(*user_info)
@@ -86,6 +81,31 @@ class TestCliqueRepository(unittest.TestCase):
         succesful4 = self.test_clique_repository.insert_new_member(fake_clique, fake_user)
         self.assertFalse(succesful4) # Klikkiä eikä käyttäjää ole
 
+    def test_insert_new_transaction_is_succesful(self):
+        user_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")
+        user = self.test_user_repository.insert_new_user(*user_info)
+        self.assertTrue(user)
+        clique_info = ("CliqueName", "clique description", user)
+        clique = self.test_clique_repository.insert_new_clique(*clique_info)
+        self.assertTrue(clique)
+        transaction_info1 = (0, user, clique, 100)
+        success1 = self.test_clique_repository.insert_new_transaction(*transaction_info1)
+        self.assertTrue(success1)
+        transaction_info2 = ('withdraw', user, clique, 50)
+        success2 = self.test_clique_repository.insert_new_transaction(*transaction_info2)
+        self.assertTrue(success2)
+
+    def test_insert_illegal_transaction_is_not_succesful(self):
+        user_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")
+        user = self.test_user_repository.insert_new_user(*user_info)
+        self.assertTrue(user)
+        clique_info = ("CliqueName", "clique description", user)
+        clique = self.test_clique_repository.insert_new_clique(*clique_info)
+        self.assertTrue(clique)
+        transaction_info1 = (2, user, clique, -100)
+        self.assertRaises(ValueError, lambda: self.test_clique_repository.insert_new_transaction(*transaction_info1))
+        transaction_info2 = ('withdrew', user, clique, -50.5)
+        self.assertRaises(ValueError, lambda: self.test_clique_repository.insert_new_transaction(*transaction_info2))
 
 
 
@@ -120,8 +140,10 @@ class TestCliqueRepository(unittest.TestCase):
 
 
 
-
-
+   # def test_after_forget_cliques_fetch_cliques_from_dbao_and_still_gettable(self):
+    #     user1_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")
+    #     user1 = self.test_user_repository.insert_new_user(*user1_info)
+    #     self.assertTrue(user1)
 
 
 

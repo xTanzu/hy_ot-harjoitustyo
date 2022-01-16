@@ -138,3 +138,34 @@ class TestCliqueDbao(unittest.TestCase):
         self.assertEqual(len(members),100)
         for i in range(100):
             self.assertEqual(members[i], i+1)
+
+    def test_insert_new_transaction_is_succesful(self):
+        userInfo = (f"testUsername", "testPassword", f"testFirstName", f"testLastName")
+        succesful1 = self.test_user_dbao.insert_new_user(*userInfo)
+        self.assertTrue(succesful1)
+        clique_info = ("testClique", "test clique description", 1)
+        succesful2 = self.test_clique_dbao.insert_new_clique(*clique_info)
+        self.assertTrue(succesful2)
+        transaction_info = ('1234-12-12T01:23:45+05:30', 0, 1, 1, 100)
+        succesful3 = self.test_clique_dbao.insert_new_transaction(*transaction_info)
+        self.assertTrue(succesful3)
+
+    def test_insert_new_transaction_can_be_found_by_clique(self):
+        userInfo = (f"testUsername", "testPassword", f"testFirstName", f"testLastName")
+        succesful1 = self.test_user_dbao.insert_new_user(*userInfo)
+        self.assertTrue(succesful1)
+        clique_info = ("testClique", "test clique description", 1)
+        succesful2 = self.test_clique_dbao.insert_new_clique(*clique_info)
+        self.assertTrue(succesful2)
+        transaction_info = ('1234-12-12T01:23:45+05:30', 0, 1, 1, 100)
+        succesful3 = self.test_clique_dbao.insert_new_transaction(*transaction_info)
+        self.assertTrue(succesful3)
+        results = self.test_clique_dbao.find_transactions_by_clique(1)
+        self.assertEqual(results[0], transaction_info)
+
+    def test_insert_new_transaction_with_nonexistant_user_or_clique_raises_integrityerror(self):
+        transaction_info = ('1234-12-12 01:23:45+05:30', 0, 1, 1, 100)
+        succesful = self.test_clique_dbao.insert_new_transaction(*transaction_info)
+        self.assertFalse(succesful)
+        results = self.test_clique_dbao.find_transactions_by_clique(1)
+        self.assertEqual(len(results), 0)
