@@ -1,6 +1,7 @@
 import sys
 import unittest
 from utils.helper import Helper
+from datetime import datetime
 
 class TestHelper(unittest.TestCase):
 
@@ -227,11 +228,53 @@ class TestHelper(unittest.TestCase):
         self.assertTrue(Helper.is_valid_short_text(test_text1))
         self.assertTrue(Helper.is_valid_short_text(test_text2))
     
-    def test_is_valid_short_text_returns_false_when_false(self):
+    def test_is_valid_short_text_raises_valueerror_when_false(self):
         test_text1 = "".join(["a" for x in range(1025)])
         test_text2 = 23
         self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text1))
         self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text2))
+
+    # timestamps ----------------------------------------------------------------------------------
+
+    def test_is_valid_timestamp_returns_true_when_true(self):
+        timestamp1 = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        timestamp2 = '2022-01-22 06:16:37'
+        timestamp3 = '1992-03-20 23:30:00'
+        timestamp4 = '1970-01-01 00:00:00'
+        timestamp5 = '2000-01-01 00:00:00'
+        self.assertTrue(Helper.is_valid_timestamp(timestamp1))
+        self.assertTrue(Helper.is_valid_timestamp(timestamp2))
+        self.assertTrue(Helper.is_valid_timestamp(timestamp3))
+        self.assertTrue(Helper.is_valid_timestamp(timestamp4))
+        self.assertTrue(Helper.is_valid_timestamp(timestamp5))
+
+    def test_is_valid_timestamp_raises_valueerror_when_false(self):
+        timestamp1 = '0000-00-00 00:00:00'
+        timestamp2 = '2022-22-01 06:16:37'
+        timestamp3 = '22-01-2022 06:16:37'
+        timestamp4 = '01-22-2022 06:16:37'
+        timestamp5 = '2022-01-22 24:00:00'
+        timestamp6 = '9999-99-99 00:00:00'
+        timestamp7 = '0000-00-00 99:99:99'
+        timestamp8 = '2022:01:22 06:16:37'
+        timestamp9 = '2022-01-22 06-16-37'
+        timestamp10 = '2022-01-22-06:16:37'
+        timestamp11 = '2022-01-2206:16:37'
+        timestamp12 = '20220122061637'
+        timestamp13 = 'Jan-22-2022 00:00:00'
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp2))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp3))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp4))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp5))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp6))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp8))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp9))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp10))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp11))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp12))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp13))
 
     # Conversions Checks --------------------------------------------------------------------------
     # Transaction types ---------------------------------------------------------------------------
@@ -239,20 +282,24 @@ class TestHelper(unittest.TestCase):
     def test_convert_transaction_type_returns_correctly_when_legal(self):
         valid_transaction_type1 = 0
         valid_transaction_type2 = 1
-        valid_transaction_type3 = 'deposit'
-        valid_transaction_type4 = 'withdraw'
-        valid_transaction_type5 = False
-        valid_transaction_type6 = True
+        valid_transaction_type3 = 2
+        valid_transaction_type4 = 'deposit'
+        valid_transaction_type5 = 'withdraw'
+        valid_transaction_type6 = 'purchase'
+        valid_transaction_type7 = False
+        valid_transaction_type8 = True
         self.assertEqual(Helper.convert_transaction_type(valid_transaction_type1), 0)
         self.assertEqual(Helper.convert_transaction_type(valid_transaction_type2), 1)
-        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type3), 0)
-        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type4), 1)
-        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type5), 0)
-        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type6), 1)
+        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type3), 2)
+        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type4), 0)
+        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type5), 1)
+        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type6), 2)
+        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type7), 0)
+        self.assertEqual(Helper.convert_transaction_type(valid_transaction_type8), 1)
 
     def test_convert_transaction_type_raises_valueerror_when_illegal(self):
         invalid_transaction_type1 = -1
-        invalid_transaction_type2 = 2
+        invalid_transaction_type2 = 3
         invalid_transaction_type3 = None
         invalid_transaction_type4 = 'nosto'
         invalid_transaction_type5 = '0'
@@ -285,7 +332,7 @@ class TestHelper(unittest.TestCase):
         self.assertEqual(Helper.convert_currency_amount(valid_amount4), 958927349200)
         self.assertEqual(Helper.convert_currency_amount(valid_amount5), 0)
         self.assertEqual(Helper.convert_currency_amount(valid_amount6), 100)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount7), 163)
+        self.assertEqual(Helper.convert_currency_amount(valid_amount7), 164)
         self.assertEqual(Helper.convert_currency_amount(valid_amount8), 5687287)
 
     def test_convert_currency_amount_raises_valueerror_when_illegal(self):

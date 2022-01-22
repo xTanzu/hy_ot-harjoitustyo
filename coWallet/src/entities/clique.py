@@ -18,7 +18,7 @@ class Clique:
         self.__clique_id = self.check_id_valid(clique_id)
         self.__clique_name = self.check_clique_name_valid(clique_name)
         self.__description = self.check_description_valid(description)
-        self.__head_user = head_user
+        self.__head_user = self.check_head_user_valid(head_user)
         self.__members:set("User") = set()
 
     @property
@@ -97,6 +97,17 @@ class Clique:
             return description
         except ValueError as e:
             raise CredentialsError(f"description not valid form:\n{str(e)}") from e
+
+    @staticmethod
+    def check_head_user_valid(user:User):
+        """Check if head_user is really a user
+
+        Args:
+            user (User): head_user candidate
+        """
+        if isinstance(user, User):
+            return user
+        raise CredentialsError("head_user not a user-object")
 
     def set_clique_id(self, clique_id:int):
         """method for resetting the clique_id (used in create clique process)

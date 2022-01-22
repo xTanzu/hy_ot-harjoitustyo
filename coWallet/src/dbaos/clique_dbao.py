@@ -291,19 +291,19 @@ class CliqueDbao(Dbao):
         result = self.db.execute(query_find_clique_member_list_by_id, query_values)
         return [val[0] for val in result]
 
-    def find_transactions_by_clique(self, clique_id:int) -> list('tuples'):
+    def find_all_transactions_by_clique_id(self, clique_id:int) -> list('tuples'):
         """Find all transactions made in a clique
 
         Args:
             clique_id (int): the clique_id of the clique whose transactions are to be found
 
         Returns:
-            list(tuple): list of transactions, whe the information of the transactions is displayed
-            in a 4-tuple (timestamp, transaction-type, user_id, clique_id, amount of transaction)
+            list(tuple): list of transactions, where the information of the transactions is displayed
+            in a 4-tuple (timestamp, transaction-type, user_id, amount of transaction)
         """        
         query_find_transactions_by_clique = """
             SELECT 
-                timestamp, type, user_id, clique_id, amount 
+                timestamp, type, user_id, amount 
             FROM 
                 CliqueLedger 
             WHERE 

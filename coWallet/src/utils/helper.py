@@ -1,5 +1,6 @@
 import string
-import math
+#import re
+from datetime import datetime
 from utils.config import NAME_MAX_LENGTH, SHORT_TEXT_MAX_LENGTH
 
 class Helper:
@@ -117,14 +118,21 @@ class Helper:
             raise ValueError(f"too long, maximum of {SHORT_TEXT_MAX_LENGTH} characters")
         return True
 
+    @staticmethod
+    def is_valid_timestamp(timestamp:str) -> bool:
+        # return re.match('\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}', timestamp)
+        datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')
+        return True
+
     # Conversions ---------------------------------------------------------------------------------
 
     @staticmethod
     def convert_transaction_type(transaction_type:'str/int/bool') -> int:
-        if isinstance(transaction_type, int) and 0 <= transaction_type <= 1:
+        transaction_types_str = ('deposit', 'withdraw', 'purchase')
+        if isinstance(transaction_type, int) and 0 <= transaction_type <= 2:
             return transaction_type
-        elif isinstance(transaction_type, str) and transaction_type in ('deposit', 'withdraw'):
-            return {'deposit': 0, 'withdraw': 1}[transaction_type]
+        elif isinstance(transaction_type, str) and transaction_type in transaction_types_str:
+            return transaction_types_str.index(transaction_type)
         else:
             raise ValueError(f"transaction_type: '{transaction_type}' not valid")
 
@@ -134,7 +142,7 @@ class Helper:
             raise ValueError("not 'int' or 'float'")
         if not 0 <= amount:
             raise ValueError("not non-negative")
-        return amount * 100 if isinstance(amount, int) else math.floor(amount * 100)
+        return amount * 100 if isinstance(amount, int) else int(round(amount * 100))
 
 # if __name__ == "__main__":
 #     username = "testUsername"

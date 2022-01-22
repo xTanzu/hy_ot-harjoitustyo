@@ -3,7 +3,9 @@ from repositories.user_repository import UserRepository
 from repositories.clique_repository import CliqueRepository
 from entities.user import User
 from entities.clique import Clique
-from utils.error import CredentialsError
+# from utils.error import CredentialsError
+
+from random import randint
 
 class TestCliqueRepository(unittest.TestCase):
 
@@ -88,10 +90,10 @@ class TestCliqueRepository(unittest.TestCase):
         clique_info = ("CliqueName", "clique description", user)
         clique = self.test_clique_repository.insert_new_clique(*clique_info)
         self.assertTrue(clique)
-        transaction_info1 = (0, user, clique, 100)
+        transaction_info1 = ('2020-01-01 00:00:00', 0, user, clique, 100)
         success1 = self.test_clique_repository.insert_new_transaction(*transaction_info1)
         self.assertTrue(success1)
-        transaction_info2 = ('withdraw', user, clique, 50)
+        transaction_info2 = ('2020-01-01 00:00:01', 'withdraw', user, clique, 50)
         success2 = self.test_clique_repository.insert_new_transaction(*transaction_info2)
         self.assertTrue(success2)
 
@@ -102,12 +104,32 @@ class TestCliqueRepository(unittest.TestCase):
         clique_info = ("CliqueName", "clique description", user)
         clique = self.test_clique_repository.insert_new_clique(*clique_info)
         self.assertTrue(clique)
-        transaction_info1 = (2, user, clique, -100)
+        transaction_info1 = ('2020-01-01 00:00:00', 3, user, clique, -100)
         self.assertRaises(ValueError, lambda: self.test_clique_repository.insert_new_transaction(*transaction_info1))
-        transaction_info2 = ('withdrew', user, clique, -50.5)
+        transaction_info2 = ('2020-01-01 00:00:00', 'withdrew', user, clique, -50.5)
         self.assertRaises(ValueError, lambda: self.test_clique_repository.insert_new_transaction(*transaction_info2))
 
-
+    def test_get_all_transactions_by_clique_is_succesful(self):
+        users = []
+        for i in range(100):
+            user_info = (f"testUsername{i}", f"testPassword{i}!", f"testPassword{i}!", f"testFirstName{i}", f"testLastName{i}")
+            users.append(self.test_user_repository.insert_new_user(*user_info))
+            self.assertTrue(users[i])
+        clique_info = ("CliqueName", "clique description", users[0])
+        clique = self.test_clique_repository.insert_new_clique(*clique_info)
+        self.assertTrue(clique)
+        for user in users:
+            for i in range(100):
+                self.test_clique_repository.insert_new_transaction('2020-01-01 00:00:00', 0, user, clique, randint(1,10000))
+        transactions = self.test_clique_repository.get_all_transactions_by_clique(clique, self.test_user_repository)
+        user = None
+        user_indx = -1
+        for i, transaction in enumerate(transactions):
+            if transaction[2] != user:
+                user = transaction[2]
+                user_indx += 1
+            self.assertEqual(transaction[1:3], (0, users[user_indx]))
+        
 
 
 

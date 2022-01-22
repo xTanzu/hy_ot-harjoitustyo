@@ -6,9 +6,7 @@ from entities.user import User
 from dbaos.clique_dbao import CliqueDbao
 from repositories.user_repository import UserRepository
 
-from utils import helper
-
-from datetime import datetime
+from utils.helper import Helper
 
 class CliqueRepository:
     """Repository object for data relating to Clique objects.
@@ -87,21 +85,22 @@ class CliqueRepository:
         clique.insert_new_members(new_member)
         return True
 
-    def insert_new_transaction(self, transaction_type:'str/int', user:User, clique:Clique, amount:'int/float') -> bool:
+    def insert_new_transaction(self, timestamp:str, transaction_type:int, user:User, clique:Clique, amount:int) -> bool:
         """[summary]
 
         Args:
+            timestamp (str): timestamp of the transaction
             transaction_type (str/int): transaction type as a str ('deposit'/'withdraw') or int (0/1)
             user (User): user-object associated with the transaction
             clique (Clique): clique-object associated with the transaction
-            amount (int/float): amount of money moved transacted in euros as int or float
+            amount (int/float): amount of money moved in euro-cents as int
 
         Returns:
             bool: boolean value representing the success of the transaction
         """
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        transaction_type = helper.Helper.convert_transaction_type(transaction_type)
-        amount = helper.Helper.convert_currency_amount(amount)
+        Helper.is_valid_timestamp(timestamp)
+        transaction_type = Helper.convert_transaction_type(transaction_type)
+        amount = Helper.convert_currency_amount(amount)
         return self.__clique_dbao.insert_new_transaction(timestamp, transaction_type, user.user_id, clique.clique_id, amount)
 
     def get_cliques_by_member(self, member:User, user_repo:UserRepository) -> List[Clique]:
@@ -130,6 +129,20 @@ class CliqueRepository:
             self.__cliques[clique.clique_id] = clique
         return [self.__cliques[clq_id] for clq_id in clique_ids]
 
-    def get_transactions_by_clique(self, clique:Clique) -> List[tuple]:
-        pass
-        # Tee tätä!!!
+    def get_all_transactions_by_clique(self, clique:Clique, user_repo:UserRepository) -> List[tuple]:
+        """get all transactions made in a clique
+
+        Args:
+            clique (Clique): the clique in which the transactions are made
+            user_repo (UserRepository): UserRepository-object used
+
+        Returns:
+            list(tuple): list of transactions, where the information of the transactions is 
+            displayed in a 4-tuple (timestamp, transaction-type, user associated with the 
+            transaction, amount of transaction)
+        """        
+        transaction_info = self.__clique_dbao.find_all_transactions_by_clique_id(clique.clique_id)
+        user_ids = set([transaction_nugget[2] for transaction_nugget in transaction_info])
+        users = user_repo.get_users_by_user_ids(*user_ids)
+        users_by_ids = {user.user_id : user for user in users}
+        return [transaction_nugget[:2] + (users_by_ids[transaction_nugget[2]],) + transaction_nugget[3:] for transaction_nugget in transaction_info]

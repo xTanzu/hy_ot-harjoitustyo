@@ -5,6 +5,9 @@ from entities.clique import Clique
 from repositories.user_repository import UserRepository
 from repositories.clique_repository import CliqueRepository
 
+from datetime import datetime
+from math import ceil
+
 class CoWalletApplication:
     """coWallet application logic
     """
@@ -133,6 +136,37 @@ class CoWalletApplication:
         """
         return self.__clique_repository.insert_new_member(clique, new_member)
 
+    def insert_new_purchase(self, clique:Clique, description:str, price:'int/float') -> bool:
+        """Insert a new purchase for a given clique and current user
+
+        Args:
+            clique (Clique): clique-object associated with the purchase
+            description (str): description of the purchase
+            price (int/float): price of the purchase in euros
+
+        Returns:
+            bool: boolean value representing the success of the insert process
+        """        
+        #Helper.is_valid_short_text(description)
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        transaction_type = 'purchase'
+        return self.__clique_repository.insert_new_transaction(timestamp, transaction_type, self.__user, clique, price)
+        # Tee ostos reseptiin myös kun se on valmis
+
+    def insert_new_deposit(self, clique:Clique, amount:'int/float') -> bool:
+        """Insert a new deposit for a given clique and current user
+
+        Args:
+            clique (Clique): clique-object associated with the purchase
+            amount (int/float): amount of the deposit in euros
+
+        Returns:
+            bool: boolean value representing the success of the insert process
+        """        
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        transaction_type = 'deposit'
+        return self.__clique_repository.insert_new_transaction(timestamp, transaction_type, self.__user, clique, amount)
+
     def get_mbr_cliques(self, update=False) -> List[Clique]:      
         """Get all the Clique-objects that the logged in User is a member of
 
@@ -161,6 +195,19 @@ class CoWalletApplication:
                         paid:       how much the user has allready paid to the clique,
                         claim:      how much is still to be paid, or if negative how much the clique ows to the user
         """
-        # Pyydä clique repositorylta kaikki klikin maksutapahtumat
-        # Laske niiden perusteella tarvittava data
-        return 0.0, 0.0, 0.0, 0.0
+        transactions = self.__clique_repository.get_all_transactions_by_clique(clique, self.__user_repository)
+        transactions_by_type = {'deposits':[], 'withdraws':[], 'purchases':[]}
+        [transactions_by_type[('deposits', 'withdraws', 'purchases')[transaction[1]]].append(transaction) for transaction in transactions]
+        # ('2022-01-22 04:21:50', 2, User(1,'testLastName0','testFirstName0','testUsername0'), 4897)
+        # for val in transactions_by_type.items():
+        #     for payment in val[1]:
+        #         print(f'{payment[2].first_name}: {payment[3]/100}e')
+        clique_purchase_sum = sum([purchase[3] for purchase in transactions_by_type['purchases']])
+        users_cut = ceil(clique_purchase_sum / len(clique.members))
+        users_purchases = sum([purchase[3] for purchase in transactions_by_type['purchases'] if purchase[2] is self.__user])
+        users_deposits = sum([purchase[3] for purchase in transactions_by_type['deposits'] if purchase[2] is self.__user])
+        users_paid = users_purchases + users_deposits
+        users_claim = users_cut - users_paid
+        return clique_purchase_sum / 100, users_cut / 100, users_paid / 100, users_claim / 100
+
+# Liitä ostosten ja talletusten toiminnot nyt käyttöliittymään!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

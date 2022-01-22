@@ -1,7 +1,10 @@
 import unittest
 from application.cowallet_application import CoWalletApplication
+from random import randint
+from math import ceil
 
 from utils.error import CredentialsError
+from utils.helper import Helper
 
 class TestCoWalletApplication(unittest.TestCase):
 
@@ -206,3 +209,61 @@ class TestCoWalletApplication(unittest.TestCase):
         self.assertRaises(CredentialsError, lambda: self.test_cowallet_application1.create_clique(*clique_info))
         cliques = self.test_cowallet_application1.get_mbr_cliques(update=True)
         self.assertEqual(len(cliques), 0)
+
+    def test_get_personal_clique_data(self):
+        user_amount = 2
+        purchases_per_user = 2
+        users = []
+        for i in range(user_amount//2):
+            user_info = (f"testUsername{i}", f"testPassword{i}!", f"testPassword{i}!", f"testFirstName{i}", f"testLastName{i}")
+            users.append((self.test_cowallet_application1.create_user(*user_info), user_info))
+            self.assertTrue(users[i][0])
+        for i in range(user_amount//2, user_amount):
+            user_info = (f"testUsername{i}", f"testPassword{i}!", f"testPassword{i}!", f"testFirstName{i}", f"testLastName{i}")
+            users.append((self.test_cowallet_application2.create_user(*user_info), user_info))
+            self.assertTrue(users[i][0])
+        self.test_cowallet_application1.logout()
+        self.test_cowallet_application1.login(users[0][1][0], users[0][1][1])
+        clique_info = ("Test Clique Name", "test clique, description")
+        clique = self.test_cowallet_application1.create_clique(*clique_info)
+        self.assertTrue(clique)
+        self.test_cowallet_application1.logout()
+        self.test_cowallet_application2.logout()
+        purchases = {}
+        letters = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789!()-.?[]_'~;:!@#$%^&*+="
+        for user_nugget in users:
+            user = user_nugget[0]
+            user_info = user_nugget[1]
+            self.test_cowallet_application1.login(user_info[0], user_info[1])
+            self.test_cowallet_application1.insert_new_member(clique, user)
+            purchases[user] = []
+            for i in range(purchases_per_user):
+                description = "".join([letters[randint(0,len(letters)-1)] for x in range(randint(10,60))])
+                purcase_price = randint(1,10000)
+                purchase = (description, purcase_price)
+                purchases[user].append(purchase)
+                success1 = self.test_cowallet_application1.insert_new_purchase(clique, description, purcase_price/100)
+                self.assertTrue(success1)
+            self.test_cowallet_application1.logout()
+        total_purchase_sum = 0
+        for user_nugget in users:
+            user = user_nugget[0]
+            for purchase in purchases[user]:
+                total_purchase_sum += purchase[1]
+        users_cut = ceil(total_purchase_sum / len(clique.members))    
+        for user_nugget in users:
+            user = user_nugget[0]
+            user_info = user_nugget[1]
+            self.test_cowallet_application1.login(user_info[0], user_info[1])
+            users_paid = sum([purchase[1] for purchase in purchases[user]])
+            if users_paid < users_cut:
+                deposit_amount = randint(1, users_cut - users_paid)
+                success2 = self.test_cowallet_application1.insert_new_deposit(clique, deposit_amount/100)
+                self.assertTrue(success2)
+                users_paid += deposit_amount
+            users_entered_data = (total_purchase_sum / 100, users_cut / 100, users_paid / 100, (users_cut - users_paid) / 100)
+            personal_clique_data = self.test_cowallet_application1.get_personal_clique_data(clique)
+            self.assertEqual(personal_clique_data, users_entered_data)
+            self.test_cowallet_application1.logout()
+        #self.assertTrue(False)
+        # Lisää tänne käyttäjille talletuksia ja tarkista niiden oikeellisuus myös!!

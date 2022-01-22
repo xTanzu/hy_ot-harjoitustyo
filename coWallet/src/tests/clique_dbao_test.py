@@ -160,12 +160,12 @@ class TestCliqueDbao(unittest.TestCase):
         transaction_info = ('1234-12-12T01:23:45+05:30', 0, 1, 1, 100)
         succesful3 = self.test_clique_dbao.insert_new_transaction(*transaction_info)
         self.assertTrue(succesful3)
-        results = self.test_clique_dbao.find_transactions_by_clique(1)
-        self.assertEqual(results[0], transaction_info)
+        results = self.test_clique_dbao.find_all_transactions_by_clique_id(1)
+        self.assertEqual(results[0], transaction_info[:3] + transaction_info[-1:])
 
-    def test_insert_new_transaction_with_nonexistant_user_or_clique_raises_integrityerror(self):
+    def test_insert_new_transaction_with_nonexistant_user_or_clique_not_succesful_nor_found(self):
         transaction_info = ('1234-12-12 01:23:45+05:30', 0, 1, 1, 100)
         succesful = self.test_clique_dbao.insert_new_transaction(*transaction_info)
         self.assertFalse(succesful)
-        results = self.test_clique_dbao.find_transactions_by_clique(1)
+        results = self.test_clique_dbao.find_all_transactions_by_clique_id(1)
         self.assertEqual(len(results), 0)
