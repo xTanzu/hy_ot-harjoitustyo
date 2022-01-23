@@ -164,8 +164,8 @@ class UserMainPage(Page):
                 clique_frame.bind('<Button-1>', clique_click_event_handler)
                 clique_label = tkinter.Label(clique_frame, text=str(clique), padx=PADDING_CONST, pady=PADDING_CONST)
                 clique_label.bind('<Button-1>', clique_click_event_handler)
-                clique_personal_balance = self.controller.app_logic.get_personal_clique_data(clique)[3]
-                balance_label = tkinter.Label(clique_frame, text=clique_personal_balance, padx=PADDING_CONST, pady=PADDING_CONST)
+                clique_personal_claims = self.controller.app_logic.get_personal_clique_data(clique)[5]
+                balance_label = tkinter.Label(clique_frame, text=clique_personal_claims, padx=PADDING_CONST, pady=PADDING_CONST)
                 balance_label.bind('<Button-1>', clique_click_event_handler)
                 balance_label.pack(side="right", fill="y", expand=False)
                 clique_label.pack(side="left", fill="y", expand=False)

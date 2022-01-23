@@ -189,25 +189,25 @@ class CoWalletApplication:
             clique (Clique): Clique from where to get the data
 
         Returns:
-            tuple(float): 4-tuple in form (purchases, users_cut, paid, claim),
-                        purchases:  amount of purchases in a clique,
-                        users_cut:  users portion of the purchases (purchases/members in clique),
-                        paid:       how much the user has allready paid to the clique,
-                        claim:      how much is still to be paid, or if negative how much the clique ows to the user
+            tuple(float): 6-tuple in form (cliques_purchases, users_purchases, users_cut, users_paid, users_withdrawn, users_claim),
+                        cliques_purchases:  amount of purchases in a clique,
+                        users_purchases: amount of purchases made by the current user
+                        users_cut: one members portion of the purchases (cliques_purchases/number of members in clique),
+                        users_paid: how much the current user has allready paid to the clique,
+                        users_withdrawn: how much the current user has withdrawn from the clique
+                        users_claim: how much is still to be claimed from the current user, 
+                                    or if negative how much the clique ows to the user
         """
         transactions = self.__clique_repository.get_all_transactions_by_clique(clique, self.__user_repository)
         transactions_by_type = {'deposits':[], 'withdraws':[], 'purchases':[]}
         [transactions_by_type[('deposits', 'withdraws', 'purchases')[transaction[1]]].append(transaction) for transaction in transactions]
-        # ('2022-01-22 04:21:50', 2, User(1,'testLastName0','testFirstName0','testUsername0'), 4897)
-        # for val in transactions_by_type.items():
-        #     for payment in val[1]:
-        #         print(f'{payment[2].first_name}: {payment[3]/100}e')
-        clique_purchase_sum = sum([purchase[3] for purchase in transactions_by_type['purchases']])
-        users_cut = ceil(clique_purchase_sum / len(clique.members))
+        cliques_purchases = sum([purchase[3] for purchase in transactions_by_type['purchases']])
         users_purchases = sum([purchase[3] for purchase in transactions_by_type['purchases'] if purchase[2] is self.__user])
+        users_cut = ceil(cliques_purchases / len(clique.members))
         users_deposits = sum([purchase[3] for purchase in transactions_by_type['deposits'] if purchase[2] is self.__user])
-        users_paid = users_purchases + users_deposits
-        users_claim = users_cut - users_paid
-        return clique_purchase_sum / 100, users_cut / 100, users_paid / 100, users_claim / 100
+        users_purchases = sum([purchase[3] for purchase in transactions_by_type['purchases'] if purchase[2] is self.__user])
+        users_paid = users_deposits + users_purchases
+        users_withdrawn = sum([purchase[3] for purchase in transactions_by_type['withdraws'] if purchase[2] is self.__user])
+        users_claim = users_cut + users_withdrawn - users_paid
+        return cliques_purchases / 100, users_purchases / 100, users_cut / 100, users_paid / 100, users_withdrawn / 100, users_claim / 100
 
-# Liitä ostosten ja talletusten toiminnot nyt käyttöliittymään!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

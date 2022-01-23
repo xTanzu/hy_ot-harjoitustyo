@@ -234,47 +234,85 @@ class TestHelper(unittest.TestCase):
         self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text1))
         self.assertRaises(ValueError, lambda: Helper.is_valid_short_text(test_text2))
 
+    def test_is_valid_description_returns_true_when_true(self):
+        test_description1 = "1"
+        test_description2 = "pallo"
+        test_description3 = "mökkimaksu"
+        test_description4 = "kaljat"
+        test_description5 = "kauppareissu"
+        test_description6 = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ!()-.?[]_'~;:!@#$%^&*+= ,"
+        test_description7 = "Lorem ipsum dolor sit ame, consectetur adipiscing elit. Duis dolor purus, condimentum nec mauris eu, suscipit ornare velit."
+        self.assertTrue(Helper.is_valid_description(test_description1))
+        self.assertTrue(Helper.is_valid_description(test_description2))
+        self.assertTrue(Helper.is_valid_description(test_description3))
+        self.assertTrue(Helper.is_valid_description(test_description4))
+        self.assertTrue(Helper.is_valid_description(test_description5))
+        self.assertTrue(Helper.is_valid_description(test_description6))
+        self.assertTrue(Helper.is_valid_description(test_description7))
+
+    def test_is_valid_description_raises_valueerror_when_false(self):
+        test_description1 = ""
+        test_description2 = " "
+        test_description3 = "    "
+        test_description4 = "   "
+        test_description5 = "\n"
+        test_description6 = None
+        test_description7 = 1
+        test_description8 = True
+        test_description9 = """",/<>\\`{|} \t\n\r\x0b\x0c"""
+        test_description10 = """Lorem ipsum dolor sit ame, consectetur adipiscing elit. Duis dolor purus, condimentum nec mauris eu, suscipit ornare velit. Praesent ligula leo, ullamcorper ac quam vel, iaculis tristique elit. Duis id ipsum dui."""
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description2))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description3))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description4))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description5))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description6))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description8))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description9))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_description(test_description10))
+
     # timestamps ----------------------------------------------------------------------------------
 
     def test_is_valid_timestamp_returns_true_when_true(self):
-        timestamp1 = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        timestamp2 = '2022-01-22 06:16:37'
-        timestamp3 = '1992-03-20 23:30:00'
-        timestamp4 = '1970-01-01 00:00:00'
-        timestamp5 = '2000-01-01 00:00:00'
-        self.assertTrue(Helper.is_valid_timestamp(timestamp1))
-        self.assertTrue(Helper.is_valid_timestamp(timestamp2))
-        self.assertTrue(Helper.is_valid_timestamp(timestamp3))
-        self.assertTrue(Helper.is_valid_timestamp(timestamp4))
-        self.assertTrue(Helper.is_valid_timestamp(timestamp5))
+        test_timestamp1 = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        test_timestamp2 = '2022-01-22 06:16:37'
+        test_timestamp3 = '1992-03-20 23:30:00'
+        test_timestamp4 = '1970-01-01 00:00:00'
+        test_timestamp5 = '2000-01-01 00:00:00'
+        self.assertTrue(Helper.is_valid_timestamp(test_timestamp1))
+        self.assertTrue(Helper.is_valid_timestamp(test_timestamp2))
+        self.assertTrue(Helper.is_valid_timestamp(test_timestamp3))
+        self.assertTrue(Helper.is_valid_timestamp(test_timestamp4))
+        self.assertTrue(Helper.is_valid_timestamp(test_timestamp5))
 
     def test_is_valid_timestamp_raises_valueerror_when_false(self):
-        timestamp1 = '0000-00-00 00:00:00'
-        timestamp2 = '2022-22-01 06:16:37'
-        timestamp3 = '22-01-2022 06:16:37'
-        timestamp4 = '01-22-2022 06:16:37'
-        timestamp5 = '2022-01-22 24:00:00'
-        timestamp6 = '9999-99-99 00:00:00'
-        timestamp7 = '0000-00-00 99:99:99'
-        timestamp8 = '2022:01:22 06:16:37'
-        timestamp9 = '2022-01-22 06-16-37'
-        timestamp10 = '2022-01-22-06:16:37'
-        timestamp11 = '2022-01-2206:16:37'
-        timestamp12 = '20220122061637'
-        timestamp13 = 'Jan-22-2022 00:00:00'
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp1))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp2))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp3))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp4))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp5))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp6))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp7))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp8))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp9))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp10))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp11))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp12))
-        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(timestamp13))
+        test_timestamp1 = '0000-00-00 00:00:00'
+        test_timestamp2 = '2022-22-01 06:16:37'
+        test_timestamp3 = '22-01-2022 06:16:37'
+        test_timestamp4 = '01-22-2022 06:16:37'
+        test_timestamp5 = '2022-01-22 24:00:00'
+        test_timestamp6 = '9999-99-99 00:00:00'
+        test_timestamp7 = '0000-00-00 99:99:99'
+        test_timestamp8 = '2022:01:22 06:16:37'
+        test_timestamp9 = '2022-01-22 06-16-37'
+        test_timestamp10 = '2022-01-22-06:16:37'
+        test_timestamp11 = '2022-01-2206:16:37'
+        test_timestamp12 = '20220122061637'
+        test_timestamp13 = 'Jan-22-2022 00:00:00'
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp1))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp2))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp3))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp4))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp5))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp6))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp7))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp8))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp9))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp10))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp11))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp12))
+        self.assertRaises(ValueError, lambda: Helper.is_valid_timestamp(test_timestamp13))
 
     # Conversions Checks --------------------------------------------------------------------------
     # Transaction types ---------------------------------------------------------------------------
@@ -315,9 +353,61 @@ class TestHelper(unittest.TestCase):
         self.assertRaises(ValueError, lambda: Helper.convert_transaction_type(invalid_transaction_type7))
         self.assertRaises(ValueError, lambda: Helper.convert_transaction_type(invalid_transaction_type8))
 
-    # Currency amounts ----------------------------------------------------------------------------
+    # Currency ------------------------------------------------------------------------------------
 
-    def test_convert_currency_amount_returns_correctly_when_legal(self):
+    def test_convert_to_euro_returns_correctly_when_legal(self):
+        valid_amount1 = 1
+        valid_amount2 = 0.01
+        valid_amount3 = 1.99
+        valid_amount4 = 999
+        valid_amount5 = 999.99
+        valid_amount6 = "1"
+        valid_amount7 = "0.01"
+        valid_amount8 = "1.99"
+        valid_amount9 = "999"
+        valid_amount10 = "999.99"
+        self.assertEqual(Helper.convert_to_euro(valid_amount1), float(valid_amount1))
+        self.assertEqual(Helper.convert_to_euro(valid_amount2), float(valid_amount2))
+        self.assertEqual(Helper.convert_to_euro(valid_amount3), float(valid_amount3))
+        self.assertEqual(Helper.convert_to_euro(valid_amount4), float(valid_amount4))
+        self.assertEqual(Helper.convert_to_euro(valid_amount5), float(valid_amount5))
+        self.assertEqual(Helper.convert_to_euro(valid_amount6), float(valid_amount6))
+        self.assertEqual(Helper.convert_to_euro(valid_amount7), float(valid_amount7))
+        self.assertEqual(Helper.convert_to_euro(valid_amount8), float(valid_amount8))
+        self.assertEqual(Helper.convert_to_euro(valid_amount9), float(valid_amount9))
+        self.assertEqual(Helper.convert_to_euro(valid_amount10), float(valid_amount10))
+
+    def test_convert_to_euro_returns_correctly_when_legal(self):
+        invalid_amount1 = 0
+        invalid_amount2 = 0.0
+        invalid_amount3 = -1
+        invalid_amount4 = -1.1
+        invalid_amount5 = "0"
+        invalid_amount6 = "0.0"
+        invalid_amount7 = "-1"
+        invalid_amount8 = "-1.1"
+        invalid_amount9 = ""
+        invalid_amount10 = " "
+        invalid_amount11 = "tyhja"
+        invalid_amount12 = "viisi"
+        invalid_amount13 = False
+        invalid_amount14 = "True"
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount1))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount2))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount3))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount4))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount5))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount6))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount7))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount8))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount9))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount10))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount11))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount12))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount13))
+        self.assertRaises(ValueError, lambda: Helper.convert_to_euro(invalid_amount14))
+
+    def test_convert_euro_to_cents_returns_correctly_when_legal(self):
         valid_amount1 = 0
         valid_amount2 = 1
         valid_amount3 = 256
@@ -326,16 +416,16 @@ class TestHelper(unittest.TestCase):
         valid_amount6 = 1.0
         valid_amount7 = 1.637236339
         valid_amount8 = 56872.873265
-        self.assertEqual(Helper.convert_currency_amount(valid_amount1), 0)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount2), 100)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount3), 25600)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount4), 958927349200)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount5), 0)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount6), 100)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount7), 164)
-        self.assertEqual(Helper.convert_currency_amount(valid_amount8), 5687287)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount1), 0)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount2), 100)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount3), 25600)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount4), 958927349200)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount5), 0)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount6), 100)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount7), 164)
+        self.assertEqual(Helper.convert_euro_to_cents(valid_amount8), 5687287)
 
-    def test_convert_currency_amount_raises_valueerror_when_illegal(self):
+    def test_convert_euro_to_cents_raises_valueerror_when_illegal(self):
         invalid_amount01 = -1
         invalid_amount02 = -(sys.maxsize * 2 + 1)
         invalid_amount03 = -256
@@ -351,18 +441,18 @@ class TestHelper(unittest.TestCase):
         invalid_amount13 = {1:"yy", 2:"kaa", 3:"koo"}
         invalid_amount14 = None
         invalid_amount15 = 1 - 2
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount01))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount02))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount03))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount04))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount05))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount06))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount07))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount08))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount09))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount10))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount11))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount12))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount13))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount14))
-        self.assertRaises(ValueError ,lambda: Helper.convert_currency_amount(invalid_amount15))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount01))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount02))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount03))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount04))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount05))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount06))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount07))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount08))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount09))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount10))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount11))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount12))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount13))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount14))
+        self.assertRaises(ValueError ,lambda: Helper.convert_euro_to_cents(invalid_amount15))

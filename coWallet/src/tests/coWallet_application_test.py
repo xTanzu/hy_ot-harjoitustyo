@@ -255,13 +255,15 @@ class TestCoWalletApplication(unittest.TestCase):
             user = user_nugget[0]
             user_info = user_nugget[1]
             self.test_cowallet_application1.login(user_info[0], user_info[1])
-            users_paid = sum([purchase[1] for purchase in purchases[user]])
-            if users_paid < users_cut:
-                deposit_amount = randint(1, users_cut - users_paid)
-                success2 = self.test_cowallet_application1.insert_new_deposit(clique, deposit_amount/100)
+            users_purchases = sum([purchase[1] for purchase in purchases[user]])
+            users_deposits = 0
+            if users_purchases < users_cut:
+                users_deposits = randint(1, users_cut - users_purchases)
+                success2 = self.test_cowallet_application1.insert_new_deposit(clique, users_deposits/100)
                 self.assertTrue(success2)
-                users_paid += deposit_amount
-            users_entered_data = (total_purchase_sum / 100, users_cut / 100, users_paid / 100, (users_cut - users_paid) / 100)
+            users_paid = users_purchases + users_deposits
+            users_withdrawn = 0 # Tänne vielä nostot myöhemmin
+            users_entered_data = (total_purchase_sum / 100, users_purchases / 100, users_cut / 100, users_paid / 100, users_withdrawn / 100, (users_cut + users_withdrawn - users_paid) / 100)
             personal_clique_data = self.test_cowallet_application1.get_personal_clique_data(clique)
             self.assertEqual(personal_clique_data, users_entered_data)
             self.test_cowallet_application1.logout()

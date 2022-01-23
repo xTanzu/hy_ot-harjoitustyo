@@ -7,6 +7,7 @@ import ui.pages.user_main_page as user_main_page
 from entities.clique import Clique
 
 from utils.config import *
+from utils.helper import Helper
 
 class CliquePage(Page):
     """Class for the clique page
@@ -104,33 +105,43 @@ class CliquePage(Page):
         frame.columnconfigure(0, weight=1)
         frame.columnconfigure(1, weight=2, minsize=4*PADDING_CONST)
         frame.columnconfigure(2, weight=1)
-        frame.rowconfigure(0, weight=1)
-        frame.rowconfigure(1, weight=1)
-        frame.rowconfigure(2, weight=8)
-        frame.rowconfigure(3, weight=1)
-        frame.rowconfigure(4, weight=1)
+        for row in range(8):
+            if (row + 1) % 3 == 0: # Joka kolmas rivi
+                frame.rowconfigure(row, weight=6, minsize=2*PADDING_CONST)
+            else:
+                frame.rowconfigure(row, weight=1)
+        
 
         # Define Labels
         clique_data = self.controller.app_logic.get_personal_clique_data(self.clique)
-        clique_purchases_label = tkinter.Label(frame, text="purchases:", font=self.font.SMALL_TEXT_FONT)
-        clique_purchases_amount = tkinter.Label(frame, text=f"{clique_data[0]:.2f}€", font=self.font.H1_FONT)
-        clique_cut_label = tkinter.Label(frame, text="your cut:", font=self.font.SMALL_TEXT_FONT)
-        clique_cut_amount = tkinter.Label(frame, text=f"{clique_data[1]:.2f}€", font=self.font.H1_FONT)
-        clique_paid_label = tkinter.Label(frame, text="paid:", font=self.font.SMALL_TEXT_FONT)
-        clique_paid_amount = tkinter.Label(frame, text=f"{clique_data[2]:.2f}€", font=self.font.H1_FONT)
-        clique_claim_label = tkinter.Label(frame, text="claim:", font=self.font.SMALL_TEXT_FONT)
-        clique_claim_amount = tkinter.Label(frame, text=f"{clique_data[3]:.2f}€", font=self.font.H1_FONT)
+        cliques_purchases_label = tkinter.Label(frame, text="cliques purchases:", font=self.font.SMALL_TEXT_FONT)
+        cliques_purchases_amount = tkinter.Label(frame, text=f"{clique_data[0]:.2f}€", font=self.font.H1_FONT)
+        users_purchases_label = tkinter.Label(frame, text="users purchases:", font=self.font.SMALL_TEXT_FONT)
+        users_purchases_amount = tkinter.Label(frame, text=f"{clique_data[1]:.2f}€", font=self.font.H1_FONT)
+        users_cut_label = tkinter.Label(frame, text="users cut:", font=self.font.SMALL_TEXT_FONT)
+        users_cut_amount = tkinter.Label(frame, text=f"{clique_data[2]:.2f}€", font=self.font.H1_FONT)
+        users_paid_label = tkinter.Label(frame, text="users paid:", font=self.font.SMALL_TEXT_FONT)
+        users_paid_amount = tkinter.Label(frame, text=f"{clique_data[3]:.2f}€", font=self.font.H1_FONT)
+        users_withdrawn_label = tkinter.Label(frame, text="users withdrawn:", font=self.font.SMALL_TEXT_FONT)
+        users_withdrawn_amount = tkinter.Label(frame, text=f"{clique_data[4]:.2f}€", font=self.font.H1_FONT)
+        users_claim_label = tkinter.Label(frame, text="users claim:", font=self.font.SMALL_TEXT_FONT)
+        users_claim_amount = tkinter.Label(frame, text=f"{clique_data[5]:.2f}€", font=self.font.H1_FONT)
+        
 
         # Position widgets
-        clique_purchases_label.grid(row=0, column=0, sticky="W")
-        clique_purchases_amount.grid(row=1, column=0, sticky="W")
-        clique_cut_label.grid(row=0, column=2, sticky="W")
-        clique_cut_amount.grid(row=1, column=2, sticky="W")
-        clique_paid_label.grid(row=3, column=0, sticky="W")
-        clique_paid_amount.grid(row=4, column=0, sticky="W")
-        clique_claim_label.grid(row=3, column=2, sticky="W")
-        clique_claim_amount.grid(row=4, column=2, sticky="W")
-
+        cliques_purchases_label.grid(   row=0, column=0, sticky="W")
+        cliques_purchases_amount.grid(  row=1, column=0, sticky="W")
+        users_purchases_label.grid(     row=0, column=2, sticky="W")
+        users_purchases_amount.grid(    row=1, column=2, sticky="W")
+        users_cut_label.grid(           row=3, column=0, sticky="W")
+        users_cut_amount.grid(          row=4, column=0, sticky="W")
+        users_paid_label.grid(          row=3, column=2, sticky="W")
+        users_paid_amount.grid(         row=4, column=2, sticky="W")
+        users_withdrawn_label.grid(     row=6, column=0, sticky="W")
+        users_withdrawn_amount.grid(    row=7, column=0, sticky="W")
+        users_claim_label.grid(         row=6, column=2, sticky="W")
+        users_claim_amount.grid(        row=7, column=2, sticky="W")
+     
         return frame
 
     def set_up_clique_payment_controls_frame(self) -> tkinter.Frame:
@@ -161,20 +172,44 @@ class CliquePage(Page):
 
         def add_transaction_pressed():
             transaction_type = transaction_val.get()
-            transaction_type = 0
             transaction_description = description_entry.get()
-            description_entry.delete(0, "end")
             transaction_total = total_entry.get()
+
+            try:
+                if transaction_type == transaction_options[0]:
+                    # Make Purchase
+                    Helper.is_valid_description(transaction_description)
+                    transaction_total = Helper.convert_to_euro(transaction_total)
+                    succesful = self.controller.app_logic.insert_new_purchase(self.clique, transaction_description, transaction_total)
+                elif transaction_type == transaction_options[1]:
+                    # Make Deposit
+                    transaction_total = Helper.convert_to_euro(transaction_total)
+                    succesful = self.controller.app_logic.insert_new_deposit(self.clique, transaction_total)
+                elif transaction_type == transaction_options[2]:
+                    # Make Withdraw
+                    succesful = False
+                else:
+                    raise ValueError("Select a transaction-type")
+            except ValueError as e:
+                error_label["text"] = str(e)
+                return
+
+            if not succesful:
+                error_label["text"] = "Transaction not succesful"
+                return
+            description_entry.delete(0, "end")
             total_entry.delete(0, "end")
-            print(f"Add transaction: \n{transaction_type}\n{transaction_description}\n{transaction_total}")
+            error_label["text"] = ""
+            self.construct_frames()
 
         # Define Labels
         transaction_label = tkinter.Label(frame, text="transaction:", font=self.font.NORMAL_TEXT_FONT)
         description_label = tkinter.Label(frame, text="description:", font=self.font.NORMAL_TEXT_FONT)
         total_label = tkinter.Label(frame, text="total amount:", font=self.font.NORMAL_TEXT_FONT)
+        error_label = tkinter.Label(frame, text="", font=self.font.SMALL_TEXT_FONT)
 
         # Define Entries
-        transaction_options = ["Purchase", "Payment"]
+        transaction_options = ["Purchase", "Deposit", "Withdraw"]
         transaction_val = tkinter.StringVar()
         transaction_val.set("Select")
         transaction_dropdown = tkinter.OptionMenu(frame, transaction_val, *transaction_options)
@@ -195,8 +230,9 @@ class CliquePage(Page):
         description_entry.grid(row=1, column=1, columnspan=2, sticky="E", padx=PADDING_CONST, pady=PADDING_CONST_SMALL)
         total_label.grid(row=2, column=0, sticky="W", padx=PADDING_CONST, pady=PADDING_CONST_SMALL)
         total_entry.grid(row=2, column=1, columnspan=2, sticky="E", padx=PADDING_CONST, pady=PADDING_CONST_SMALL)
-        back_button.grid(row=3, column=0, sticky="W", padx=PADDING_CONST, pady=PADDING_CONST)
-        add_transaction_button.grid(row=3, column=1, columnspan=2, sticky="E", padx=PADDING_CONST, pady=PADDING_CONST)
+        error_label.grid(row=3, column=1, columnspan=2, sticky="E", padx=PADDING_CONST, pady=PADDING_CONST_SMALL)
+        back_button.grid(row=4, column=0, sticky="W", padx=PADDING_CONST, pady=PADDING_CONST)
+        add_transaction_button.grid(row=4, column=1, columnspan=2, sticky="E", padx=PADDING_CONST, pady=PADDING_CONST)
 
         return frame
 

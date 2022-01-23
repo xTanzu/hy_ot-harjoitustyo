@@ -170,5 +170,8 @@ viilausta vielä. Toimii kuitenkin jo.
 - 15.1	23-07		Eka päivä kun vointi antaa luvan keskittyä johonki muuhun kun sairastamiseen. Tehdään Transaktioiden pohjatyöt: transaktioiden lisäys ja hakeminen clique_dbao ja clique_repository luokkiin
 8h
 
--21.1	18-8:30		Kouluhommat painaa jo päälle ni tehään tää ny loppuun mahd nopee. Jatketaan transaktioiden tuomista applikaatioon. Paranneltiin transaktioiden lisäystä: Lisäiltii validointia ja liitettiin transaktioiden lisäys ostoksen ja talletuksen lisäykseen. Pitää lisätä ostoksen lisäykseen vielä kuitti luokka, mutta transaktiopuoli toimii jo. Oli aika vääntöä lukujen tyyppien, pyöristysten jne. kanssa. Nyt vihdoin toimii.
+- 21.1	18-8:30		Kouluhommat painaa jo päälle ni tehään tää ny loppuun mahd nopee. Jatketaan transaktioiden tuomista applikaatioon. Paranneltiin transaktioiden lisäystä: Lisäiltii validointia ja liitettiin transaktioiden lisäys ostoksen ja talletuksen lisäykseen. Pitää lisätä ostoksen lisäykseen vielä kuitti luokka, mutta transaktiopuoli toimii jo. Oli aika vääntöä lukujen tyyppien, pyöristysten jne. kanssa. Nyt vihdoin toimii.
 14h 30min
+
+- 22.1	22-05		Jatketaan transaktioiden tekemistä. Korjaa get_personal_clique_data metodi niin että se ottaa huomioon myös nostot. Lisää palautusarvoja jotta saadaan pari tilastoa ohjelmaan lisää joka klikistä. Kirjoita testit myös. Siirrettiin transaktioiden lisääminen käyttöliittymään lisävalidoinnilla (vähän pihalla missä kohtaa pitäisi validoida ja miten). Toiminnallisuus kuitenkin toimii alustavalla tavalla.
+7h

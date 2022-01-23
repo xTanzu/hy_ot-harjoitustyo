@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 import string
 #import re
 from datetime import datetime
@@ -119,6 +120,20 @@ class Helper:
         return True
 
     @staticmethod
+    def is_valid_description(description:str) -> bool:
+        if not isinstance(description, str):
+            raise ValueError("description not a string of text")
+        if not bool(description):
+            raise ValueError("description is empty")
+        if description.isspace():
+            raise ValueError("description is only space characters")
+        if not Helper.consists_of_legal_characters(description, xtra_chars=" ,"):
+            raise ValueError("description contains illegal characters")
+        if NAME_MAX_LENGTH < len(description):
+            raise ValueError(f"description too long, max {NAME_MAX_LENGTH} chars")
+        return True
+
+    @staticmethod
     def is_valid_timestamp(timestamp:str) -> bool:
         # return re.match('\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}', timestamp)
         datetime.strptime(timestamp,'%Y-%m-%d %H:%M:%S')
@@ -137,7 +152,21 @@ class Helper:
             raise ValueError(f"transaction_type: '{transaction_type}' not valid")
 
     @staticmethod
-    def convert_currency_amount(amount:'int/float') -> int:
+    def convert_to_euro(amount:'str/int/float') -> float:
+        if not bool(amount):
+            raise ValueError("amount is empty or zero")
+        try:
+            amount = float(amount)
+        except ValueError as e:
+            raise ValueError("amount not a number") from e
+        if amount < 0:
+            raise ValueError("amount is negative")
+        if amount == 0:
+            raise ValueError("amount is zero")
+        return round(amount * 100, 0) / 100
+
+    @staticmethod
+    def convert_euro_to_cents(amount:'int/float') -> int:
         if not (isinstance(amount, int) or isinstance(amount, float)):
             raise ValueError("not 'int' or 'float'")
         if not 0 <= amount:

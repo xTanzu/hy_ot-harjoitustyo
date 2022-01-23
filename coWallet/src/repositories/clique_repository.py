@@ -100,7 +100,7 @@ class CliqueRepository:
         """
         Helper.is_valid_timestamp(timestamp)
         transaction_type = Helper.convert_transaction_type(transaction_type)
-        amount = Helper.convert_currency_amount(amount)
+        amount = Helper.convert_euro_to_cents(amount)
         return self.__clique_dbao.insert_new_transaction(timestamp, transaction_type, user.user_id, clique.clique_id, amount)
 
     def get_cliques_by_member(self, member:User, user_repo:UserRepository) -> List[Clique]:
