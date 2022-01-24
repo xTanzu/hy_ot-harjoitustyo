@@ -175,3 +175,6 @@ viilausta vielä. Toimii kuitenkin jo.
 
 - 22.1	22-05		Jatketaan transaktioiden tekemistä. Korjaa get_personal_clique_data metodi niin että se ottaa huomioon myös nostot. Lisää palautusarvoja jotta saadaan pari tilastoa ohjelmaan lisää joka klikistä. Kirjoita testit myös. Siirrettiin transaktioiden lisääminen käyttöliittymään lisävalidoinnilla (vähän pihalla missä kohtaa pitäisi validoida ja miten). Toiminnallisuus kuitenkin toimii alustavalla tavalla.
 7h
+
+- 23.1	23-09		Tehdään sivu jäsenten lisäämiselle käyttöliittymään. Tee ulkonäkö sinnepäin valmiiksi. Tee jäsenien etsintätoiminto logiikkaan ja liitä se käyttöliittymään. Toimii, mutta joitain "dummy" nappeja olemassa
+10h

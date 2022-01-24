@@ -55,6 +55,21 @@ class TestClique(unittest.TestCase):
         clique.insert_new_members(user2, user3, user4)
         self.assertEqual(clique.members, [user1, user2, user3, user4])
 
+    def test_insert_new_members_with_reset_resets_members(self):
+        users = []
+        for i in range(100):
+            users.append(User(i, f'username{i}', f'firstName{i}', f'lastName{i}'))
+        users.sort()
+        clique = Clique(1, 'cliqueName', 'clique description', users[0])
+        clique.insert_new_members(*users[:50])
+        for i, member in enumerate(sorted(clique.members)):
+            self.assertEqual(member, users[i])
+        clique.insert_new_members(*users[50:], reset=True)
+        members = sorted(clique.members)
+        self.assertEqual(members[0], users[0])
+        for i, member in enumerate(members[1:]):
+            self.assertEqual(member, users[i+50])
+
     def test_str_returns_clique_name_desc(self):
         self.assertEqual(str(self.test_clique), f"{self.clique_info['clique_name']}: {self.clique_info['description']}")
 

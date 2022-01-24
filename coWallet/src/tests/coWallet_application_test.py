@@ -211,8 +211,8 @@ class TestCoWalletApplication(unittest.TestCase):
         self.assertEqual(len(cliques), 0)
 
     def test_get_personal_clique_data(self):
-        user_amount = 2
-        purchases_per_user = 2
+        user_amount = 100
+        purchases_per_user = 100
         users = []
         for i in range(user_amount//2):
             user_info = (f"testUsername{i}", f"testPassword{i}!", f"testPassword{i}!", f"testFirstName{i}", f"testLastName{i}")
@@ -269,3 +269,42 @@ class TestCoWalletApplication(unittest.TestCase):
             self.test_cowallet_application1.logout()
         #self.assertTrue(False)
         # Lisää tänne käyttäjille talletuksia ja tarkista niiden oikeellisuus myös!!
+
+    def test_update_clique_members(self):
+        users_per_application = 100
+        app1_users = []
+        for i in range(users_per_application):
+            user_info = (f"testUsername{i}", f"testPassword{i}!", f"testPassword{i}!", f"testFirstName{i}", f"testLastName{i}")
+            app1_users.append((self.test_cowallet_application1.create_user(*user_info), user_info))
+            self.assertTrue(app1_users[-1][0])
+        app2_users = []
+        for i in range(users_per_application, 2*users_per_application):
+            user_info = (f"testUsername{i}", f"testPassword{i}!", f"testPassword{i}!", f"testFirstName{i}", f"testLastName{i}")
+            app2_users.append((self.test_cowallet_application1.create_user(*user_info), user_info))
+            self.assertTrue(app2_users[-1][0])
+        self.test_cowallet_application1.logout()
+        self.test_cowallet_application2.logout()
+        app1_users.sort()
+        app2_users.sort()
+        self.test_cowallet_application1.login(app1_users[0][1][0], app1_users[0][1][1])
+        clique_info = ("Test Clique Name", "test clique, description")
+        app1_clique = self.test_cowallet_application1.create_clique(*clique_info)
+        self.assertTrue(app1_clique)
+        for user_nugget in app1_users:
+            self.test_cowallet_application1.insert_new_member(app1_clique, user_nugget[0])
+        for i, member in enumerate(sorted(app1_clique.members)):
+            self.assertEqual(member, app1_users[i][0])
+        self.test_cowallet_application1.insert_new_member(app1_clique, app2_users[0][0])
+        self.test_cowallet_application2.login(app2_users[0][1][0], app2_users[0][1][1])
+        app2_clique = self.test_cowallet_application2.get_mbr_cliques()[0]
+        self.assertEqual(len(app2_clique.members), 101)
+        for user_nugget in app2_users:
+            self.test_cowallet_application2.insert_new_member(app2_clique, user_nugget[0])
+        self.assertEqual(len(app1_clique.members), 101)
+        self.assertEqual(len(app2_clique.members), 200)
+        self.test_cowallet_application1.update_clique_members(app1_clique)
+        self.assertEqual(len(app1_clique.members), 200)
+        self.assertEqual(len(app2_clique.members), 200)
+        users = sorted(app1_users + app2_users)
+        for i, member in enumerate(sorted(app1_clique.members)):
+            self.assertEqual(member, users[i][0])

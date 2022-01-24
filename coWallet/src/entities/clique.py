@@ -39,7 +39,7 @@ class Clique:
 
     @property
     def members(self) -> list:
-        return list(self.__members)
+        return sorted(list(self.__members))
 
     @staticmethod
     def check_id_valid(id_value:int) -> int:
@@ -117,12 +117,16 @@ class Clique:
         """
         self.__clique_id = self.check_id_valid(clique_id)
 
-    def insert_new_members(self, *new_members:User):
+    def insert_new_members(self, *new_members:User, reset=False):
         """Inserts new members in the Clique object
 
         Args:
             new_member (User): arbitrary number of User objects to insert as new member
+            reset (bool): if the list should be reset before adding
         """
+        if reset:
+            self.__members.clear()
+            self.__members.add(self.head_user)
         for new_member in new_members:
             if isinstance(new_member, User):
                 self.__members.add(new_member)

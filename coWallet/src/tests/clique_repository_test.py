@@ -23,6 +23,40 @@ class TestCliqueRepository(unittest.TestCase):
         self.assertTrue(user1)
         result1:list = self.test_clique_repository.get_cliques_by_member(user1, self.test_user_repository)
         self.assertEqual(len(result1), 0)
+
+    def test_new_clique_has_one_member(self):
+        user_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")
+        user = self.test_user_repository.insert_new_user(*user_info)
+        self.assertTrue(user)
+        clique_info = ("CliqueName", "clique description", user)
+        clique = self.test_clique_repository.insert_new_clique(*clique_info)
+        self.assertTrue(clique)
+        self.test_clique_repository.update_clique_members(clique, self.test_user_repository)
+        self.assertEqual(len(clique.members), 1)
+        self.assertEqual(clique.members[0], user)
+
+    def test_updated_clique_members_are_found(self):
+        users = []
+        for i in range(100):
+            user_info = (f"testUsername{i}", "testPassword1!", "testPassword1!", f"testFirstName{i}", f"testLastName{i}")
+            user = self.test_user_repository.insert_new_user(*user_info)
+            self.assertTrue(user)
+            users.append(user)
+        users.sort()
+        clique_info = ("CliqueName", "clique description", users[0])
+        clique = self.test_clique_repository.insert_new_clique(*clique_info)
+        self.assertTrue(clique)
+        for user in users:
+            self.test_clique_repository.insert_new_member(clique, user)
+        for i, member in enumerate(sorted(clique.members)):
+            self.assertEqual(member, users[i])
+        clique.insert_new_members(reset=True)
+        self.assertEqual(len(clique.members), 1)
+        self.assertEqual(clique.members[0], users[0])
+        self.test_clique_repository.update_clique_members(clique, self.test_user_repository)
+        self.assertEqual(len(clique.members), 100)
+        for i, member in enumerate(sorted(clique.members)):
+            self.assertEqual(member, users[i])
     
     def test_added_cliques_are_found_by_its_head_user_and_by_its_members_even_after_forget_cliques(self):
         user1_info = ("testUsername1", "testPassword1!", "testPassword1!", "testFirstName1", "testLastName1")

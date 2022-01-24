@@ -8,6 +8,7 @@ from ui.pages.register_page import RegisterPage
 from ui.pages.user_main_page import UserMainPage
 from ui.pages.create_clique_page import CreateCliquePage
 from ui.pages.clique_page import CliquePage
+from ui.pages.add_members_page import AddMembersPage
 import ui.pages.page as page
 
 
@@ -40,7 +41,7 @@ class MainTkFrame(tkinter.Tk):
         self.container.rowconfigure(0, weight=1)
 
         self.pages = {}
-        self.usable_pages = [SignInPage, RegisterPage, UserMainPage, CreateCliquePage, CliquePage]
+        self.usable_pages = [SignInPage, RegisterPage, UserMainPage, CreateCliquePage, CliquePage, AddMembersPage]
         self.switch_page_to(SignInPage)
     
     def construct_page(self, usable_page:type, **kwargs) -> page.Page:
@@ -79,7 +80,7 @@ class MainTkFrame(tkinter.Tk):
             if page not in self.usable_pages:
                 error_msg = f"Page {page.__name__} is not usable, can't switch to it"
                 raise NameError(error_msg)
-            print(page_instance_name)
+            #print(page_instance_name)
             self.pages[page_instance_name] = self.construct_page(page, **kwargs)
         self.pages[page_instance_name].show(**kwargs_sect)
         self.update()

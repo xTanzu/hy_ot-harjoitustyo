@@ -136,6 +136,9 @@ class CoWalletApplication:
         """
         return self.__clique_repository.insert_new_member(clique, new_member)
 
+    def update_clique_members(self, clique:Clique):
+        self.__clique_repository.update_clique_members(clique, self.__user_repository)
+
     def insert_new_purchase(self, clique:Clique, description:str, price:'int/float') -> bool:
         """Insert a new purchase for a given clique and current user
 

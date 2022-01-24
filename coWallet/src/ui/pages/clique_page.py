@@ -2,6 +2,7 @@ import tkinter
 
 from ui.pages.page import Page
 import ui.pages.user_main_page as user_main_page
+import ui.pages.add_members_page as add_members_page
 
 # from entities.user import User
 from entities.clique import Clique
@@ -39,7 +40,7 @@ class CliquePage(Page):
         }
 
     def construct_frames(self):
-        """Construct the frames of the page. Initialize frames all frames, 
+        """Construct the frames of the page. Initialize all frames, 
         get new content to updatable frames or get new and update existing 
         content on updatable frames.
         """        
@@ -81,7 +82,7 @@ class CliquePage(Page):
         frame.columnconfigure(1, weight=1)
 
         def add_members_pressed():
-            print("Add members pressed. Do something!!")
+            self.controller.switch_page_to(add_members_page.AddMembersPage, page_id=self.clique.clique_id, clique=self.clique)
 
         # Define Labels
         capped_clique_name = self.clique.clique_name if len(self.clique.clique_name)<=16 else self.clique.clique_name[:14]+'...'
@@ -93,7 +94,7 @@ class CliquePage(Page):
         add_members_button = tkinter.Button(frame, text="Add members", command=add_members_pressed)
 
         # Position widgets
-        clique_name_label.grid(row=0, column=0, sticky="W")# rowspan=2,
+        clique_name_label.grid(row=0, column=0, sticky="W")
         clique_member_amount_label.grid(row=1, column=0, sticky="W")
         add_members_button.grid(row=0, column=1, sticky="E")
 

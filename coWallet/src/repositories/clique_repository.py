@@ -103,11 +103,26 @@ class CliqueRepository:
         amount = Helper.convert_euro_to_cents(amount)
         return self.__clique_dbao.insert_new_transaction(timestamp, transaction_type, user.user_id, clique.clique_id, amount)
 
+    def update_clique_members(self, clique:Clique, user_repo:UserRepository):
+        """Get all User-objects that are members of a clique
+
+        Args:
+            clique (Clique): the Clique whos members we are looking for
+            user_repo (UserRepository): UserRepository from where to get User-objects
+
+        Returns:
+            List[User]: List of member User-objects
+        """
+        members_user_ids = self.__clique_dbao.find_clique_member_list_by_id(clique.clique_id)
+        members = user_repo.get_users_by_user_ids(*members_user_ids)
+        clique.insert_new_members(*members, reset=True)
+
     def get_cliques_by_member(self, member:User, user_repo:UserRepository) -> List[Clique]:
         """Get all the Clique-objects that a User is a member of
 
         Args:
             member (User): the User who is an alleged member of some Cliques
+            user_repo (UserRepository): UserRepository from where to get User-objects
 
         Returns:
             List[Clique]: List of Clique-objects that the User is a member of
